@@ -102,7 +102,7 @@ class HomeController extends BaseController
             'featuredCategories' => $featuredCategories,
             'stats'              => $stats,
             'rankedByCategory'   => $rankedByCategory,
-            'transparentNav'     => true,
+            'transparentNav'     => false,
             'meta_title'         => 'Charj.in - India\'s EV Decision Engine | Compare Electric Vehicles',
             'meta_description'   => 'India\'s most complete EV platform. Compare electric vehicles, calculate savings, find dealers and charging stations across India.',
         ]);

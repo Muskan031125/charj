@@ -81,8 +81,8 @@ $transparentNav = $transparentNav ?? false;
     @keyframes scaleIn     { from{opacity:0;transform:scale(.9)} to{opacity:1;transform:scale(1)} }
     @keyframes gradShift   { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
     @keyframes shimmer     { to{background-position:-200% center} }
-    @keyframes pulse-glow  { 0%,100%{box-shadow:0 0 0 0 rgba(0,153,153,.0)} 50%{box-shadow:0 0 20px 4px rgba(0,153,153,.3),0 0 40px 8px rgba(0,153,153,.12)} }
-    @keyframes neon-border { 0%,100%{border-color:rgba(0,153,153,.3)} 50%{border-color:rgba(0,153,153,.7)} }
+    @keyframes pulse-glow  { 0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.0)} 50%{box-shadow:0 0 20px 4px rgba(16,185,129,.3),0 0 40px 8px rgba(16,185,129,.12)} }
+    @keyframes neon-border { 0%,100%{border-color:rgba(16,185,129,.3)} 50%{border-color:rgba(16,185,129,.7)} }
     @keyframes float1      { 0%,100%{transform:translateY(0) translateX(0)} 33%{transform:translateY(-16px) translateX(8px)} 66%{transform:translateY(6px) translateX(-10px)} }
     @keyframes float2      { 0%,100%{transform:translateY(0) translateX(0)} 50%{transform:translateY(-22px) translateX(12px)} }
     @keyframes float3      { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-12px) rotate(180deg)} }
@@ -101,7 +101,7 @@ $transparentNav = $transparentNav ?? false;
     .aurora   { animation:aurora 12s ease-in-out infinite; }
     .shimmer  { background:linear-gradient(90deg,#152b30 25%,#1c343a 50%,#152b30 75%); background-size:200%; animation:shimmer 1.5s linear infinite; }
     .pulse-glow { animation:pulse-glow 3s ease-in-out infinite; }
-    .cursor   { display:inline-block; width:2px; height:1em; background:#16c4c4; margin-left:2px; animation:blink 1s step-end infinite; vertical-align:text-bottom; }
+    .cursor   { display:inline-block; width:2px; height:1em; background:#10b981; margin-left:2px; animation:blink 1s step-end infinite; vertical-align:text-bottom; }
     .stagger-1{animation-delay:.05s} .stagger-2{animation-delay:.10s} .stagger-3{animation-delay:.15s}
     .stagger-4{animation-delay:.20s} .stagger-5{animation-delay:.25s} .stagger-6{animation-delay:.30s}
 
@@ -131,37 +131,37 @@ $transparentNav = $transparentNav ?? false;
 
     /* ═══ COMPONENTS (ELEGANT DARK · SIEMENS TEAL) ═══ */
     /* Buttons */
-    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:#009999; color:#fff; padding:11px 24px; border-radius:100px; font-weight:800; font-size:.875rem; transition:all .2s; text-decoration:none; letter-spacing:.01em; box-shadow:0 4px 14px -2px rgba(0,153,153,.4); }
-    .btn-primary:hover { background:#0bbaba; transform:translateY(-2px); box-shadow:0 0 0 4px rgba(0,153,153,.18), 0 8px 24px -4px rgba(0,153,153,.5); }
-    .btn-outline { display:inline-flex; align-items:center; gap:8px; border:1.5px solid rgba(0,153,153,.55); color:#16c4c4; padding:10px 22px; border-radius:100px; font-weight:700; font-size:.875rem; transition:all .2s; text-decoration:none; background:transparent; }
-    .btn-outline:hover { background:rgba(0,153,153,.12); border-color:#16c4c4; transform:translateY(-1px); box-shadow:0 0 16px rgba(0,153,153,.25); }
+    .btn-primary { display:inline-flex; align-items:center; gap:8px; background:#10b981; color:#fff; padding:11px 24px; border-radius:100px; font-weight:800; font-size:.875rem; transition:all .2s; text-decoration:none; letter-spacing:.01em; box-shadow:0 4px 14px -2px rgba(16,185,129,.4); }
+    .btn-primary:hover { background:#059669; transform:translateY(-2px); box-shadow:0 0 0 4px rgba(16,185,129,.18), 0 8px 24px -4px rgba(16,185,129,.5); }
+    .btn-outline { display:inline-flex; align-items:center; gap:8px; border:1.5px solid rgba(16,185,129,.55); color:#10b981; padding:10px 22px; border-radius:100px; font-weight:700; font-size:.875rem; transition:all .2s; text-decoration:none; background:transparent; }
+    .btn-outline:hover { background:rgba(16,185,129,.12); border-color:#10b981; transform:translateY(-1px); box-shadow:0 0 16px rgba(16,185,129,.25); }
     /* Cards */
     .card { background:#152b30; border:1px solid rgba(255,255,255,.06); border-radius:1rem; transition:all .25s cubic-bezier(.4,0,.2,1); }
-    .card:hover { border-color:rgba(0,153,153,.4); box-shadow:0 0 0 1px rgba(0,153,153,.12), 0 20px 40px -12px rgba(0,0,0,.5), 0 0 22px -4px rgba(0,153,153,.18); transform:translateY(-3px); }
+    .card:hover { border-color:rgba(16,185,129,.4); box-shadow:0 0 0 1px rgba(16,185,129,.12), 0 20px 40px -12px rgba(0,0,0,.5), 0 0 22px -4px rgba(16,185,129,.18); transform:translateY(-3px); }
     .card-hover { transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-    .card-hover:hover { transform:translateY(-3px); box-shadow:0 20px 40px -12px rgba(0,0,0,.45), 0 0 22px -4px rgba(0,153,153,.18); border-color:rgba(0,153,153,.4); }
+    .card-hover:hover { transform:translateY(-3px); box-shadow:0 20px 40px -12px rgba(0,0,0,.45), 0 0 22px -4px rgba(16,185,129,.18); border-color:rgba(16,185,129,.4); }
     /* Glass */
     .glass { background:rgba(255,255,255,.05); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,.09); }
-    .glass-green { background:rgba(0,153,153,.12); backdrop-filter:blur(12px); border:1px solid rgba(0,153,153,.3); }
+    .glass-green { background:rgba(16,185,129,.12); backdrop-filter:blur(12px); border:1px solid rgba(16,185,129,.3); }
     /* Glow text */
-    .neon-green { color:#16c4c4; text-shadow:0 0 18px rgba(0,153,153,.7), 0 0 38px rgba(0,153,153,.3); }
+    .neon-green { color:#10b981; text-shadow:0 0 18px rgba(16,185,129,.7), 0 0 38px rgba(16,185,129,.3); }
     .neon-blue  { color:#38bdf8; text-shadow:0 0 18px rgba(56,189,248,.55), 0 0 38px rgba(56,189,248,.2); }
     /* Gradient text */
-    .gradient-text { background:linear-gradient(135deg,#16c4c4,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .gradient-text { background:linear-gradient(135deg,#10b981,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     /* Nav */
     .nav-dark { background:rgba(12,26,29,.9); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-bottom:1px solid rgba(255,255,255,.06); }
     /* VC card */
     .vc-card { cursor:pointer; transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s cubic-bezier(.4,0,.2,1), border-color .3s; }
-    .vc-card:hover { transform:translateY(-6px); box-shadow:0 0 0 1px rgba(0,153,153,.35), 0 24px 60px -12px rgba(0,0,0,.6), 0 0 30px -6px rgba(0,153,153,.2); }
+    .vc-card:hover { transform:translateY(-6px); box-shadow:0 0 0 1px rgba(16,185,129,.35), 0 24px 60px -12px rgba(0,0,0,.6), 0 0 30px -6px rgba(16,185,129,.2); }
     /* Filter chip */
     .filter-chip { transition:all .15s; }
     .filter-chip:hover { border-color:rgba(248,113,113,.45) !important; color:#f87171 !important; }
     .filter-chip:hover .chip-x { opacity:1; }
     /* Misc */
-    .range-btn.active, .price-btn.active { background:#009999; color:#fff; font-weight:700; }
+    .range-btn.active, .price-btn.active { background:#10b981; color:#fff; font-weight:700; }
     .compare-bar-enter { animation:slideUp .3s cubic-bezier(.22,.68,0,1.2) both; }
     .gradient-border { position:relative; }
-    .gradient-border::after { content:''; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg,#009999,#38bdf8); z-index:-1; opacity:0; transition:opacity .3s; }
+    .gradient-border::after { content:''; position:absolute; inset:-1px; border-radius:inherit; background:linear-gradient(135deg,#10b981,#38bdf8); z-index:-1; opacity:0; transition:opacity .3s; }
     .gradient-border:hover::after { opacity:1; }
     /* Page in */
     @keyframes pageIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
@@ -207,9 +207,9 @@ $transparentNav = $transparentNav ?? false;
   <?= $this->renderSection('head') ?>
 </head>
 <body class="antialiased"
-      style="background:#0c1a1d;color:#e6f1f1"
-      x-data="{mobileOpen:false, scrolled:false, transparentNav: <?= $transparentNav ? 'true' : 'false' ?>}"
-      @scroll.window="scrolled=window.scrollY>50">
+      style="background:linear-gradient(180deg,#dff5ea 0%,#e8f7ef 100%);color:#14532d"
+      x-data="{mobileOpen:false, scrollY:0, lastScrollY:0, navHidden:false, transparentNav: <?= $transparentNav ? 'true' : 'false' ?>}"
+      @scroll.window="lastScrollY=scrollY; scrollY=window.scrollY; navHidden=(scrollY > lastScrollY && scrollY > 100)">
 
 <?php if (session()->get('admin_previewing_as_customer')): ?>
 <!-- ADMIN PREVIEW BANNER -->
@@ -228,33 +228,25 @@ $transparentNav = $transparentNav ?? false;
 <?php endif; ?>
 
 <!-- TOP NAV -->
-<header class="fixed top-0 inset-x-0 z-50 transition-all duration-300"
-        :style="<?= session()->get('admin_previewing_as_customer') ? "'top:40px'" : "'top:0'" ?>"
-        :class="(transparentNav && !scrolled) ? 'bg-transparent' : ''"
-        style="background:rgba(12,26,29,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6">
-    <div class="flex h-16 items-center justify-between">
+<header class="z-50" style="position:fixed;top:0;left:0;right:0;height:56px;background:rgba(5,150,105,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px rgba(5,150,105,0.15);transition:transform 300ms cubic-bezier(0.4,0,0.2,1)"
+        :style="{ transform: navHidden ? 'translateY(-100%)' : 'translateY(0)' }">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 flex items-center justify-between h-full" style="transition: transform 300ms ease-out;">
 
       <!-- Logo -->
       <a href="<?= base_url() ?>" class="flex items-center gap-2.5" aria-label="Charj.in — India's Dedicated EV Marketplace">
-        <svg viewBox="0 0 36 36" class="h-9 w-9 flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="18" cy="18" r="17"
-            :fill="(transparentNav && !scrolled) ? 'rgba(255,255,255,0.12)' : 'rgba(0,153,153,0.12)'"
-            :stroke="(transparentNav && !scrolled) ? 'rgba(255,255,255,0.3)' : 'rgba(0,153,153,0.4)'"
-            stroke-width="1"/>
-          <path d="M26 10.5A10 10 0 1 0 26 25.5" stroke="white"
-                :stroke="(transparentNav && !scrolled) ? 'white' : '#16c4c4'"
-                stroke-width="3.5" stroke-linecap="round" fill="none"/>
-          <path d="M19.5 9L13 19h5l-1.5 8L24.5 17H20L19.5 9Z" fill="#16c4c4"/>
+        <svg viewBox="0 0 36 36" class="h-8 w-8 flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="17" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.4)" stroke-width="1"/>
+          <path d="M26 10.5A10 10 0 1 0 26 25.5" stroke="#10b981" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <path d="M19.5 9L13 19h5l-1.5 8L24.5 17H20L19.5 9Z" fill="#10b981"/>
         </svg>
-        <span class="font-black text-xl tracking-tight transition-colors duration-300 leading-none text-white">
-          charj<span style="color:#16c4c4">.in</span>
+        <span class="font-black text-lg tracking-tight leading-none text-white">
+          charj<span style="color:#6ee7b7">.in</span>
         </span>
       </a>
 
       <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center gap-1" aria-label="Main navigation">
-          <a href="<?= base_url('explore') ?>" class="rounded-full px-4 py-2 text-sm font-semibold transition-colors" :class="(transparentNav && !scrolled) ? 'text-white/90 hover:text-white hover:bg-white/10' : 'text-slate-300 hover:text-white hover:bg-white/10'">Explore</a>
+          <a href="<?= base_url('explore') ?>" class="rounded-full px-4 py-2 text-sm font-semibold transition-colors text-white hover:text-white hover:bg-white/10">Explore</a>
         <?php
         $navLinks = [
           ['label'=>'EVs','href'=>base_url('vehicles')],
@@ -274,6 +266,12 @@ $transparentNav = $transparentNav ?? false;
             ['label'=>'Battery Cost','href'=>base_url('battery-cost'),'icon'=>'🔋'],
           ]],
           ['label'=>'Charging','href'=>base_url('charging-stations')],
+          ['label'=>'Community','href'=>'#','sub'=>[
+            ['label'=>'News & Articles','href'=>base_url('news'),'icon'=>'📰'],
+            ['label'=>'Events & Expos','href'=>base_url('events'),'icon'=>'🎪'],
+            ['label'=>'Announcements','href'=>base_url('announcements'),'icon'=>'📢'],
+            ['label'=>'Spare Parts','href'=>base_url('spare-parts'),'icon'=>'🔧'],
+          ]],
           ['label'=>'Guides','href'=>'#','sub'=>[
             ['label'=>'Home Charger Guide','href'=>base_url('home-charger-guide'),'icon'=>'🏠'],
             ['label'=>'EV for Apartment','href'=>base_url('ev-for-apartment'),'icon'=>'🏢'],
@@ -285,14 +283,14 @@ $transparentNav = $transparentNav ?? false;
           if (!empty($link['sub'])):
         ?>
         <div class="relative" x-data="{open:false}" @mouseenter="open=true" @mouseleave="open=false">
-          <button class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors" :class="(transparentNav && !scrolled) ? 'text-white/90 hover:text-white hover:bg-white/10' : 'text-slate-300 hover:text-white hover:bg-white/10'">
+          <button class="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-semibold transition-colors text-white hover:text-white hover:bg-white/10">
             <?= esc($link['label']) ?>
             <svg class="h-3.5 w-3.5 opacity-60 transition-transform" :class="open?'rotate-180':''" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div x-show="open" x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 scale-95 -translate-y-1" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-cloak
-               class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl p-2 shadow-2xl" style="background:#152b30;border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px -12px rgba(0,0,0,.5)">
+               class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 rounded-2xl p-2 shadow-2xl" style="background:#f5faf9;border:1px solid #d1fae5;box-shadow:0 20px 40px -12px rgba(0,0,0,.1)">
             <?php foreach ($link['sub'] as $sub): ?>
-            <a href="<?= esc($sub['href']) ?>" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-cyan-300 transition-colors">
+            <a href="<?= esc($sub['href']) ?>" class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-emerald-100 hover:text-emerald-700 transition-colors">
               <span class="text-base" aria-hidden="true"><?= $sub['icon'] ?></span>
               <?= esc($sub['label']) ?>
             </a>
@@ -300,7 +298,7 @@ $transparentNav = $transparentNav ?? false;
           </div>
         </div>
         <?php else: ?>
-        <a href="<?= esc($link['href']) ?>" class="rounded-full px-4 py-2 text-sm font-semibold transition-colors" :class="(transparentNav && !scrolled) ? 'text-white/90 hover:text-white hover:bg-white/10' : 'text-slate-300 hover:text-white hover:bg-white/10'">
+        <a href="<?= esc($link['href']) ?>" class="rounded-full px-4 py-2 text-sm font-semibold transition-colors text-white hover:text-white hover:bg-white/10">
           <?= esc($link['label']) ?>
         </a>
         <?php endif; endforeach; ?>
@@ -309,41 +307,42 @@ $transparentNav = $transparentNav ?? false;
       <!-- CTA + Mobile toggle -->
       <div class="flex items-center gap-3">
         <a href="<?= base_url('find-my-ev') ?>" onclick="charjTrack('header_cta_click',{location:'header'})"
-           class="hidden sm:flex btn-primary text-sm !py-2.5 !px-5 pulse-glow">
+           class="hidden sm:flex items-center gap-2 text-sm font-bold text-white rounded-full py-2.5 px-6 transition-all duration-250"
+           style="background:#10b981;box-shadow:0 8px 24px rgba(16,185,129,0.3);border:1px solid rgba(255,255,255,0.2)"
+           @mouseover="this.style.transform='scale(1.05)';this.style.boxShadow='0 12px 32px rgba(16,185,129,0.4)'"
+           @mouseout="this.style.transform='scale(1)';this.style.boxShadow='0 8px 24px rgba(16,185,129,0.3)'">
           Find My EV ⚡
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          <svg class="h-4 w-4 transition-transform duration-250" style="transform:translateX(0)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
         </a>
-        <button @click="mobileOpen=!mobileOpen" class="md:hidden rounded-xl p-2 transition-colors" :class="(transparentNav && !scrolled) ? 'text-white hover:bg-white/10' : 'text-slate-300 hover:bg-white/10'"
+        <button @click="mobileOpen=!mobileOpen" class="md:hidden rounded-xl p-2 transition-colors text-white hover:bg-white/10"
                 aria-label="Toggle navigation menu" :aria-expanded="mobileOpen.toString()">
           <svg x-show="!mobileOpen" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
           <svg x-show="mobileOpen" x-cloak class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
-      </div>
-    </div>
   </div>
 
   <!-- Mobile menu -->
   <div x-show="mobileOpen" x-cloak
        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
-       class="md:hidden px-4 py-4 shadow-2xl" style="background:rgba(12,26,29,.98);border-top:1px solid rgba(255,255,255,.06)"
+       class="md:hidden px-4 py-4 shadow-2xl" style="background:#f5faf9;border-top:1px solid #d1fae5"
        @keydown.escape.window="mobileOpen=false">
     <div class="space-y-1">
-      <a href="<?= base_url('explore') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">🔍 Explore Brands</a>
-      <a href="<?= base_url('vehicles') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">🚗 Browse EVs</a>
-      <a href="<?= base_url('compare') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">⚖️ Compare</a>
-      <a href="<?= base_url('find-my-ev') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">🎯 Find My EV</a>
-      <hr class="my-2" style="border-color:rgba(255,255,255,.07)">
-      <p class="px-4 text-xs font-bold uppercase tracking-widest text-slate-500">Calculators</p>
-      <a href="<?= base_url('tco-calculator') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 hover:bg-white/10 hover:text-cyan-300">💰 Savings Calculator</a>
-      <a href="<?= base_url('subsidy-calculator') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 hover:bg-white/10 hover:text-cyan-300">🎁 Subsidy Finder</a>
-      <a href="<?= base_url('charging-cost') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 hover:bg-white/10 hover:text-cyan-300">⚡ Charging Cost</a>
-      <a href="<?= base_url('can-i-make-it') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400 hover:bg-white/10 hover:text-cyan-300">🗺️ Trip Range Check</a>
-      <hr class="my-2" style="border-color:rgba(255,255,255,.07)">
-      <a href="<?= base_url('charging-stations') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">⚡ Charging Stations</a>
-      <a href="<?= base_url('ev-glossary') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">📖 EV Glossary</a>
-      <a href="<?= base_url('ev-dealers') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-200 hover:bg-white/10 hover:text-cyan-300">📍 Find EV Dealers</a>
+      <a href="<?= base_url('explore') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">🔍 Explore Brands</a>
+      <a href="<?= base_url('vehicles') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">🚗 Browse EVs</a>
+      <a href="<?= base_url('compare') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">⚖️ Compare</a>
+      <a href="<?= base_url('find-my-ev') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">🎯 Find My EV</a>
+      <hr class="my-2" style="border-color:#d1fae5">
+      <p class="px-4 text-xs font-bold uppercase tracking-widest text-slate-600">Calculators</p>
+      <a href="<?= base_url('tco-calculator') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-emerald-100 hover:text-emerald-700">💰 Savings Calculator</a>
+      <a href="<?= base_url('subsidy-calculator') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-emerald-100 hover:text-emerald-700">🎁 Subsidy Finder</a>
+      <a href="<?= base_url('charging-cost') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-emerald-100 hover:text-emerald-700">⚡ Charging Cost</a>
+      <a href="<?= base_url('can-i-make-it') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-600 hover:bg-emerald-100 hover:text-emerald-700">🗺️ Trip Range Check</a>
+      <hr class="my-2" style="border-color:#d1fae5">
+      <a href="<?= base_url('charging-stations') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">⚡ Charging Stations</a>
+      <a href="<?= base_url('ev-glossary') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">📖 EV Glossary</a>
+      <a href="<?= base_url('ev-dealers') ?>" @click="mobileOpen=false" class="flex items-center gap-3 rounded-xl px-4 py-3 font-semibold text-slate-700 hover:bg-emerald-100 hover:text-emerald-700">📍 Find EV Dealers</a>
     </div>
-    <hr class="my-2" style="border-color:rgba(255,255,255,.07)">
+    <hr class="my-2" style="border-color:#d1fae5">
     <a href="<?= base_url('find-my-ev') ?>" @click="mobileOpen=false" onclick="charjTrack('header_cta_click',{location:'mobile_menu'})"
        class="mt-4 btn-primary w-full justify-center">Find My Perfect EV →</a>
   </div>
@@ -370,30 +369,30 @@ $transparentNav = $transparentNav ?? false;
 <?php endif; ?>
 
 <!-- PAGE CONTENT -->
-<main id="main-content">
+<main id="main-content" style="padding-top:56px">
   <?= $this->renderSection('content') ?>
 </main>
 
 <!-- BOTTOM MOBILE NAV -->
-<nav class="fixed bottom-0 left-0 right-0 z-40 md:hidden shadow-2xl" style="background:rgba(12,26,29,.98);border-top:1px solid rgba(0,153,153,.18);box-shadow:0 -4px 20px -8px rgba(0,0,0,.4)" aria-label="Mobile bottom navigation">
+<nav class="fixed bottom-0 left-0 right-0 z-40 md:hidden shadow-2xl" style="background:rgba(12,26,29,.98);border-top:1px solid rgba(16,185,129,.18);box-shadow:0 -4px 20px -8px rgba(0,0,0,.4)" aria-label="Mobile bottom navigation">
   <div class="grid grid-cols-5 h-[58px]">
-    <a href="<?= base_url() ?>" class="flex flex-col items-center justify-center gap-0.5 text-cyan-300 transition-colors">
+    <a href="<?= base_url() ?>" class="flex flex-col items-center justify-center gap-0.5 text-emerald-700 transition-colors">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
       <span class="text-[9px] font-semibold">Home</span>
     </a>
-    <a href="<?= base_url('vehicles') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-cyan-300 transition-colors">
+    <a href="<?= base_url('vehicles') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-emerald-700 transition-colors">
       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z"/></svg>
       <span class="text-[9px] font-semibold">EVs</span>
     </a>
-    <a href="<?= base_url('compare') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-cyan-300 transition-colors">
+    <a href="<?= base_url('compare') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-emerald-700 transition-colors">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
       <span class="text-[9px] font-semibold">Compare</span>
     </a>
-    <a href="<?= base_url('find-my-ev') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-cyan-300 transition-colors">
+    <a href="<?= base_url('find-my-ev') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-emerald-700 transition-colors">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
       <span class="text-[9px] font-semibold">Find EV</span>
     </a>
-    <a href="<?= base_url('ev-dealers') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-cyan-300 transition-colors">
+    <a href="<?= base_url('ev-dealers') ?>" class="flex flex-col items-center justify-center gap-0.5 text-slate-400 hover:text-emerald-700 transition-colors">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
       <span class="text-[9px] font-semibold">Dealers</span>
     </a>

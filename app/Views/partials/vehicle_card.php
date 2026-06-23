@@ -10,6 +10,7 @@ $isFast   = !empty($vehicle['is_fast_charge']) || !empty($vehicle['fast_charging
 $rating   = isset($vehicle['expert_rating']) && $vehicle['expert_rating'] > 0 ? (float)$vehicle['expert_rating'] : 0;
 $battery  = $vehicle['battery_capacity'] ?? 0;
 $category = strtolower($vehicle['category_name'] ?? $vehicle['category'] ?? 'scooter');
+$updated  = !empty($vehicle['updated_at']) ? $vehicle['updated_at'] : $vehicle['created_at'] ?? null;
 
 // EMI: 9% pa, 36mo, 80% loan
 $loan = $price * 0.8; $r = 0.09/12;
@@ -25,141 +26,161 @@ if (!function_exists('vcFmt')) {
     }
 }
 
-// Category → image-area gradient (elegant dark, teal-leaning)
-$catGrad = [
-    'scooter'    => ['#0c1a2e','#10263f','#1e4d6b'],
-    'car'        => ['#08221f','#0c322f','#0e5c57'],
-    'bike'       => ['#1c1208','#2e1f10','#5c3a18'],
-    'rickshaw'   => ['#0a2424','#0e3232','#11595a'],
-    'commercial' => ['#13191b','#1c2528','#3a474a'],
-][$category] ?? ['#08221f','#0c322f','#0e5c57'];
-
-// Category SVG icon path
-$catIcon = [
-    'car'    => 'M5 11l1.5-4.5A2 2 0 018.4 5h7.2a2 2 0 011.9 1.5L19 11m-14 0h14m-14 0v5a1 1 0 001 1h1m11-1a1 1 0 01-1 1h-1m-9 0a2 2 0 104 0m5 0a2 2 0 104 0',
-    'scooter'=> 'M12 3a2 2 0 012 2v1h3l2 4H5l2-4h3V5a2 2 0 012-2zM5 10v4a1 1 0 001 1h1a3 3 0 006 0h1a1 1 0 001-1v-4H5z',
-    'bike'   => 'M5 19a4 4 0 110-8 4 4 0 010 8zm14 0a4 4 0 110-8 4 4 0 010 8zm-9-4h4m1-8l-3 6',
-][$category] ?? 'M5 11l1.5-4.5A2 2 0 018.4 5h7.2a2 2 0 011.9 1.5L19 11m-14 0h14m-14 0v5a1 1 0 001 1h1m11-1a1 1 0 01-1 1h-1m-9 0a2 2 0 104 0m5 0a2 2 0 104 0';
-
 $imgSrc = !empty($vehicle['image_url'])
     ? esc($vehicle['image_url'])
     : base_url('assets/images/vehicles/'.esc($slug).'.webp');
 ?>
 
 <a href="<?= site_url('vehicles/'.esc($slug)) ?>"
-   class="vc-card group flex flex-col rounded-2xl overflow-hidden"
-   style="background:#152b30;border:1px solid rgba(255,255,255,.06)">
+   class="vc-card group flex flex-col rounded-3xl overflow-hidden"
+   style="background:#ffffff;border:1.5px solid #d1fae5;box-shadow:0 8px 24px rgba(0,0,0,.05);transition:all 250ms cubic-bezier(0.4,0,0.2,1);"
+   @mouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 20px 40px rgba(16,185,129,.12)';this.style.borderColor='#10b981'"
+   @mouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.05)';this.style.borderColor='#d1fae5'">
 
   <!-- ── IMAGE AREA ── -->
-  <div class="relative h-44 flex items-center justify-center overflow-hidden"
-       style="background:linear-gradient(145deg,<?= $catGrad[0] ?>,<?= $catGrad[1] ?>)">
-
-    <!-- dot grid -->
-    <div class="absolute inset-0 pointer-events-none"
-         style="background-image:radial-gradient(rgba(255,255,255,.16) 1px,transparent 1px);background-size:18px 18px;opacity:.3"></div>
-
-    <!-- aurora glow blob -->
-    <div class="absolute inset-0 aurora pointer-events-none rounded-full blur-3xl"
-         style="background:radial-gradient(ellipse at 60% 40%,<?= $catGrad[2] ?>66,transparent 70%)"></div>
+  <div class="relative h-56 flex items-center justify-center overflow-hidden" style="background:linear-gradient(180deg,#e7f8ef 0%,#f3fbf7 100%)">
 
     <!-- actual image -->
     <img id="vi-<?= esc($slug) ?>"
          src="<?= $imgSrc ?>"
          alt="<?= esc($name) ?>"
          loading="lazy"
-         class="absolute inset-0 w-full h-full object-contain p-4 opacity-0 transition-all duration-500 group-hover:scale-110"
+         class="absolute inset-0 w-full h-full object-contain p-6 opacity-0 transition-all duration-500"
+         style="transition: opacity 500ms, transform 500ms"
          onload="this.classList.remove('opacity-0');document.getElementById('vf-<?= esc($slug) ?>').style.display='none'"
          onerror="this.style.display='none'">
 
     <!-- SVG fallback -->
-    <div id="vf-<?= esc($slug) ?>" class="flex flex-col items-center gap-2 select-none">
-      <svg class="w-14 h-14 transition-transform duration-500 group-hover:scale-110"
-           style="color:<?= $catGrad[2] ?>;opacity:.6"
+    <div id="vf-<?= esc($slug) ?>" class="flex flex-col items-center gap-3 select-none">
+      <svg class="w-20 h-20 transition-transform duration-500"
+           style="color:#10b981;opacity:.3"
            fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="<?= $catIcon ?>"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 11l1.5-4.5A2 2 0 018.4 5h7.2a2 2 0 011.9 1.5L19 11m-14 0h14m-14 0v5a1 1 0 001 1h1m11-1a1 1 0 01-1 1h-1m-9 0a2 2 0 104 0m5 0a2 2 0 104 0"/>
       </svg>
-      <span style="color:<?= $catGrad[2] ?>;opacity:.55;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase"><?= esc($brand ?: $category) ?></span>
+      <span style="color:#6ee7b7;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase"><?= esc($brand ?: $category) ?></span>
     </div>
 
-    <!-- top-left badges -->
-    <div class="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
+    <!-- badges - top left -->
+    <div class="absolute top-3 left-3 flex flex-col gap-2 z-10">
       <?php if ($isFeatured): ?>
-      <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full tracking-wide"
-            style="background:#009999;color:#fff">⭐ FEATURED</span>
+      <span class="text-[10px] font-black px-3 py-1 rounded-full tracking-wide transition-all duration-300" style="background:#059669;color:#fff;animation:slideDown 500ms ease-out">🔥 Best Seller</span>
       <?php endif; ?>
       <?php if ($isFast): ?>
-      <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full"
-            style="background:#f59e0b;color:#0c1a1d">⚡ FAST CHARGE</span>
+      <span class="text-[10px] font-black px-3 py-1 rounded-full transition-all duration-300" style="background:#10b981;color:#fff;animation:slideDown 600ms ease-out">⚡ Fast Charging</span>
+      <?php endif; ?>
+      <?php if ($rating > 4.5): ?>
+      <span class="text-[10px] font-black px-3 py-1 rounded-full transition-all duration-300" style="background:#16a34a;color:#fff;animation:slideDown 700ms ease-out">🏆 Top Rated</span>
       <?php endif; ?>
     </div>
 
-    <!-- rating -->
+    <!-- rating - top right -->
     <?php if ($rating > 0): ?>
-    <div class="absolute top-2.5 right-2.5 z-10 flex items-center gap-1 px-2 py-1 rounded-full"
-         style="background:rgba(12,26,29,.75);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)">
-      <svg class="h-3 w-3 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-      <span class="text-[11px] font-bold text-white"><?= number_format($rating,1) ?></span>
+    <div class="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300"
+         style="background:rgba(255,255,255,.95);border:1px solid #d1fae5;box-shadow:0 4px 12px rgba(0,0,0,.08)">
+      <svg class="h-4 w-4 fill-amber-400" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+      <span class="text-sm font-bold" style="color:#0f172a"><?= number_format($rating,1) ?></span>
     </div>
     <?php endif; ?>
-
-    <!-- brand logo -->
-    <?php if ($logo): ?>
-    <div class="absolute bottom-2.5 right-2.5 z-10 h-9 w-9 rounded-xl p-1.5 shadow-lg"
-         style="background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.2)">
-      <img src="<?= base_url('assets/images/'.esc($logo)) ?>" alt="<?= esc($brand) ?>" class="h-full w-full object-contain">
-    </div>
-    <?php endif; ?>
-
-    <!-- category chip -->
-    <div class="absolute bottom-2.5 left-2.5 z-10">
-      <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-            style="background:rgba(12,26,29,.7);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)"><?= ucfirst($category) ?></span>
-    </div>
   </div>
 
   <!-- ── CARD BODY ── -->
-  <div class="flex flex-col flex-1 p-4 pb-0">
-    <p class="text-[11px] font-black uppercase tracking-widest mb-0.5" style="color:#16c4c4"><?= esc($brand) ?></p>
-    <h3 class="font-black text-base leading-snug mb-3 line-clamp-2 transition-colors duration-200"
-        style="color:#e6f1f1" onmouseover="this.style.color='#16c4c4'" onmouseout="this.style.color='#e6f1f1'"
-    ><?= esc($name) ?></h3>
+  <div class="flex flex-col flex-1 p-6">
 
-    <!-- stat pills -->
-    <div class="flex gap-1.5 mb-3">
+    <!-- Brand + Category -->
+    <div class="flex items-center justify-between mb-2">
+      <p class="text-xs font-black uppercase tracking-widest" style="color:#6ee7b7"><?= esc($brand) ?></p>
+      <span class="text-[10px] font-semibold uppercase tracking-wide px-2 py-1 rounded" style="background:#f0fdf4;color:#6ee7b7">⚡ <?= ucfirst($category) ?></span>
+    </div>
+
+    <!-- Vehicle Name - PRIMARY HIERARCHY -->
+    <h3 class="font-black text-lg leading-tight mb-4 line-clamp-2 transition-colors duration-250"
+        style="color:#0f172a"><?= esc($name) ?></h3>
+
+    <!-- PRICE - HERO ELEMENT -->
+    <div class="mb-6 pb-6 border-b" style="border-color:#d1fae5">
+      <p class="text-xs font-semibold uppercase tracking-wide mb-1" style="color:#6ee7b7">Starting From</p>
+      <div class="text-3xl font-black leading-none transition-transform duration-250 group-hover:scale-105" style="color:#059669;transform-origin:left"><?= vcFmt($price) ?></div>
+    </div>
+
+    <!-- Specs Grid - Clear Hierarchy -->
+    <div class="space-y-3 mb-6">
+      <!-- Range -->
       <?php if ($range > 0): ?>
-      <div class="flex-1 rounded-lg px-2 py-2 text-center" style="background:rgba(0,153,153,.12);border:1px solid rgba(0,153,153,.28)">
-        <div class="text-sm font-black leading-none" style="color:#16c4c4"><?= $range ?></div>
-        <div class="text-[9px] font-semibold mt-0.5" style="color:#0d9999">km</div>
+      <div class="flex items-center justify-between p-3 rounded-lg transition-all duration-250" style="background:#f0fdf4;border:1px solid #e0f5ed">
+        <div class="flex items-center gap-2">
+          <span style="font-size:18px">⚡</span>
+          <div>
+            <p class="text-xs" style="color:#6ee7b7">Range</p>
+            <p class="text-sm font-bold" style="color:#14532d"><?= $range ?> km</p>
+          </div>
+        </div>
+        <span class="text-xs font-semibold" style="color:#6ee7b7">WLTP</span>
       </div>
       <?php endif; ?>
-      <?php if ($battery): ?>
-      <div class="flex-1 rounded-lg px-2 py-2 text-center" style="background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2)">
-        <div class="text-sm font-black leading-none" style="color:#7dd3fc"><?= esc($battery) ?></div>
-        <div class="text-[9px] font-semibold mt-0.5" style="color:#38bdf8">kWh</div>
-      </div>
-      <?php endif; ?>
-      <?php if ($emi > 0): ?>
-      <div class="flex-1 rounded-lg px-2 py-2 text-center" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)">
-        <div class="text-sm font-black leading-none" style="color:#cbd5e1">₹<?= number_format((int)($emi/1000)) ?>k</div>
-        <div class="text-[9px] font-semibold mt-0.5" style="color:#94a3b8">EMI</div>
-      </div>
-      <?php endif; ?>
-    </div>
-  </div>
 
-  <!-- ── PRICE FOOTER ── -->
-  <div class="mx-3 mb-3 mt-0 rounded-xl flex items-center justify-between px-4 py-3"
-       style="background:linear-gradient(135deg,#0c1a1d,#152b30);border:1px solid rgba(255,255,255,.06)">
-    <div>
-      <div class="text-[9px] font-bold uppercase tracking-widest" style="color:#5e7575">Ex-showroom</div>
-      <div class="text-lg font-black" style="color:#e6f1f1"><?= vcFmt($price) ?></div>
+      <!-- Battery -->
+      <?php if ($battery): ?>
+      <div class="flex items-center justify-between p-3 rounded-lg transition-all duration-250" style="background:#f0fdf4;border:1px solid #e0f5ed">
+        <div class="flex items-center gap-2">
+          <span style="font-size:18px">🔋</span>
+          <div>
+            <p class="text-xs" style="color:#6ee7b7">Battery</p>
+            <p class="text-sm font-bold" style="color:#14532d"><?= esc($battery) ?> kWh</p>
+          </div>
+        </div>
+      </div>
+      <?php endif; ?>
+
+      <!-- EMI -->
+      <?php if ($emi > 0): ?>
+      <div class="flex items-center justify-between p-3 rounded-lg transition-all duration-250" style="background:#f0fdf4;border:1px solid #e0f5ed">
+        <div class="flex items-center gap-2">
+          <span style="font-size:18px">💰</span>
+          <div>
+            <p class="text-xs" style="color:#6ee7b7">Monthly EMI</p>
+            <p class="text-sm font-bold" style="color:#14532d">₹<?= number_format((int)($emi/1000)) ?>k</p>
+          </div>
+        </div>
+      </div>
+      <?php endif; ?>
     </div>
-    <!-- animated arrow on hover -->
-    <div class="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider rounded-lg px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0"
-         style="background:#009999;color:#fff">
-      View
-      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+
+    <!-- Trust Signals -->
+    <div class="mb-6 pt-3 border-t" style="border-color:#e0f5ed">
+      <div class="flex items-center gap-2 text-xs" style="color:#6ee7b7">
+        <span>✓</span>
+        <span class="font-semibold">Verified Specifications</span>
+      </div>
+      <?php if ($updated): ?>
+      <div class="flex items-center gap-2 text-xs mt-1.5" style="color:#a0aaa8">
+        <span>🔄</span>
+        <span>Updated recently</span>
+      </div>
+      <?php endif; ?>
     </div>
+
+    <!-- CTA Button -->
+    <div class="mt-auto pt-4 border-t transition-all duration-250" style="border-color:#d1fae5">
+      <div class="flex items-center justify-between text-sm font-bold uppercase tracking-wide transition-all duration-250 group-hover:text-white group-hover:px-3 group-hover:py-2 group-hover:rounded-lg"
+           style="color:#10b981;padding:8px 0;gap:8px">
+        <span>View Details</span>
+        <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </div>
+    </div>
+
   </div>
 
 </a>
+
+<style>
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

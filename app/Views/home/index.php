@@ -56,6 +56,57 @@
   .star-icon { color: #f59e0b; }
   /* Press logo */
   .press-logo { color: #94a3b8; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  /* Charging Stations Section Styles */
+  .charging-map-container {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(22, 163, 74, 0.3);
+    background: #f0fdf4;
+    height: 400px;
+  }
+  .leaflet-container {
+    height: 100%;
+    background: #f5fdf4;
+  }
+  .charging-station-item {
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .charging-station-item:hover {
+    transform: translateX(4px);
+    background: rgba(22, 163, 74, 0.1);
+  }
+  .charging-station-item.active {
+    background: rgba(22, 163, 74, 0.15);
+    border-color: #16a34a;
+  }
+  .geolocation-spinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 153, 153, 0.3);
+    border-top-color: #009999;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  .charging-distance {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #16c4c4;
+  }
+  .charger-type-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: rgba(22, 163, 74, 0.15);
+    color: #16a34a;
+    margin: 0.25rem 0.25rem 0.25rem 0;
+  }
 </style>
 <?= $this->endSection() ?>
 
@@ -64,33 +115,33 @@
 <!-- ================================================================
   SECTION 1 — HERO (full viewport)
 ================================================================ -->
-<section class="relative min-h-screen flex flex-col justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-teal-950 to-teal-950">
+<section class="relative min-h-screen flex flex-col justify-center overflow-hidden" style="background: linear-gradient(180deg, #dff5ea 0%, #e8f7ef 100%)">
 
   <!-- Grid overlay -->
   <div class="absolute inset-0 hero-grid pointer-events-none" aria-hidden="true"></div>
 
   <!-- Glow blobs -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-teal-500 opacity-[0.06] blur-3xl rounded-full"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-teal-400 opacity-[0.05] blur-3xl rounded-full"></div>
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-emerald-300 opacity-[0.08] blur-3xl rounded-full"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-green-300 opacity-[0.06] blur-3xl rounded-full"></div>
   </div>
 
   <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center">
 
     <!-- Eyebrow badge -->
-    <div class="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/30 rounded-full px-4 py-2 mb-8 animate-fade-in-up stagger-1">
+    <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-8 animate-fade-in-up stagger-1" style="background:rgba(110,231,183,0.15);border:1px solid rgba(110,231,183,0.3)">
       <span class="text-sm" aria-hidden="true">&#x26A1;</span>
-      <span class="text-teal-300 text-xs font-bold tracking-wider uppercase">India's Dedicated EV Marketplace</span>
+      <span class="text-xs font-bold tracking-wider uppercase" style="color:#059669">India's Dedicated EV Marketplace</span>
     </div>
 
     <!-- H1 -->
-    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight mb-4 animate-fade-in-up stagger-2">
+    <h1 class="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-tight tracking-tight mb-6 animate-fade-in-up stagger-2" style="color:#0f172a">
       One platform.<br>
-      <span class="hero-gradient-text">Every EV brand.</span>
+      <span style="color:#16a34a">Every EV brand.</span>
     </h1>
 
     <!-- Subheadline -->
-    <p class="text-base sm:text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10 animate-fade-in-up stagger-3">
+    <p class="text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-12 sm:mb-14 animate-fade-in-up stagger-3" style="color:#4b5563">
       We connect EV brands with buyers — making it simple to discover,
       compare and choose the right electric vehicle.
     </p>
@@ -181,10 +232,247 @@
 
 
 <!-- ================================================================
-  SECTION 2 — ANIMATED STATS BAR
+  SECTION 2 — EV CATEGORIES (app-style tabs) [MOVED UP FROM SECTION 4]
+================================================================ -->
+<section class="py-16 reveal" style="background:#f8fdf8">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="flex items-center justify-between mb-12">
+      <div>
+        <span class="inline-block text-emerald-400 text-xs font-bold uppercase tracking-widest mb-3">Our Vehicle Range</span>
+        <h2 class="text-4xl sm:text-5xl font-black leading-tight" style="color:#e6f1f1">Browse by<br><span style="color:#10b981">category</span></h2>
+        <p class="text-base mt-3" style="color:#a8b9b9">All EV types. Every brand. One place.</p>
+      </div>
+      <a href="<?= base_url('vehicles') ?>" class="hidden sm:inline-flex items-center gap-1 text-cyan-400 font-semibold text-sm hover:gap-2 transition-all">
+        View all <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- 4 main category cards (like app tabs, large) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <?php
+      $mainCats = [
+        [
+          'icon'  => '&#128757;',
+          'name'  => '2 Wheelers',
+          'sub'   => 'Scooters & Motorcycles',
+          'url'   => base_url('electric-scooters'),
+          'color' => 'from-[#152b30] to-[#13262b]',
+          'bdr'   => 'border-white/10',
+          'ic'    => 'bg-[rgba(0,153,153,.15)]',
+        ],
+        [
+          'icon'  => '&#128662;',
+          'name'  => '3 Wheelers',
+          'sub'   => 'E-Rickshaws & Loaders',
+          'url'   => base_url('electric-rickshaws'),
+          'color' => 'from-[#152b30] to-[#13262b]',
+          'bdr'   => 'border-white/10',
+          'ic'    => 'bg-[rgba(22,196,196,.15)]',
+        ],
+        [
+          'icon'  => '&#128664;',
+          'name'  => '4 Wheelers',
+          'sub'   => 'Cars, Sedans & SUVs',
+          'url'   => base_url('electric-cars'),
+          'color' => 'from-[#152b30] to-[#13262b]',
+          'bdr'   => 'border-white/10',
+          'ic'    => 'bg-[rgba(56,189,248,.15)]',
+        ],
+        [
+          'icon'  => '&#128666;',
+          'name'  => 'Commercial',
+          'sub'   => 'Buses, Trucks & Fleets',
+          'url'   => base_url('commercial-ev'),
+          'color' => 'from-[#152b30] to-[#13262b]',
+          'bdr'   => 'border-white/10',
+          'ic'    => 'bg-[rgba(0,153,153,.15)]',
+        ],
+      ];
+      foreach ($mainCats as $cat): ?>
+      <a href="<?= $cat['url'] ?>"
+         onclick="charjTrack('category_click',{category:'<?= addslashes(esc($cat['name'])) ?>'})"
+         class="group flex flex-col items-center text-center p-6 sm:p-8 rounded-3xl bg-gradient-to-br <?= $cat['color'] ?> border-2 border-emerald-500/30 hover:border-emerald-500 hover:shadow-xl hover:-translate-y-2 transition-all duration-200 cursor-pointer">
+        <div class="w-16 h-16 rounded-2xl <?= $cat['ic'] ?> flex items-center justify-center text-4xl mb-4 group-hover:scale-125 transition-transform duration-200">
+          <?= $cat['icon'] ?>
+        </div>
+        <span class="font-black text-white text-lg"><?= $cat['name'] ?></span>
+        <span class="text-slate-300 text-sm mt-2"><?= $cat['sub'] ?></span>
+      </a>
+      <?php endforeach; ?>
+    </div>
+
+    <!-- Sub-category quick links -->
+    <div class="flex flex-wrap gap-3 mt-8">
+      <?php
+      $subCats = [
+        ['label'=>'Electric Scooters',    'url'=>base_url('electric-scooters')],
+        ['label'=>'Electric Motorcycles', 'url'=>base_url('electric-bikes')],
+        ['label'=>'Electric Cars',        'url'=>base_url('electric-cars')],
+        ['label'=>'Electric SUVs',        'url'=>base_url('electric-cars')],
+        ['label'=>'E-Rickshaws',          'url'=>base_url('electric-rickshaws')],
+        ['label'=>'Electric Buses',       'url'=>base_url('commercial-ev')],
+      ];
+      foreach ($subCats as $sc): ?>
+      <a href="<?= $sc['url'] ?>"
+         class="text-sm font-semibold text-slate-300 border-2 border-emerald-500/40 rounded-full px-5 py-2.5 hover:text-emerald-300 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-150" style="background:rgba(16,185,129,.04)">
+        <?= $sc['label'] ?>
+      </a>
+      <?php endforeach; ?>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================================================================
+  SECTION 3 — CHARGING STATIONS NEAR YOU [NEW GEOLOCATION SECTION]
+================================================================ -->
+<section class="py-16 reveal" style="background:#f5fdf4">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center mb-12">
+      <span class="inline-block text-emerald-600 text-xs font-bold uppercase tracking-widest mb-3">Charging Infrastructure</span>
+      <h2 class="text-4xl sm:text-5xl font-black text-slate-900 mb-4 leading-tight">
+        Find charging stations<br><span style="color:#16a34a">near you</span>
+      </h2>
+      <p class="text-slate-600 text-lg max-w-2xl mx-auto">Get real-time charging station locations, compare networks, check availability and pricing — all in one place.</p>
+    </div>
+
+    <!-- Geolocation finder with map -->
+    <div x-data="chargingStationsFinder()" class="space-y-6">
+
+      <!-- Top controls -->
+      <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+        <button @click="detectLocation()"
+                :disabled="detecting"
+                class="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold px-8 py-3 rounded-full transition-all duration-200 text-base">
+          <span x-show="!detecting" aria-hidden="true">📍</span>
+          <span x-show="detecting" class="geolocation-spinner"></span>
+          <span x-text="detecting ? 'Detecting location...' : 'Detect My Location'"></span>
+        </button>
+        <div class="relative flex-1 sm:flex-initial">
+          <input type="text" x-model="searchCity" placeholder="Or search by city..."
+                 @keyup.enter="searchByCity()"
+                 class="w-full sm:w-48 px-4 py-3 rounded-full border border-emerald-300 bg-white text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-emerald-50 outline-none transition-all"
+                 aria-label="Search charging stations by city">
+          <button @click="searchByCity()" class="absolute right-2 top-1/2 -translate-y-1/2" style="color:#16a34a">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- User location display -->
+      <div x-show="userLocation" class="text-center text-sm text-slate-600 mb-4">
+        📌 Showing chargers near <span x-text="locationName" class="font-semibold" style="color:#16a34a"></span>
+      </div>
+
+      <!-- Map container -->
+      <div id="charging-map" class="charging-map-container"></div>
+
+      <!-- Results section -->
+      <div class="grid md:grid-cols-3 gap-6">
+
+        <!-- Map stats (left) -->
+        <div class="space-y-4">
+          <div class="rounded-2xl p-6" style="background:#f0fdf4;border:2px solid rgba(22,163,74,.3)">
+            <div class="text-3xl font-black" style="color:#16a34a" mb-2 x-text="stationCount + '+'"></div>
+            <p class="text-sm text-slate-600 font-semibold">Stations found</p>
+          </div>
+          <div class="rounded-2xl p-6" style="background:#f0fdf4;border:2px solid rgba(22,163,74,.3)">
+            <div class="text-3xl font-black" style="color:#16a34a" mb-2 x-text="Math.round(nearestDistance || 0) + ' km'"></div>
+            <p class="text-sm text-slate-600 font-semibold">Closest charger</p>
+          </div>
+          <a href="<?= base_url('charger-check') ?>"
+             onclick="charjTrack('charging_section_explore',{})"
+             class="inline-flex items-center justify-center gap-2 w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-3 rounded-full transition-all duration-200 text-sm">
+            Advanced Search &#x2192;
+          </a>
+        </div>
+
+        <!-- List of nearby stations (right 2 cols) -->
+        <div class="md:col-span-2 space-y-3 max-h-96 overflow-y-auto">
+          <template x-for="(station, idx) in nearbyStations.slice(0, 8)" :key="idx">
+            <div class="charging-station-item rounded-2xl p-5 border-2 border-emerald-200 hover:border-emerald-500/60 hover:bg-emerald-50 cursor-pointer" style="background:#f0fdf4"
+                 @click="selectStation(station)">
+              <div class="flex items-start justify-between mb-3">
+                <div class="flex-1">
+                  <h3 class="font-bold text-slate-900 text-base" x-text="station.name"></h3>
+                  <p class="text-sm text-slate-600 mt-1" x-text="station.network || 'Network info unavailable'"></p>
+                </div>
+                <span class="charging-distance font-bold text-lg" style="color:#16a34a" x-text="Math.round(station.distance * 10) / 10 + ' km'"></span>
+              </div>
+
+              <!-- Charger types -->
+              <div class="mb-2 flex flex-wrap">
+                <template x-for="type in (station.charger_types || ['Unknown'])" :key="type">
+                  <span class="charger-type-badge" x-text="type"></span>
+                </template>
+              </div>
+
+              <!-- Pricing if available -->
+              <template x-if="station.pricing">
+                <p class="text-xs" style="color:#16a34a">
+                  <span class="font-semibold">₹<span x-text="station.pricing.toFixed(2)"></span>/kWh</span>
+                </p>
+              </template>
+
+              <!-- View details link -->
+              <a :href="'<?= base_url('charger-check') ?>?station=' + station.id" class="text-xs font-semibold inline-flex items-center gap-1 mt-2" style="color:#16a34a">
+                View details <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </template>
+
+          <!-- No results message -->
+          <template x-if="!loading && nearbyStations.length === 0">
+            <div class="text-center py-8 text-slate-400">
+              <div class="text-4xl mb-3">📍</div>
+              <p class="text-sm">Allow location access or search by city to find nearby chargers</p>
+            </div>
+          </template>
+
+          <!-- Loading state -->
+          <template x-if="loading">
+            <div class="text-center py-8 text-slate-400">
+              <div class="inline-block geolocation-spinner mb-3"></div>
+              <p class="text-sm">Finding nearby charging stations...</p>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Network stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12 pt-8 border-t border-emerald-200">
+        <div class="text-center">
+          <div class="text-3xl font-black" style="color:#16a34a" mb-2>5,000+</div>
+          <p class="text-sm text-slate-600 font-medium">Public charging points</p>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black" style="color:#16a34a" mb-2>12+</div>
+          <p class="text-sm text-slate-600 font-medium">Major networks</p>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black" style="color:#16a34a" mb-2>18</div>
+          <p class="text-sm text-slate-600 font-medium">States covered</p>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black" style="color:#16a34a" mb-2>Live</div>
+          <p class="text-sm text-slate-600 font-medium">Real-time data</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ================================================================
+  SECTION 4 — ANIMATED STATS BAR
 ================================================================ -->
 <section
-  class="py-12" style="background:#0c1a1d;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)"
+  class="py-12" style="background:#f0fdf4;border-top:1px solid #dcfce7;border-bottom:1px solid #dcfce7"
   x-data="{
     triggered: false,
     counters: [
@@ -231,7 +519,7 @@
 
 
 <!-- ================================================================
-  SECTION 2B — WHAT IS CHARJ.IN?
+  SECTION 5 — WHAT IS CHARJ.IN?
 ================================================================ -->
 <section class="bg-gradient-to-br from-slate-900 to-teal-950 py-16 reveal">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -275,7 +563,7 @@
 
 
 <!-- ================================================================
-  SECTION 2C — WHY CHARJ.IN? (5-col)
+  SECTION 6 — WHY CHARJ.IN? (5-col)
 ================================================================ -->
 <section class="py-20 reveal" style="background:#0c1a1d">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -312,7 +600,7 @@
 
 
 <!-- ================================================================
-  SECTION 3 — FEATURE GRID "Everything you need"
+  SECTION 7 — FEATURE GRID "Everything you need"
 ================================================================ -->
 <section class="py-20" style="background:#0f2125">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -324,35 +612,32 @@
       <p class="mt-3 text-lg max-w-xl mx-auto" style="color:#8ba3a3">Not a listing site. A decision engine.</p>
     </div>
 
-    <!-- 12-feature grid -->
+    <!-- 16-feature grid (6 cards per row) -->
     <?php
     $features = [
-      ['icon' => '🎯', 'title' => 'EV Finder Quiz',         'desc' => '7 questions. 3 perfect EV matches. Know your ideal EV in 2 minutes.',              'url' => base_url('find-my-ev'),         'stagger' => 'stagger-1'],
-      ['icon' => '⚖️', 'title' => 'Side-by-Side Compare',   'desc' => 'Compare any 2–3 EVs on every spec that matters.',                                   'url' => base_url('compare'),            'stagger' => 'stagger-2'],
-      ['icon' => '🎁', 'title' => 'Subsidy Calculator',     'desc' => 'FAME II + state subsidies + 80EEB tax benefit in one click.',                        'url' => base_url('subsidy-calculator'), 'stagger' => 'stagger-3'],
-      ['icon' => '⚡', 'title' => 'Charging Cost/KM',       'desc' => 'See exactly what 1 km costs you vs petrol at your electricity rate.',               'url' => base_url('charging-cost'),      'stagger' => 'stagger-4'],
-      ['icon' => '🗺️', 'title' => 'Trip Range Checker',    'desc' => 'Can your EV make it from Delhi to Agra? Find out instantly.',                       'url' => base_url('can-i-make-it'),      'stagger' => 'stagger-5'],
-      ['icon' => '💰', 'title' => '5-Year Cost Calculator', 'desc' => 'Total cost of ownership including resale. Real numbers.',                            'url' => base_url('tco-calculator'),     'stagger' => 'stagger-6'],
-      ['icon' => '🔌', 'title' => 'Charger Compatibility',  'desc' => 'Will your EV charge at Tata Power? Statiq? Find out.',                              'url' => base_url('charger-check'),      'stagger' => 'stagger-1'],
-      ['icon' => '📈', 'title' => 'Resale Estimator',       'desc' => 'What will your EV be worth in 3 years? Plan ahead.',                                'url' => base_url('resale-estimator'),   'stagger' => 'stagger-2'],
-      ['icon' => '🔋', 'title' => 'Battery Cost Guide',     'desc' => 'Worst-case battery replacement costs for every major EV.',                          'url' => base_url('battery-cost'),       'stagger' => 'stagger-3'],
-      ['icon' => '🏠', 'title' => 'Home Charger Guide',     'desc' => 'Setup cost by city. Apartment checklist. Get installer quotes.',                    'url' => base_url('home-charger-guide'), 'stagger' => 'stagger-4'],
-      ['icon' => '🚛', 'title' => 'Fleet ROI Calculator',   'desc' => 'Monthly savings for your delivery/logistics fleet.',                                 'url' => base_url('fleet-calculator'),   'stagger' => 'stagger-5'],
-      ['icon' => '📖', 'title' => 'EV Glossary',            'desc' => 'Plain-English explanations of every EV term. No jargon.',                           'url' => base_url('ev-glossary'),        'stagger' => 'stagger-6'],
+      ['icon' => '🔧', 'title' => 'Spare Parts',          'desc' => 'Quality EV parts from trusted vendors',                          'url' => base_url('spare-parts'),        'stagger' => 'stagger-1'],
+      ['icon' => '🎯', 'title' => 'EV Finder Quiz',       'desc' => 'Find your perfect EV match in 2 min',                            'url' => base_url('find-my-ev'),         'stagger' => 'stagger-2'],
+      ['icon' => '⚖️', 'title' => 'Compare EVs',          'desc' => 'Compare specs, range & price',                                   'url' => base_url('compare'),            'stagger' => 'stagger-3'],
+      ['icon' => '🎁', 'title' => 'Subsidy Calculator',   'desc' => 'FAME II + state subsidies',                                      'url' => base_url('subsidy-calculator'), 'stagger' => 'stagger-4'],
+      ['icon' => '🎪', 'title' => 'Events & Expos',       'desc' => 'Upcoming EV launches & expos',                                    'url' => base_url('events'),             'stagger' => 'stagger-5'],
+      ['icon' => '📢', 'title' => 'Announcements',        'desc' => 'Latest EV news & updates',                                        'url' => base_url('announcements'),      'stagger' => 'stagger-6'],
+      ['icon' => '⚡', 'title' => 'Charging Cost/KM',     'desc' => '1 km cost vs petrol rate',                                        'url' => base_url('charging-cost'),      'stagger' => 'stagger-1'],
+      ['icon' => '📍', 'title' => 'Find Chargers',        'desc' => 'Charging stations near you',                                      'url' => base_url('charging-stations'),  'stagger' => 'stagger-2'],
+      ['icon' => '🗺️', 'title' => 'Trip Range Checker',   'desc' => 'Plan your EV road trips',                                         'url' => base_url('can-i-make-it'),      'stagger' => 'stagger-3'],
+      ['icon' => '💰', 'title' => 'Cost of Ownership',    'desc' => '5-year ownership costs',                                          'url' => base_url('tco-calculator'),     'stagger' => 'stagger-4'],
+      ['icon' => '🔌', 'title' => 'Charger Check',        'desc' => 'EV & charger compatibility',                                      'url' => base_url('charger-check'),      'stagger' => 'stagger-5'],
+      ['icon' => '📈', 'title' => 'Resale Value',         'desc' => '3-year resale estimates',                                         'url' => base_url('resale-estimator'),   'stagger' => 'stagger-6'],
     ];
     ?>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
       <?php foreach ($features as $f): ?>
-      <div class="reveal animate-fade-in-up <?= $f['stagger'] ?> rounded-2xl p-6 card-hover" style="background:#152b30;border:1px solid rgba(255,255,255,.06)">
-        <span class="text-3xl" aria-hidden="true"><?= $f['icon'] ?></span>
-        <h3 class="font-bold mt-3 text-base" style="color:#e6f1f1"><?= esc($f['title']) ?></h3>
-        <p class="text-sm mt-1 leading-relaxed" style="color:#8ba3a3"><?= esc($f['desc']) ?></p>
-        <a href="<?= $f['url'] ?>"
-           onclick="charjTrack('feature_click',{feature:'<?= addslashes(esc($f['title'])) ?>'})"
-           class="inline-flex items-center gap-1 text-sm font-semibold mt-4 hover:gap-2 transition-all duration-150" style="color:#16c4c4">
-          Try it <span aria-hidden="true">→</span>
-        </a>
-      </div>
+      <a href="<?= $f['url'] ?>"
+         onclick="charjTrack('feature_click',{feature:'<?= addslashes(esc($f['title'])) ?>'})"
+         class="reveal animate-fade-in-up <?= $f['stagger'] ?> rounded-xl p-4 card-hover block transition-all duration-200 hover:-translate-y-1 hover:shadow-lg" style="background:#152b30;border:1px solid rgba(255,255,255,.06)">
+        <span class="text-2xl block mb-2" aria-hidden="true"><?= $f['icon'] ?></span>
+        <h3 class="font-bold text-sm" style="color:#e6f1f1"><?= esc($f['title']) ?></h3>
+        <p class="text-xs mt-1 leading-relaxed line-clamp-2" style="color:#8ba3a3"><?= esc($f['desc']) ?></p>
+      </a>
       <?php endforeach; ?>
     </div>
   </div>
@@ -360,102 +645,9 @@
 
 
 <!-- ================================================================
-  SECTION 4 — EV CATEGORIES (app-style tabs)
+  SECTION 8 — RANKED EVs by CATEGORY (CarDekho style)
 ================================================================ -->
-<section class="py-16 reveal" style="background:#0c1a1d">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h2 class="text-2xl sm:text-3xl font-black" style="color:#e6f1f1">Browse by category</h2>
-        <p class="text-sm mt-1" style="color:#8ba3a3">All EV types. Every brand. One place.</p>
-      </div>
-      <a href="<?= base_url('vehicles') ?>" class="hidden sm:inline-flex items-center gap-1 text-cyan-400 font-semibold text-sm hover:gap-2 transition-all">
-        View all <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-
-    <!-- 4 main category cards (like app tabs, large) -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <?php
-      $mainCats = [
-        [
-          'icon'  => '&#128757;',
-          'name'  => '2 Wheelers',
-          'sub'   => 'Scooters & Motorcycles',
-          'url'   => base_url('electric-scooters'),
-          'color' => 'from-[#152b30] to-[#13262b]',
-          'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(0,153,153,.15)]',
-        ],
-        [
-          'icon'  => '&#128662;',
-          'name'  => '3 Wheelers',
-          'sub'   => 'E-Rickshaws & Loaders',
-          'url'   => base_url('electric-rickshaws'),
-          'color' => 'from-[#152b30] to-[#13262b]',
-          'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(22,196,196,.15)]',
-        ],
-        [
-          'icon'  => '&#128664;',
-          'name'  => '4 Wheelers',
-          'sub'   => 'Cars, Sedans & SUVs',
-          'url'   => base_url('electric-cars'),
-          'color' => 'from-[#152b30] to-[#13262b]',
-          'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(56,189,248,.15)]',
-        ],
-        [
-          'icon'  => '&#128666;',
-          'name'  => 'Commercial',
-          'sub'   => 'Buses, Trucks & Fleets',
-          'url'   => base_url('commercial-ev'),
-          'color' => 'from-[#152b30] to-[#13262b]',
-          'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(0,153,153,.15)]',
-        ],
-      ];
-      foreach ($mainCats as $cat): ?>
-      <a href="<?= $cat['url'] ?>"
-         onclick="charjTrack('category_click',{category:'<?= addslashes(esc($cat['name'])) ?>'})"
-         class="group flex flex-col items-center text-center p-4 sm:p-6 rounded-2xl bg-gradient-to-br <?= $cat['color'] ?> border <?= $cat['bdr'] ?> hover:shadow-lg hover:-translate-y-1 transition-all duration-200 cursor-pointer">
-        <div class="w-14 h-14 rounded-2xl <?= $cat['ic'] ?> flex items-center justify-center text-3xl mb-3 group-hover:scale-110 transition-transform duration-200">
-          <?= $cat['icon'] ?>
-        </div>
-        <span class="font-black text-slate-100 text-base"><?= $cat['name'] ?></span>
-        <span class="text-slate-400 text-xs mt-1"><?= $cat['sub'] ?></span>
-      </a>
-      <?php endforeach; ?>
-    </div>
-
-    <!-- Sub-category quick links -->
-    <div class="flex flex-wrap gap-2">
-      <?php
-      $subCats = [
-        ['label'=>'Electric Scooters',    'url'=>base_url('electric-scooters')],
-        ['label'=>'Electric Motorcycles', 'url'=>base_url('electric-bikes')],
-        ['label'=>'Electric Cars',        'url'=>base_url('electric-cars')],
-        ['label'=>'Electric SUVs',        'url'=>base_url('electric-cars')],
-        ['label'=>'E-Rickshaws',          'url'=>base_url('electric-rickshaws')],
-        ['label'=>'Electric Buses',       'url'=>base_url('commercial-ev')],
-      ];
-      foreach ($subCats as $sc): ?>
-      <a href="<?= $sc['url'] ?>"
-         class="text-xs font-semibold text-slate-400 border border-white/10 rounded-full px-4 py-2 hover:text-cyan-300 hover:border-cyan-500 transition-all duration-150" style="background:rgba(255,255,255,.06)">
-        <?= $sc['label'] ?>
-      </a>
-      <?php endforeach; ?>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ================================================================
-  SECTION 5 — RANKED EVs by CATEGORY (CarDekho style)
-================================================================ -->
-<section class="py-16 reveal" style="background:#0f2125">
+<section class="py-16 reveal" style="background:#f5fdf4">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"
        x-data="{ tab: '2-wheeler' }">
 
@@ -680,7 +872,7 @@
 
 
 <!-- ================================================================
-  SECTION 6 — HOW IT WORKS
+  SECTION 9 — HOW IT WORKS
 ================================================================ -->
 <section class="py-20 reveal" style="background:#0c1a1d">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -741,7 +933,7 @@
 
 
 <!-- ================================================================
-  SECTION 7 — SUBSIDY SPOTLIGHT BANNER
+  SECTION 10 — SUBSIDY SPOTLIGHT BANNER
 ================================================================ -->
 <section class="py-6 px-4 sm:px-6 lg:px-8 reveal">
   <div class="max-w-7xl mx-auto">
@@ -787,9 +979,9 @@
 
 
 <!-- ================================================================
-  SECTION 8 — TESTIMONIALS
+  SECTION 11 — TESTIMONIALS
 ================================================================ -->
-<section class="py-16 reveal" style="background:#0f2125">
+<section class="py-16 reveal" style="background:#f5fdf4">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="text-center mb-10">
@@ -847,10 +1039,10 @@
 
 
 <!-- ================================================================
-  SECTION 9 — LATEST NEWS (conditional)
+  SECTION 12 — LATEST NEWS (conditional)
 ================================================================ -->
 <?php if (!empty($latestArticles)): ?>
-<section class="py-16 reveal" style="background:#0c1a1d">
+<section class="py-16 reveal" style="background:#f8fdf8">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="flex items-end justify-between mb-8">
@@ -956,9 +1148,9 @@
 
 
 <!-- ================================================================
-  SECTION 10 — FINAL CTA
+  SECTION 14 — FINAL CTA
 ================================================================ -->
-<section class="relative overflow-hidden py-24 bg-gradient-to-br from-slate-950 to-teal-950 text-center reveal">
+<section class="relative overflow-hidden py-24 bg-gradient-to-br from-emerald-600 to-green-600 text-center reveal">
 
   <!-- Grid overlay -->
   <div class="absolute inset-0 hero-grid pointer-events-none opacity-60" aria-hidden="true"></div>
@@ -1005,5 +1197,245 @@
     </div>
   </div>
 </section>
+
+<!-- ================================================================
+  CHARGING STATIONS FINDER - ALPINE.JS APPLICATION
+================================================================ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  window.chargingStationsFinder = function() {
+    return {
+      detecting: false,
+      loading: false,
+      userLocation: null,
+      locationName: 'your location',
+      searchCity: '',
+      nearbyStations: [],
+      selectedStation: null,
+      map: null,
+      mapMarkers: [],
+      stationCount: 0,
+      nearestDistance: null,
+
+      // Initialize map on mount
+      init() {
+        this.$nextTick(() => {
+          this.initMap();
+        });
+      },
+
+      // Initialize Leaflet map
+      initMap() {
+        // Default to India center
+        const mapCenter = [20.5937, 78.9629];
+
+        this.map = L.map('charging-map', {
+          center: mapCenter,
+          zoom: 5,
+          zoomControl: true,
+          scrollWheelZoom: false,
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors',
+          maxZoom: 19,
+        }).addTo(this.map);
+
+        // Load mock charging stations data
+        this.loadMockStations();
+      },
+
+      // Load mock charging stations (replace with API call later)
+      loadMockStations() {
+        this.allStations = [
+          { id: 1, name: 'Tata Power - Delhi Central', network: 'Tata Power Charging', lat: 28.6139, lng: 77.2090, charger_types: ['AC', 'DC'], pricing: 8.50 },
+          { id: 2, name: 'Statiq - Bangalore Tech Park', network: 'Statiq', lat: 12.9716, lng: 77.5946, charger_types: ['DC'], pricing: 10.00 },
+          { id: 3, name: 'Shell Recharge - Mumbai South', network: 'Shell Recharge', lat: 19.0760, lng: 72.8777, charger_types: ['AC', 'DC'], pricing: 12.50 },
+          { id: 4, name: 'EVGO - Pune Downtown', network: 'EVGO', lat: 18.5204, lng: 73.8567, charger_types: ['AC'], pricing: 7.50 },
+          { id: 5, name: 'Tata Power - Hyderabad Metro', network: 'Tata Power Charging', lat: 17.3850, lng: 78.4867, charger_types: ['DC'], pricing: 9.00 },
+          { id: 6, name: 'Statiq - Bangalore Indiranagar', network: 'Statiq', lat: 12.9716, lng: 77.6412, charger_types: ['AC', 'DC'], pricing: 9.50 },
+          { id: 7, name: 'Tata Power - Delhi Airport', network: 'Tata Power Charging', lat: 28.5562, lng: 77.1199, charger_types: ['DC'], pricing: 11.00 },
+          { id: 8, name: 'Shell Recharge - Gurgaon', network: 'Shell Recharge', lat: 28.4089, lng: 77.0235, charger_types: ['AC'], pricing: 8.75 },
+          { id: 9, name: 'EVGO - Pune Civil Lines', network: 'EVGO', lat: 18.5308, lng: 73.8446, charger_types: ['AC', 'DC'], pricing: 8.00 },
+          { id: 10, name: 'Statiq - Hyderabad Banjara Hills', network: 'Statiq', lat: 17.3935, lng: 78.4444, charger_types: ['AC'], pricing: 8.50 },
+        ];
+      },
+
+      // Detect user location using HTML5 Geolocation API
+      async detectLocation() {
+        this.detecting = true;
+        this.loading = true;
+
+        if (!navigator.geolocation) {
+          alert('Geolocation is not supported by your browser. Please search by city instead.');
+          this.detecting = false;
+          this.loading = false;
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            this.userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            this.locationName = `${this.userLocation.lat.toFixed(4)}, ${this.userLocation.lng.toFixed(4)}`;
+            this.detectCity(this.userLocation);
+            this.detectingComplete();
+          },
+          (error) => {
+            console.error('Geolocation error:', error);
+            alert('Could not detect your location. Please check permissions and try again, or search by city.');
+            this.detecting = false;
+            this.loading = false;
+          }
+        );
+      },
+
+      // Reverse geocode to get city name
+      async detectCity(location) {
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}`);
+          const data = await response.json();
+          if (data.address) {
+            this.locationName = data.address.city || data.address.town || data.address.county || 'Your Location';
+          }
+        } catch (error) {
+          console.error('Geocoding error:', error);
+        }
+      },
+
+      // Find nearby stations based on user location
+      detectingComplete() {
+        if (!this.userLocation) {
+          this.detecting = false;
+          this.loading = false;
+          return;
+        }
+
+        // Calculate distances and sort
+        this.nearbyStations = this.allStations.map(station => ({
+          ...station,
+          distance: this.calculateDistance(this.userLocation.lat, this.userLocation.lng, station.lat, station.lng)
+        })).sort((a, b) => a.distance - b.distance);
+
+        this.stationCount = this.nearbyStations.length;
+        this.nearestDistance = this.nearbyStations[0]?.distance || null;
+
+        // Update map
+        this.updateMap();
+
+        this.detecting = false;
+        this.loading = false;
+
+        // Track event
+        charjTrack('charging_geolocation_detect', {
+          stations_found: this.stationCount,
+          nearest_distance_km: Math.round(this.nearestDistance * 10) / 10
+        });
+      },
+
+      // Search by city
+      async searchByCity() {
+        if (!this.searchCity.trim()) return;
+
+        this.loading = true;
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(this.searchCity)}&limit=1`);
+          const data = await response.json();
+
+          if (data.length > 0) {
+            this.userLocation = {
+              lat: parseFloat(data[0].lat),
+              lng: parseFloat(data[0].lon)
+            };
+            this.locationName = this.searchCity;
+            this.detectingComplete();
+          } else {
+            alert('City not found. Please try another search.');
+            this.loading = false;
+          }
+        } catch (error) {
+          console.error('Search error:', error);
+          alert('Error searching for city. Please try again.');
+          this.loading = false;
+        }
+      },
+
+      // Calculate distance between two coordinates (Haversine formula)
+      calculateDistance(lat1, lng1, lat2, lng2) {
+        const R = 6371; // Earth's radius in kilometers
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLng = (lng2 - lng1) * Math.PI / 180;
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+          Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      },
+
+      // Update map with markers
+      updateMap() {
+        // Clear existing markers
+        this.mapMarkers.forEach(marker => this.map.removeLayer(marker));
+        this.mapMarkers = [];
+
+        if (!this.userLocation) return;
+
+        // Add user location marker (blue)
+        const userMarker = L.circleMarker([this.userLocation.lat, this.userLocation.lng], {
+          radius: 8,
+          fillColor: '#009999',
+          color: '#16c4c4',
+          weight: 3,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).bindPopup('<b>Your Location</b>').addTo(this.map);
+        this.mapMarkers.push(userMarker);
+
+        // Add station markers (teal)
+        this.nearbyStations.slice(0, 15).forEach((station, idx) => {
+          const marker = L.circleMarker([station.lat, station.lng], {
+            radius: 6,
+            fillColor: '#16c4c4',
+            color: '#009999',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.7
+          }).bindPopup(`
+            <div style="min-width: 180px;">
+              <b>${station.name}</b><br/>
+              <small>${station.network}</small><br/>
+              <small style="color: #16c4c4;">${Math.round(station.distance * 10) / 10} km away</small>
+            </div>
+          `).addTo(this.map);
+          this.mapMarkers.push(marker);
+        });
+
+        // Fit bounds to show all markers
+        if (this.mapMarkers.length > 0) {
+          const group = new L.featureGroup(this.mapMarkers);
+          this.map.fitBounds(group.getBounds().pad(0.1), { maxZoom: 13 });
+        }
+      },
+
+      // Select a station
+      selectStation(station) {
+        this.selectedStation = station;
+        charjTrack('charging_station_selected', {
+          station_id: station.id,
+          station_name: station.name,
+          distance_km: Math.round(station.distance * 10) / 10
+        });
+      }
+    };
+  };
+});
+</script>
+
+<!-- Leaflet.js library for maps -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 
 <?= $this->endSection() ?>
