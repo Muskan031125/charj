@@ -19,10 +19,10 @@
 .filter-chip:hover .chip-x{opacity:1}
 .compare-bar-enter{animation:slideUp .3s cubic-bezier(.22,.68,0,1.2) both}
 @keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
-.range-btn.active{background:#009999;color:#fff}
-.price-btn.active{background:#009999;color:#fff}
-.peer:checked ~ .range-pill{background:#009999!important;color:#fff}
-.range-pill:hover{background:#009999!important}
+.range-btn.active{background:#00A896;color:#fff}
+.price-btn.active{background:#00A896;color:#fff}
+.peer:checked ~ .range-pill{background:#00A896!important;color:#fff}
+.range-pill:hover{background:#00A896!important}
 </style>
 
 <?php
@@ -99,8 +99,8 @@ function removeParam(string $key, ?string $val = null): string {
   <!-- dot grid overlay -->
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:24px 24px"></div>
   <!-- glow blobs -->
-  <div class="absolute top-0 right-1/3 w-96 h-48 bg-teal-500 opacity-[0.07] blur-3xl rounded-full pointer-events-none anim-grad" style="background:linear-gradient(135deg,#009999,#0d9488,#38bdf8)"></div>
-  <div class="absolute bottom-0 left-1/4 w-72 h-40 bg-teal-400 opacity-[0.06] blur-3xl rounded-full pointer-events-none"></div>
+  <div class="absolute top-0 right-1/3 w-96 h-48 opacity-[0.1] blur-3xl rounded-full pointer-events-none" style="background:linear-gradient(135deg,#00A896,#00C9A7,#1AFFCC)"></div>
+  <div class="absolute bottom-0 left-1/4 w-72 h-40 opacity-[0.07] blur-3xl rounded-full pointer-events-none" style="background:#1AFFCC"></div>
   <!-- floating particles -->
   <div class="absolute top-10 left-10 w-2 h-2 bg-teal-400 rounded-full opacity-30 float-1 pointer-events-none"></div>
   <div class="absolute top-20 right-20 w-1.5 h-1.5 bg-teal-400 rounded-full opacity-25 float-2 pointer-events-none"></div>
@@ -110,14 +110,14 @@ function removeParam(string $key, ?string $val = null): string {
   <div class="relative max-w-7xl mx-auto">
     <!-- Breadcrumb -->
     <nav class="text-xs mb-4 text-slate-500 flex items-center gap-1.5" aria-label="Breadcrumb">
-      <a href="<?= base_url('/') ?>" class="hover:text-cyan-400 transition-colors text-slate-400">Home</a>
+      <a href="<?= base_url('/') ?>" class="transition-colors text-slate-400 hover:text-[#1AFFCC]">Home</a>
       <svg class="w-3 h-3 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       <span class="text-slate-300"><?= esc($title ?? 'All EVs') ?></span>
     </nav>
 
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 bg-teal-500/15 border border-teal-500/25 rounded-full px-3 py-1 text-cyan-300 text-xs font-bold uppercase tracking-widest mb-3">
+        <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest mb-3" style="background:rgba(0,168,150,.15);border:1px solid rgba(26,255,204,.25);color:#1AFFCC">
           ⚡ Charj.in EV Database
         </div>
         <h1 class="text-3xl sm:text-4xl font-black text-white leading-tight">
@@ -133,18 +133,18 @@ function removeParam(string $key, ?string $val = null): string {
             <div class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">EVs Listed</div>
           </div>
           <div class="glass rounded-xl px-4 py-2.5 text-center">
-            <div class="text-xl font-black text-cyan-400">₹59k</div>
+            <div class="text-xl font-black" style="color:#1AFFCC">₹59k</div>
             <div class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Starting From</div>
           </div>
           <div class="glass rounded-xl px-4 py-2.5 text-center">
-            <div class="text-xl font-black text-teal-400">700+km</div>
+            <div class="text-xl font-black" style="color:#1AFFCC">700+km</div>
             <div class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Best Range</div>
           </div>
         </div>
       </div>
 
       <div class="flex flex-wrap items-center gap-2 flex-shrink-0">
-        <span class="rounded-full text-xs font-bold px-4 py-2 text-white shadow-lg" style="background:linear-gradient(135deg,#009999,#0d9488)">
+        <span class="rounded-full text-xs font-bold px-4 py-2 text-white shadow-lg" style="background:linear-gradient(135deg,#00A896,#00C9A7)">
           ⚡ <?= number_format($totalVehicles ?? count($vehicles ?? [])) ?> EVs
         </span>
         <?php if ($hasFilters): ?>
@@ -159,7 +159,7 @@ function removeParam(string $key, ?string $val = null): string {
             <?php if (is_array($v)): foreach ($v as $vi): ?><input type="hidden" name="<?= esc($k) ?>[]" value="<?= esc($vi) ?>"><?php endforeach; else: ?><input type="hidden" name="<?= esc($k) ?>" value="<?= esc($v) ?>"><?php endif; ?>
           <?php endforeach; ?>
           <select name="sort" onchange="this.form.submit()"
-            class="rounded-full border border-white/20 bg-white/10 text-white px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer backdrop-blur-sm">
+            class="rounded-full border border-white/20 bg-white/10 text-white px-4 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00A896] cursor-pointer backdrop-blur-sm">
             <option value="relevance"  <?= $selectedSort==='relevance' ?'selected':'' ?>>Sort: Relevance</option>
             <option value="price_low"  <?= $selectedSort==='price_low' ?'selected':'' ?>>Price: Low → High</option>
             <option value="price_high" <?= $selectedSort==='price_high'?'selected':'' ?>>Price: High → Low</option>
@@ -190,7 +190,7 @@ function removeParam(string $key, ?string $val = null): string {
         </svg>
         Filters
         <?php if ($hasFilters): ?>
-        <span class="bg-teal-500 rounded-full w-5 h-5 text-xs flex items-center justify-center font-bold">
+        <span class="rounded-full w-5 h-5 text-xs flex items-center justify-center font-bold" style="background:#00A896">
           <?= count($chips) ?>
         </span>
         <?php endif; ?>
@@ -202,7 +202,7 @@ function removeParam(string $key, ?string $val = null): string {
           <?php if (is_array($v)): foreach ($v as $vi): ?><input type="hidden" name="<?= esc($k) ?>[]" value="<?= esc($vi) ?>"><?php endforeach; else: ?><input type="hidden" name="<?= esc($k) ?>" value="<?= esc($v) ?>"><?php endif; ?>
         <?php endforeach; ?>
         <select name="sort" onchange="this.form.submit()"
-          class="rounded-full border px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer" style="background:#152b30;border:1px solid rgba(255,255,255,.07);color:#e6f1f1">
+          class="rounded-full border px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#00A896] cursor-pointer" style="background:#152b30;border:1px solid rgba(255,255,255,.07);color:#e6f1f1">
           <option value="relevance" <?= $selectedSort==='relevance'?'selected':'' ?>>Sort: Relevance</option>
           <option value="price_low" <?= $selectedSort==='price_low'?'selected':'' ?>>Price: Low to High</option>
           <option value="price_high" <?= $selectedSort==='price_high'?'selected':'' ?>>Price: High to Low</option>
@@ -252,7 +252,7 @@ function removeParam(string $key, ?string $val = null): string {
         <div class="flex items-center justify-between px-5 py-4" style="border-bottom:1px solid rgba(255,255,255,.07)">
           <h2 class="font-bold text-slate-100 text-base">Filters</h2>
           <?php if ($hasFilters): ?>
-          <a href="<?= base_url('vehicles') ?>" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
+          <a href="<?= base_url('vehicles') ?>" class="text-xs font-semibold transition-colors" style="color:#1AFFCC">
             Clear all
           </a>
           <?php endif; ?>
@@ -271,7 +271,7 @@ function removeParam(string $key, ?string $val = null): string {
                 name="q"
                 value="<?= esc($searchQ) ?>"
                 placeholder="Search EV model or brand..."
-                class="w-full pl-9 pr-3 py-2 rounded-xl text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"
+                class="w-full pl-9 pr-3 py-2 rounded-xl text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00A896]" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"
               >
             </div>
           </div>
@@ -281,7 +281,7 @@ function removeParam(string $key, ?string $val = null): string {
             <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Vehicle Type</p>
             <div class="space-y-2">
               <label class="flex items-center gap-2.5 cursor-pointer group">
-                <input type="radio" name="category" value="" <?= empty($selectedCat)?'checked':'' ?> class="w-4 h-4 accent-teal-500">
+                <input type="radio" name="category" value="" <?= empty($selectedCat)?'checked':'' ?> class="w-4 h-4 accent-[#00A896]">
                 <span class="text-sm text-slate-300 group-hover:text-slate-100 transition-colors font-medium">All EVs</span>
               </label>
               <?php
@@ -305,7 +305,7 @@ function removeParam(string $key, ?string $val = null): string {
               <label class="flex items-center gap-2.5 cursor-pointer group">
                 <input type="radio" name="category" value="<?= $typeSlug ?>"
                   <?= $isSelected ? 'checked' : '' ?>
-                  class="w-4 h-4 accent-teal-500">
+                  class="w-4 h-4 accent-[#00A896]">
                 <span class="text-lg leading-none" aria-hidden="true"><?= $typeEmoji ?></span>
                 <span class="text-sm text-slate-300 group-hover:text-slate-100 transition-colors flex-1"><?= $typeName ?></span>
                 <?php if ($typeCount): ?>
@@ -329,7 +329,7 @@ function removeParam(string $key, ?string $val = null): string {
                 <input type="checkbox" name="brand[]"
                   value="<?= esc($bSlug) ?>"
                   <?= $checked ? 'checked' : '' ?>
-                  class="w-4 h-4 accent-teal-500 rounded">
+                  class="w-4 h-4 accent-[#00A896] rounded">
                 <span class="w-6 h-6 rounded flex items-center justify-center text-[11px] font-bold text-slate-400 flex-shrink-0" style="background:rgba(255,255,255,.06)" aria-hidden="true">
                   <?= strtoupper(substr($brand['name'], 0, 1)) ?>
                 </span>
@@ -344,7 +344,7 @@ function removeParam(string $key, ?string $val = null): string {
             </div>
             <?php if (count($brands) > 5): ?>
             <button type="button" @click="showAll = !showAll"
-              class="mt-2.5 text-xs text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
+              class="mt-2.5 text-xs font-semibold transition-colors" style="color:#1AFFCC">
               <span x-text="showAll ? '▲ Show less' : '▼ Show all brands'"></span>
             </button>
             <?php endif; ?>
@@ -361,7 +361,7 @@ function removeParam(string $key, ?string $val = null): string {
               ?>
               <button type="button"
                 @click="priceMin='<?= $min ?>'; priceMax='<?= $max ?>'; $refs.priceMinI.value='<?= $min ?>'; $refs.priceMaxI.value='<?= $max ?>'"
-                class="price-btn text-xs px-2.5 py-1 rounded-lg hover:text-white text-slate-300 transition-colors <?= $isActive ? 'active' : '' ?>" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07)" onmouseover="this.style.background='#009999'" onmouseout="if(!this.classList.contains('active'))this.style.background='rgba(255,255,255,.06)'">
+                class="price-btn text-xs px-2.5 py-1 rounded-lg hover:text-white text-slate-300 transition-colors <?= $isActive ? 'active' : '' ?>" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07)" onmouseover="this.style.background='#00A896'" onmouseout="if(!this.classList.contains('active'))this.style.background='rgba(255,255,255,.06)'">
                 <?= $label ?>
               </button>
               <?php endforeach; ?>
@@ -376,7 +376,7 @@ function removeParam(string $key, ?string $val = null): string {
                     :value="priceMin"
                     @input="priceMin=$event.target.value"
                     placeholder="0"
-                    class="w-full pl-6 pr-2 py-2 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-500" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
+                    class="w-full pl-6 pr-2 py-2 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#00A896]" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
                 </div>
               </div>
               <div>
@@ -387,7 +387,7 @@ function removeParam(string $key, ?string $val = null): string {
                     :value="priceMax"
                     @input="priceMax=$event.target.value"
                     placeholder="Any"
-                    class="w-full pl-6 pr-2 py-2 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-500" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
+                    class="w-full pl-6 pr-2 py-2 rounded-xl text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#00A896]" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
                 </div>
               </div>
             </div>
@@ -417,19 +417,19 @@ function removeParam(string $key, ?string $val = null): string {
               <label class="flex items-center gap-2.5 cursor-pointer group">
                 <input type="checkbox" name="fast_charging" value="1"
                   <?= !empty($_GET['fast_charging']) ? 'checked' : '' ?>
-                  class="w-4 h-4 accent-teal-500 rounded">
+                  class="w-4 h-4 accent-[#00A896] rounded">
                 <span class="text-sm text-slate-300 group-hover:text-slate-100 transition-colors">Fast Charging Available</span>
               </label>
               <label class="flex items-center gap-2.5 cursor-pointer group">
                 <input type="checkbox" name="connected" value="1"
                   <?= !empty($_GET['connected']) ? 'checked' : '' ?>
-                  class="w-4 h-4 accent-teal-500 rounded">
+                  class="w-4 h-4 accent-[#00A896] rounded">
                 <span class="text-sm text-slate-300 group-hover:text-slate-100 transition-colors">Connected Features</span>
               </label>
               <label class="flex items-center gap-2.5 cursor-pointer group">
                 <input type="checkbox" name="fame_eligible" value="1"
                   <?= !empty($_GET['fame_eligible']) ? 'checked' : '' ?>
-                  class="w-4 h-4 accent-teal-500 rounded">
+                  class="w-4 h-4 accent-[#00A896] rounded">
                 <span class="text-sm text-slate-300 group-hover:text-slate-100 transition-colors">FAME II Eligible</span>
               </label>
             </div>
@@ -439,7 +439,7 @@ function removeParam(string $key, ?string $val = null): string {
           <div class="px-5 py-4">
             <label for="sidebar_sort" class="block text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-2.5">Sort By</label>
             <select id="sidebar_sort" name="sort"
-              class="w-full rounded-xl px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer appearance-none" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"
+              class="w-full rounded-xl px-3 py-2.5 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#00A896] cursor-pointer appearance-none" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"
               style="background-image:url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\");background-position:right .5rem center;background-repeat:no-repeat;background-size:1.5em 1.5em;padding-right:2.5rem">
               <option value="relevance"  <?= $selectedSort==='relevance' ?'selected':'' ?>>Relevance</option>
               <option value="price_low"  <?= $selectedSort==='price_low' ?'selected':'' ?>>Price: Low → High</option>
@@ -453,12 +453,12 @@ function removeParam(string $key, ?string $val = null): string {
           <!-- Actions -->
           <div class="px-5 py-4 space-y-2" style="background:#0f2125">
             <button type="submit"
-              class="w-full flex items-center justify-center gap-2 text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-sm" style="background:#009999" onmouseover="this.style.background='#007a7a'" onmouseout="this.style.background='#009999'">
+              class="w-full flex items-center justify-center gap-2 text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-sm" style="background:#00A896;box-shadow:0 4px 14px rgba(0,168,150,.3)" onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36'" onmouseout="this.style.background='#00A896';this.style.color='#fff'">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
               Apply Filters
             </button>
             <?php if ($hasFilters): ?>
-            <a href="<?= base_url('vehicles') ?>" class="block w-full text-center text-slate-400 hover:text-cyan-300 font-medium py-2 text-sm transition-colors">
+            <a href="<?= base_url('vehicles') ?>" class="block w-full text-center text-slate-400 font-medium py-2 text-sm transition-colors hover:text-[#1AFFCC]">
               ✕ Clear All Filters
             </a>
             <?php endif; ?>
@@ -480,7 +480,7 @@ function removeParam(string $key, ?string $val = null): string {
           of <strong class="text-slate-100"><?= number_format($totalVehicles ?? 0) ?></strong> EVs
         </p>
         <?php if ($hasFilters): ?>
-        <a href="<?= base_url('vehicles') ?>" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold underline-offset-2 hover:underline transition-colors">
+        <a href="<?= base_url('vehicles') ?>" class="text-xs font-semibold underline-offset-2 hover:underline transition-colors" style="color:#1AFFCC">
           Clear all
         </a>
         <?php endif; ?>
@@ -528,7 +528,7 @@ function removeParam(string $key, ?string $val = null): string {
           <!-- Prev -->
           <?php if ($prevPage): $qp['page'] = $prevPage; ?>
           <a href="?<?= http_build_query($qp) ?>"
-             class="flex items-center gap-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-100 hover:bg-teal-600 hover:text-white transition-all shadow-sm" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
+             class="flex items-center gap-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-100 hover:bg-[#00A896] hover:text-white transition-all shadow-sm" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
             ← Prev
           </a>
           <?php else: ?>
@@ -542,28 +542,28 @@ function removeParam(string $key, ?string $val = null): string {
           $startP = max(1, $curPage - 2);
           $endP   = min($totPages, $curPage + 2);
           if ($startP > 1): $qp['page'] = 1; ?>
-          <a href="?<?= http_build_query($qp) ?>" class="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-teal-600 hover:text-white transition-all" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">1</a>
+          <a href="?<?= http_build_query($qp) ?>" class="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-[#00A896] hover:text-white transition-all" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">1</a>
           <?php if ($startP > 2): ?><span class="px-2 text-slate-400 text-sm self-center">…</span><?php endif; ?>
           <?php endif; ?>
 
           <?php for ($i = $startP; $i <= $endP; $i++): $qp['page'] = $i; ?>
           <?php if ($i === $curPage): ?>
-          <span class="px-3.5 py-2.5 text-white rounded-xl text-sm font-bold shadow-md" style="background:#009999"><?= $i ?></span>
+          <span class="px-3.5 py-2.5 text-white rounded-xl text-sm font-bold shadow-md" style="background:#00A896;box-shadow:0 0 12px rgba(0,168,150,.4)"><?= $i ?></span>
           <?php else: ?>
-          <a href="?<?= http_build_query($qp) ?>" class="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-teal-600 hover:text-white transition-all" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"><?= $i ?></a>
+          <a href="?<?= http_build_query($qp) ?>" class="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-[#00A896] hover:text-white transition-all" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"><?= $i ?></a>
           <?php endif; ?>
           <?php endfor; ?>
 
           <?php if ($endP < $totPages): ?>
           <?php if ($endP < $totPages - 1): ?><span class="px-2 text-slate-400 text-sm self-center">…</span><?php endif; ?>
           <?php $qp['page'] = $totPages; ?>
-          <a href="?<?= http_build_query($qp) ?>" class="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-teal-600 hover:text-white transition-all" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"><?= $totPages ?></a>
+          <a href="?<?= http_build_query($qp) ?>" class="px-3.5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 hover:bg-[#00A896] hover:text-white transition-all" style="background:#152b30;border:1px solid rgba(255,255,255,.07)"><?= $totPages ?></a>
           <?php endif; ?>
 
           <!-- Next -->
           <?php if ($nextPage): $qp['page'] = $nextPage; ?>
           <a href="?<?= http_build_query($qp) ?>"
-             class="flex items-center gap-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-100 hover:bg-teal-600 hover:text-white transition-all shadow-sm" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
+             class="flex items-center gap-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-100 hover:bg-[#00A896] hover:text-white transition-all shadow-sm" style="background:#152b30;border:1px solid rgba(255,255,255,.07)">
             Next →
           </a>
           <?php else: ?>
@@ -590,7 +590,7 @@ function removeParam(string $key, ?string $val = null): string {
           No electric vehicles match your current filters. Try broadening your search or clearing some filters.
         </p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center mb-8">
-          <a href="<?= base_url('vehicles') ?>" class="text-white px-6 py-3 rounded-xl font-bold transition-colors" style="background:#009999" onmouseover="this.style.background='#007a7a'" onmouseout="this.style.background='#009999'">
+          <a href="<?= base_url('vehicles') ?>" class="text-white px-6 py-3 rounded-xl font-bold transition-colors" style="background:#00A896" onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36'" onmouseout="this.style.background='#00A896';this.style.color='#fff'">
             ✕ Clear All Filters
           </a>
           <a href="<?= base_url('find-my-ev') ?>" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-slate-700 transition-colors">
@@ -600,11 +600,11 @@ function removeParam(string $key, ?string $val = null): string {
         <div class="pt-6" style="border-top:1px solid rgba(255,255,255,.07)">
           <p class="text-xs text-slate-400 mb-3 uppercase tracking-wide font-medium">Popular searches</p>
           <div class="flex flex-wrap gap-2 justify-center">
-            <a href="<?= base_url('vehicles?category=scooter') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-teal-600 hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Electric Scooters</a>
-            <a href="<?= base_url('vehicles?category=car') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-teal-600 hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Electric Cars</a>
-            <a href="<?= base_url('vehicles?category=bike') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-teal-600 hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Electric Bikes</a>
-            <a href="<?= base_url('vehicles?price_max=100000') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-teal-600 hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Under ₹1 Lakh</a>
-            <a href="<?= base_url('vehicles?range_min=150') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-teal-600 hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">150+ km Range</a>
+            <a href="<?= base_url('vehicles?category=scooter') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-[#00A896] hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Electric Scooters</a>
+            <a href="<?= base_url('vehicles?category=car') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-[#00A896] hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Electric Cars</a>
+            <a href="<?= base_url('vehicles?category=bike') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-[#00A896] hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Electric Bikes</a>
+            <a href="<?= base_url('vehicles?price_max=100000') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-[#00A896] hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">Under ₹1 Lakh</a>
+            <a href="<?= base_url('vehicles?range_min=150') ?>" class="text-slate-300 px-3 py-1.5 rounded-full text-sm hover:bg-[#00A896] hover:text-white transition-colors" style="background:rgba(255,255,255,.06)">150+ km Range</a>
           </div>
         </div>
       </div>
@@ -626,15 +626,15 @@ function removeParam(string $key, ?string $val = null): string {
   x-transition:leave="transition ease-in duration-200"
   x-transition:leave-start="translate-y-0 opacity-100"
   x-transition:leave-end="translate-y-full opacity-0"
-  class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900 text-white shadow-2xl border-t-2 border-teal-500"
+  class="fixed bottom-0 left-0 right-0 z-40 text-white shadow-2xl" style="background:rgba(0,20,18,.97);border-top:2px solid #00A896;backdrop-filter:blur(20px)"
   role="region"
   aria-label="Compare bar"
 >
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4 flex-wrap">
     <div class="flex items-center gap-3 flex-wrap min-w-0">
-      <span class="text-cyan-400 font-black text-lg hidden sm:block" aria-hidden="true">⚡</span>
+      <span class="font-black text-lg hidden sm:block" style="color:#1AFFCC" aria-hidden="true">⚡</span>
       <span class="font-bold text-sm whitespace-nowrap">
-        Comparing <span x-text="compareList.length" class="text-cyan-400 text-base"></span> EVs
+        Comparing <span x-text="compareList.length" class="text-base font-black" style="color:#1AFFCC"></span> EVs
       </span>
       <!-- Vehicle thumbnails -->
       <div class="flex items-center gap-2">
@@ -661,7 +661,7 @@ function removeParam(string $key, ?string $val = null): string {
         Clear
       </button>
       <a :href="compareUrl()"
-         class="text-white px-5 py-2.5 rounded-xl font-bold transition-colors text-sm whitespace-nowrap shadow-lg" style="background:#009999" onmouseover="this.style.background='#007a7a'" onmouseout="this.style.background='#009999'">
+         class="text-white px-5 py-2.5 rounded-xl font-bold transition-colors text-sm whitespace-nowrap" style="background:#00A896;box-shadow:0 0 16px rgba(0,168,150,.4)" onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36'" onmouseout="this.style.background='#00A896';this.style.color='#fff'">
         Compare Now →
       </a>
     </div>

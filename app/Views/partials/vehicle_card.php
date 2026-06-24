@@ -85,7 +85,7 @@ $imgSrc = !empty($vehicle['image_url'])
     <div class="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
       <?php if ($isFeatured): ?>
       <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full tracking-wide"
-            style="background:#009999;color:#fff">⭐ FEATURED</span>
+            style="background:#00A896;color:#fff">⭐ FEATURED</span>
       <?php endif; ?>
       <?php if ($isFast): ?>
       <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full"
@@ -119,17 +119,17 @@ $imgSrc = !empty($vehicle['image_url'])
 
   <!-- ── CARD BODY ── -->
   <div class="flex flex-col flex-1 p-4 pb-0">
-    <p class="text-[11px] font-black uppercase tracking-widest mb-0.5" style="color:#16c4c4"><?= esc($brand) ?></p>
+    <p class="text-[11px] font-black uppercase tracking-widest mb-0.5" style="color:#1AFFCC"><?= esc($brand) ?></p>
     <h3 class="font-black text-base leading-snug mb-3 line-clamp-2 transition-colors duration-200"
-        style="color:#e6f1f1" onmouseover="this.style.color='#16c4c4'" onmouseout="this.style.color='#e6f1f1'"
+        style="color:#e6f1f1" onmouseover="this.style.color='#1AFFCC'" onmouseout="this.style.color='#e6f1f1'"
     ><?= esc($name) ?></h3>
 
     <!-- stat pills -->
     <div class="flex gap-1.5 mb-3">
       <?php if ($range > 0): ?>
-      <div class="flex-1 rounded-lg px-2 py-2 text-center" style="background:rgba(0,153,153,.12);border:1px solid rgba(0,153,153,.28)">
-        <div class="text-sm font-black leading-none" style="color:#16c4c4"><?= $range ?></div>
-        <div class="text-[9px] font-semibold mt-0.5" style="color:#0d9999">km</div>
+      <div class="flex-1 rounded-lg px-2 py-2 text-center" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.28)">
+        <div class="text-sm font-black leading-none" style="color:#1AFFCC"><?= $range ?></div>
+        <div class="text-[9px] font-semibold mt-0.5" style="color:#00A896">km</div>
       </div>
       <?php endif; ?>
       <?php if ($battery): ?>
@@ -156,7 +156,7 @@ $imgSrc = !empty($vehicle['image_url'])
     </div>
     <!-- animated arrow on hover -->
     <div class="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-wider rounded-lg px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0"
-         style="background:#009999;color:#fff">
+         style="background:#00A896;color:#fff">
       View
       <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
     </div>

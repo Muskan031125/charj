@@ -40,15 +40,15 @@
   /* Scroll indicator */
   @keyframes bounce-slow { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
   .scroll-indicator { animation: bounce-slow 2s ease-in-out infinite; }
-  /* Hero gradient (brighter greens for dark bg) */
+  /* Hero gradient */
   .hero-gradient-text {
-    background: linear-gradient(135deg, #4ade80, #2dd4bf);
+    background: linear-gradient(135deg, #00A896, #1AFFCC);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   /* Category hover */
-  .cat-card:hover { background: #009999 !important; border-color: #009999 !important; }
+  .cat-card:hover { background: #00A896 !important; border-color: #00A896 !important; }
   .cat-card:hover .cat-emoji-wrap { background: rgba(255,255,255,0.2) !important; }
   .cat-card:hover .cat-name,
   .cat-card:hover .cat-count { color: #fff !important; }
@@ -71,16 +71,16 @@
 
   <!-- Glow blobs -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-teal-500 opacity-[0.06] blur-3xl rounded-full"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-teal-400 opacity-[0.05] blur-3xl rounded-full"></div>
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] opacity-[0.09] blur-3xl rounded-full" style="background:#00A896"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 opacity-[0.07] blur-3xl rounded-full" style="background:#1AFFCC"></div>
   </div>
 
   <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 text-center">
 
     <!-- Eyebrow badge -->
-    <div class="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-500/30 rounded-full px-4 py-2 mb-8 animate-fade-in-up stagger-1">
+    <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-8 animate-fade-in-up stagger-1" style="background:rgba(0,168,150,.15);border:1px solid rgba(26,255,204,.25)">
       <span class="text-sm" aria-hidden="true">&#x26A1;</span>
-      <span class="text-teal-300 text-xs font-bold tracking-wider uppercase">India's Dedicated EV Marketplace</span>
+      <span class="text-xs font-bold tracking-wider uppercase" style="color:#1AFFCC">India's Dedicated EV Marketplace</span>
     </div>
 
     <!-- H1 -->
@@ -104,7 +104,7 @@
                class="flex-1 bg-transparent text-white placeholder-white/50 px-4 py-4 text-base outline-none min-w-0"
                aria-label="Search EVs">
         <button type="submit"
-                class="flex-shrink-0 bg-[#009999] hover:bg-[#16c4c4] text-white font-bold px-6 py-4 transition-colors text-sm">
+                class="flex-shrink-0 text-white font-bold px-6 py-4 transition-colors text-sm" style="background:#00A896" onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36'" onmouseout="this.style.background='#00A896';this.style.color='#fff'">
           Search
         </button>
       </div>
@@ -130,7 +130,7 @@
       ];
       foreach ($heroTabs as $ht): ?>
       <a href="<?= $ht['url'] ?>"
-         class="flex flex-col items-center gap-1 px-4 sm:px-6 py-2.5 rounded-xl bg-white/8 border border-white/15 hover:bg-white/15 hover:border-teal-400/50 transition-all duration-150 group">
+         class="flex flex-col items-center gap-1 px-4 sm:px-6 py-2.5 rounded-xl bg-white/8 border border-white/15 hover:bg-white/15 hover:border-[#00A896]/60 transition-all duration-150 group">
         <span class="text-xl leading-none" aria-hidden="true"><?= $ht['icon'] ?></span>
         <span class="text-xs font-semibold text-white/70 group-hover:text-white whitespace-nowrap"><?= $ht['label'] ?></span>
       </a>
@@ -141,7 +141,10 @@
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="<?= base_url('find-my-ev') ?>"
          onclick="charjTrack('hero_cta_finder',{})"
-         class="inline-flex items-center justify-center gap-2 bg-[#009999] hover:bg-[#16c4c4] text-white font-bold text-base px-7 py-3.5 rounded-full transition-all duration-200 shadow-lg hover:-translate-y-0.5">
+         class="inline-flex items-center justify-center gap-2 text-white font-bold text-base px-7 py-3.5 rounded-full transition-all duration-200 shadow-lg hover:-translate-y-0.5"
+         style="background:#00A896;box-shadow:0 0 20px rgba(0,168,150,.4)"
+         onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36';this.style.boxShadow='0 0 30px rgba(26,255,204,.5)'"
+         onmouseout="this.style.background='#00A896';this.style.color='#fff';this.style.boxShadow='0 0 20px rgba(0,168,150,.4)'">
         Find My EV &#x2192;
       </a>
       <a href="<?= base_url('compare') ?>"
@@ -220,7 +223,7 @@
           <span class="text-2xl mb-3" x-text="stat.icon" aria-hidden="true"></span>
           <div class="flex items-baseline gap-0.5">
             <span class="text-4xl font-black text-slate-100" x-text="stat.raw"></span>
-            <span class="text-xl font-black text-cyan-400" x-text="stat.suffix"></span>
+            <span class="text-xl font-black" style="color:#1AFFCC" x-text="stat.suffix"></span>
           </div>
           <span class="text-sm text-slate-400 mt-1 font-medium" x-text="stat.label"></span>
         </div>
@@ -239,9 +242,9 @@
 
       <!-- Left: description -->
       <div>
-        <span class="inline-block text-teal-400 text-xs font-bold uppercase tracking-widest mb-4">What is charj.in?</span>
+        <span class="inline-block text-xs font-bold uppercase tracking-widest mb-4" style="color:#1AFFCC">What is charj.in?</span>
         <h2 class="text-3xl sm:text-4xl font-black text-white mb-5 leading-tight">
-          India's dedicated<br><span class="text-teal-400">EV marketplace</span>
+          India's dedicated<br><span style="color:#1AFFCC">EV marketplace</span>
         </h2>
         <p class="text-slate-300 text-base leading-relaxed mb-6">
           charj.in is India's dedicated online marketplace for <strong class="text-white">electric vehicles</strong>. We list EVs from all brands across India — from e-scooters to electric cars and commercial EVs — bringing everything together in one place.
@@ -264,7 +267,7 @@
         <div class="flex items-center gap-4 bg-white/5 border border-white/10 rounded-xl px-5 py-4">
           <span class="text-2xl flex-shrink-0" aria-hidden="true"><?= $wf['icon'] ?></span>
           <span class="text-white font-semibold text-sm"><?= $wf['text'] ?></span>
-          <svg class="w-4 h-4 text-teal-400 ml-auto flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+          <svg class="w-4 h-4 ml-auto flex-shrink-0" style="color:#00A896" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
         </div>
         <?php endforeach; ?>
       </div>
@@ -282,9 +285,9 @@
 
     <div class="text-center mb-12">
       <h2 class="text-3xl sm:text-4xl font-black" style="color:#e6f1f1">
-        Why <span class="text-cyan-400">charj.in</span>?
+        Why <span style="color:#1AFFCC">charj.in</span>?
       </h2>
-      <div class="w-12 h-1 bg-[#009999] rounded-full mx-auto mt-4"></div>
+      <div class="w-12 h-1 rounded-full mx-auto mt-4" style="background:#00A896"></div>
     </div>
 
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 text-center">
@@ -298,7 +301,7 @@
       ];
       foreach ($whyFeatures as $wf): ?>
       <div class="flex flex-col items-center">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-4" style="background:rgba(0,153,153,.12);border:1px solid rgba(0,153,153,.3)">
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-4" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.3)">
           <?= $wf['icon'] ?>
         </div>
         <h3 class="font-bold text-sm mb-2 leading-tight" style="color:#e6f1f1"><?= $wf['title'] ?></h3>
@@ -319,7 +322,7 @@
 
     <!-- Header -->
     <div class="text-center mb-12 reveal">
-      <span class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style="background:rgba(0,153,153,.12);color:#16c4c4;border:1px solid rgba(0,153,153,.3)">What Charj.in does</span>
+      <span class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style="background:rgba(0,168,150,.12);color:#1AFFCC;border:1px solid rgba(0,168,150,.3)">What Charj.in does</span>
       <h2 class="text-3xl sm:text-4xl font-black leading-tight" style="color:#e6f1f1">Built for India's EV revolution</h2>
       <p class="mt-3 text-lg max-w-xl mx-auto" style="color:#8ba3a3">Not a listing site. A decision engine.</p>
     </div>
@@ -349,7 +352,7 @@
         <p class="text-sm mt-1 leading-relaxed" style="color:#8ba3a3"><?= esc($f['desc']) ?></p>
         <a href="<?= $f['url'] ?>"
            onclick="charjTrack('feature_click',{feature:'<?= addslashes(esc($f['title'])) ?>'})"
-           class="inline-flex items-center gap-1 text-sm font-semibold mt-4 hover:gap-2 transition-all duration-150" style="color:#16c4c4">
+           class="inline-flex items-center gap-1 text-sm font-semibold mt-4 hover:gap-2 transition-all duration-150" style="color:#1AFFCC">
           Try it <span aria-hidden="true">→</span>
         </a>
       </div>
@@ -370,7 +373,7 @@
         <h2 class="text-2xl sm:text-3xl font-black" style="color:#e6f1f1">Browse by category</h2>
         <p class="text-sm mt-1" style="color:#8ba3a3">All EV types. Every brand. One place.</p>
       </div>
-      <a href="<?= base_url('vehicles') ?>" class="hidden sm:inline-flex items-center gap-1 text-cyan-400 font-semibold text-sm hover:gap-2 transition-all">
+      <a href="<?= base_url('vehicles') ?>" class="hidden sm:inline-flex items-center gap-1 font-semibold text-sm hover:gap-2 transition-all" style="color:#1AFFCC">
         View all <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -386,7 +389,7 @@
           'url'   => base_url('electric-scooters'),
           'color' => 'from-[#152b30] to-[#13262b]',
           'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(0,153,153,.15)]',
+          'ic'    => 'bg-[rgba(0,168,150,.15)]',
         ],
         [
           'icon'  => '&#128662;',
@@ -395,7 +398,7 @@
           'url'   => base_url('electric-rickshaws'),
           'color' => 'from-[#152b30] to-[#13262b]',
           'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(22,196,196,.15)]',
+          'ic'    => 'bg-[rgba(0,168,150,.15)]',
         ],
         [
           'icon'  => '&#128664;',
@@ -413,7 +416,7 @@
           'url'   => base_url('commercial-ev'),
           'color' => 'from-[#152b30] to-[#13262b]',
           'bdr'   => 'border-white/10',
-          'ic'    => 'bg-[rgba(0,153,153,.15)]',
+          'ic'    => 'bg-[rgba(0,168,150,.15)]',
         ],
       ];
       foreach ($mainCats as $cat): ?>
@@ -442,7 +445,7 @@
       ];
       foreach ($subCats as $sc): ?>
       <a href="<?= $sc['url'] ?>"
-         class="text-xs font-semibold text-slate-400 border border-white/10 rounded-full px-4 py-2 hover:text-cyan-300 hover:border-cyan-500 transition-all duration-150" style="background:rgba(255,255,255,.06)">
+         class="text-xs font-semibold text-slate-400 border border-white/10 rounded-full px-4 py-2 hover:border-[#00A896] transition-all duration-150" style="background:rgba(255,255,255,.06)" onmouseover="this.style.color='#1AFFCC'" onmouseout="this.style.color=''">
         <?= $sc['label'] ?>
       </a>
       <?php endforeach; ?>
@@ -462,11 +465,11 @@
     <!-- Section header -->
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
       <div>
-        <span class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3" style="background:rgba(0,153,153,.15);color:#16c4c4">Top Picks 2025</span>
+        <span class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3" style="background:rgba(0,168,150,.15);color:#1AFFCC;border:1px solid rgba(0,168,150,.25)">Top Picks 2025</span>
         <h2 class="text-2xl sm:text-3xl font-black" style="color:#e6f1f1">Best EVs in India</h2>
         <p class="text-sm mt-1" style="color:#8ba3a3">Ranked by expert rating, range &amp; value</p>
       </div>
-      <a href="<?= base_url('vehicles') ?>" class="text-sm font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors">
+      <a href="<?= base_url('vehicles') ?>" class="text-sm font-bold flex items-center gap-1 transition-colors" style="color:#1AFFCC">
         View all EVs <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -481,7 +484,7 @@
       ];
       foreach ($catTabs as $key => $tab): ?>
       <button @click="tab = '<?= $key ?>'"
-              :class="tab === '<?= $key ?>' ? 'text-white shadow-lg border-[#009999]' : 'border text-slate-400 hover:border-cyan-500 hover:text-cyan-300'" :style="tab === '<?= $key ?>' ? 'background:#009999;border:1px solid #009999' : 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)'"
+              :class="tab === '<?= $key ?>' ? 'text-white shadow-lg' : 'border text-slate-400'" :style="tab === '<?= $key ?>' ? 'background:#00A896;border:1px solid #00A896;box-shadow:0 0 16px rgba(0,168,150,.35)' : 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)'"
               class="flex-shrink-0 flex flex-col items-start px-5 py-3 rounded-2xl border-2 transition-all duration-200 text-left">
         <span class="font-bold text-sm"><?= $tab['label'] ?></span>
         <span class="text-xs opacity-70 mt-0.5"><?= $tab['sub'] ?></span>
@@ -547,7 +550,7 @@
       <?php if (empty($vehicles)): ?>
       <div class="text-center py-12 text-slate-400">
         <div class="text-4xl mb-3"><?= ['2-wheeler'=>'🛵','3-wheeler'=>'🛺','4-wheeler'=>'🚗'][$catKey] ?></div>
-        <p class="text-sm">No EVs in this category yet. <a href="<?= base_url('vehicles') ?>" class="text-cyan-400 font-semibold">Browse all EVs →</a></p>
+        <p class="text-sm">No EVs in this category yet. <a href="<?= base_url('vehicles') ?>" class="font-semibold" style="color:#1AFFCC">Browse all EVs →</a></p>
       </div>
       <?php else: ?>
 
@@ -592,13 +595,13 @@
           <!-- Info -->
           <div class="p-4">
             <p class="text-xs text-slate-400 font-semibold uppercase tracking-wide mb-0.5"><?= esc($v['brand_name']??'') ?></p>
-            <h3 class="font-black text-slate-100 text-sm leading-tight mb-2 group-hover:text-cyan-300 transition-colors"><?= esc($v['name']??'') ?></h3>
+            <h3 class="font-black text-slate-100 text-sm leading-tight mb-2 transition-colors" onmouseover="this.style.color='#1AFFCC'" onmouseout="this.style.color=''"><?= esc($v['name']??'') ?></h3>
 
             <div class="flex items-center gap-2 mb-3">
               <?php if ($rating > 0): ?>
-              <div class="flex items-center gap-1 rounded-lg px-2 py-0.5" style="background:rgba(0,153,153,.1)">
+              <div class="flex items-center gap-1 rounded-lg px-2 py-0.5" style="background:rgba(0,168,150,.12)">
                 <span class="text-amber-400 text-xs">★</span>
-                <span class="text-xs font-black text-cyan-300"><?= number_format($rating,1) ?></span>
+                <span class="text-xs font-black" style="color:#1AFFCC"><?= number_format($rating,1) ?></span>
               </div>
               <?php endif; ?>
               <?php if ($range > 0): ?>
@@ -611,7 +614,7 @@
                 <div class="text-[10px] text-slate-400">Starting</div>
                 <div class="text-base font-black text-slate-100"><?= $priceStr ?></div>
               </div>
-              <span class="text-[10px] font-bold text-cyan-300 px-2 py-1 rounded-lg" style="background:rgba(0,153,153,.1)">
+              <span class="text-[10px] font-bold px-2 py-1 rounded-lg" style="color:#1AFFCC;background:rgba(0,168,150,.12)">
                 <?= esc($v['category_name']??'EV') ?>
               </span>
             </div>
@@ -646,7 +649,7 @@
           </div>
           <!-- Name + type -->
           <div class="flex-1 min-w-0">
-            <div class="font-bold text-slate-100 text-sm group-hover:text-cyan-300 transition-colors"><?= esc($v['name']??'') ?></div>
+            <div class="font-bold text-slate-100 text-sm transition-colors group-hover:text-[#1AFFCC]"><?= esc($v['name']??'') ?></div>
             <div class="text-xs text-slate-400"><?= esc($v['brand_name']??'') ?> · <?= esc($v['category_name']??'') ?></div>
           </div>
           <!-- Stats -->
@@ -658,7 +661,7 @@
           <div class="text-right flex-shrink-0">
             <div class="text-sm font-black text-slate-100"><?= $priceStr ?></div>
           </div>
-          <svg class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
+          <svg class="w-4 h-4 text-slate-500 group-hover:text-[#1AFFCC] flex-shrink-0 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
         </a>
         <?php endforeach; ?>
       </div>
@@ -666,7 +669,7 @@
 
       <div class="mt-5 text-center">
         <a href="<?= base_url('vehicles?category=' . urlencode($catKey)) ?>"
-           class="inline-flex items-center gap-2 hover:brightness-110 text-white font-bold text-sm px-6 py-3 rounded-full transition-all shadow-md" style="background:#009999">
+           class="inline-flex items-center gap-2 text-white font-bold text-sm px-6 py-3 rounded-full transition-all shadow-md" style="background:#00A896;box-shadow:0 4px 14px rgba(0,168,150,.35)" onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36'" onmouseout="this.style.background='#00A896';this.style.color='#fff'">
           See all <?= $catTabs[$catKey]['label'] ?> <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
@@ -686,7 +689,7 @@
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <div class="text-center mb-12">
-      <span class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style="background:rgba(0,153,153,.15);color:#16c4c4">Simple Process</span>
+      <span class="inline-block text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style="background:rgba(0,168,150,.15);color:#1AFFCC;border:1px solid rgba(0,168,150,.25)">Simple Process</span>
       <h2 class="text-3xl sm:text-4xl font-black leading-tight" style="color:#e6f1f1">
         From confused to confident<br class="hidden sm:block"> in 3 steps
       </h2>
@@ -696,28 +699,28 @@
 
       <!-- Connector line (desktop) -->
       <div class="hidden md:block absolute top-10 left-[calc(33.33%+0px)] right-[calc(33.33%+0px)] h-px pointer-events-none"
-           style="background: linear-gradient(90deg, transparent, rgba(0,153,153,0.4), #16c4c4, rgba(0,153,153,0.4), transparent);"
+           style="background: linear-gradient(90deg, transparent, rgba(0,168,150,0.4), #1AFFCC, rgba(0,168,150,0.4), transparent);"
            aria-hidden="true"></div>
 
       <!-- Step 1 -->
       <div class="reveal animate-fade-in-up stagger-1 flex flex-col items-center text-center">
         <div class="relative mb-6">
-          <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-sm" style="background:rgba(0,153,153,.12)">
+          <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-sm" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.2)">
             🎯
-            <span class="absolute -top-2 -right-2 w-7 h-7 text-white text-xs font-black rounded-full flex items-center justify-center shadow-md" style="background:#009999">01</span>
+            <span class="absolute -top-2 -right-2 w-7 h-7 text-white text-xs font-black rounded-full flex items-center justify-center shadow-md" style="background:#00A896">01</span>
           </div>
         </div>
         <h3 class="text-lg font-bold text-slate-100 mb-2">Tell us about yourself</h3>
         <p class="text-sm text-slate-400 leading-relaxed max-w-xs mb-4">2-minute quiz about your daily commute, budget and charging situation.</p>
-        <a href="<?= base_url('find-my-ev') ?>" class="text-cyan-400 text-sm font-semibold hover:text-cyan-300 transition-colors">Take the quiz →</a>
+        <a href="<?= base_url('find-my-ev') ?>" class="text-sm font-semibold transition-colors" style="color:#1AFFCC">Take the quiz →</a>
       </div>
 
       <!-- Step 2 -->
       <div class="reveal animate-fade-in-up stagger-2 flex flex-col items-center text-center">
         <div class="relative mb-6">
-          <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-sm" style="background:rgba(22,196,196,.12)">
+          <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl shadow-sm" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.2)">
             📊
-            <span class="absolute -top-2 -right-2 w-7 h-7 text-white text-xs font-black rounded-full flex items-center justify-center shadow-md" style="background:#16c4c4">02</span>
+            <span class="absolute -top-2 -right-2 w-7 h-7 text-white text-xs font-black rounded-full flex items-center justify-center shadow-md" style="background:#00A896">02</span>
           </div>
         </div>
         <h3 class="text-lg font-bold text-slate-100 mb-2">See your perfect matches</h3>
@@ -745,7 +748,7 @@
 ================================================================ -->
 <section class="py-6 px-4 sm:px-6 lg:px-8 reveal">
   <div class="max-w-7xl mx-auto">
-    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#009999] to-teal-600 px-8 py-12 md:py-14">
+    <div class="relative overflow-hidden rounded-3xl px-8 py-12 md:py-14" style="background:linear-gradient(135deg,#00A896 0%,#00C9A7 60%,#1AFFCC 100%)">
 
       <!-- Background dots -->
       <div class="absolute inset-0 pointer-events-none"
@@ -855,10 +858,10 @@
 
     <div class="flex items-end justify-between mb-8">
       <div>
-        <span class="text-xs font-bold uppercase tracking-widest text-cyan-400">Stay Updated</span>
+        <span class="text-xs font-bold uppercase tracking-widest" style="color:#1AFFCC">Stay Updated</span>
         <h2 class="text-2xl sm:text-3xl font-black mt-1" style="color:#e6f1f1">EV News &amp; Guides</h2>
       </div>
-      <a href="<?= base_url('blog') ?>" class="text-sm font-semibold text-cyan-400 hover:text-cyan-300 transition-colors hidden sm:block">All articles →</a>
+      <a href="<?= base_url('blog') ?>" class="text-sm font-semibold transition-colors hidden sm:block" style="color:#1AFFCC">All articles →</a>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -880,13 +883,13 @@
 
         <div class="flex flex-col flex-1 p-5">
           <?php if (!empty($article['category'])): ?>
-          <span class="inline-block text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-3 w-fit" style="background:rgba(0,153,153,.15);color:#16c4c4">
+          <span class="inline-block text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-3 w-fit" style="background:rgba(0,168,150,.15);color:#1AFFCC">
             <?= esc($article['category']) ?>
           </span>
           <?php endif; ?>
 
           <h3 class="font-bold text-slate-100 text-base leading-snug line-clamp-2 mb-2 flex-1">
-            <a href="<?= base_url('blog/' . esc($article['slug'] ?? '')) ?>" class="hover:text-cyan-300 transition-colors">
+            <a href="<?= base_url('blog/' . esc($article['slug'] ?? '')) ?>" class="transition-colors hover:text-[#1AFFCC]">
               <?= esc($article['title'] ?? '') ?>
             </a>
           </h3>
@@ -902,7 +905,7 @@
             <?php if (!empty($article['read_time'])): ?>
             <span>· <?= (int)$article['read_time'] ?> min read</span>
             <?php endif; ?>
-            <a href="<?= base_url('blog/' . esc($article['slug'] ?? '')) ?>" class="ml-auto text-cyan-400 font-semibold hover:text-cyan-300 transition-colors">Read →</a>
+            <a href="<?= base_url('blog/' . esc($article['slug'] ?? '')) ?>" class="ml-auto font-semibold transition-colors" style="color:#1AFFCC">Read →</a>
           </div>
         </div>
       </article>
@@ -910,7 +913,7 @@
     </div>
 
     <div class="mt-6 text-center sm:hidden">
-      <a href="<?= base_url('blog') ?>" class="text-sm font-semibold text-cyan-400">View all articles →</a>
+      <a href="<?= base_url('blog') ?>" class="text-sm font-semibold" style="color:#1AFFCC">View all articles →</a>
     </div>
   </div>
 </section>
@@ -920,13 +923,13 @@
 <!-- ================================================================
   FOR EV BRANDS SECTION
 ================================================================ -->
-<section class="border-y py-16 reveal" style="background:#0f2125;border-top:1px solid rgba(0,153,153,.2);border-bottom:1px solid rgba(0,153,153,.2)">
+<section class="border-y py-16 reveal" style="background:#0f2125;border-top:1px solid rgba(0,168,150,.2);border-bottom:1px solid rgba(0,168,150,.2)">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid md:grid-cols-2 gap-10 items-center">
 
       <!-- Left -->
       <div class="flex items-start gap-4">
-        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0" style="background:#009999">&#128226;</div>
+        <div class="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-2xl flex-shrink-0" style="background:#00A896;box-shadow:0 4px 14px rgba(0,168,150,.35)">&#128226;</div>
         <div>
           <h2 class="text-2xl font-black text-slate-100 mb-2">For EV Brands</h2>
           <p class="text-slate-400 text-sm leading-relaxed">List your EVs on charj.in and get discovered by thousands of buyers who are actively looking for their next electric ride.</p>
@@ -943,7 +946,7 @@
           ['icon'=>'&#9889;',   'label'=>"Be Part of India's EV Future"],
         ];
         foreach ($brandBenefits as $b): ?>
-        <div class="flex flex-col items-center text-center rounded-xl p-4 shadow-sm" style="background:#152b30;border:1px solid rgba(0,153,153,.2)">
+        <div class="flex flex-col items-center text-center rounded-xl p-4 shadow-sm" style="background:#152b30;border:1px solid rgba(0,168,150,.2)">
           <span class="text-2xl mb-2" aria-hidden="true"><?= $b['icon'] ?></span>
           <span class="text-xs font-bold text-slate-100 leading-tight"><?= $b['label'] ?></span>
         </div>
@@ -964,13 +967,13 @@
   <div class="absolute inset-0 hero-grid pointer-events-none opacity-60" aria-hidden="true"></div>
 
   <!-- Glow -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-teal-500 opacity-[0.07] blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] opacity-[0.12] blur-3xl rounded-full pointer-events-none" style="background:radial-gradient(ellipse,#00A896,#1AFFCC,transparent)" aria-hidden="true"></div>
 
   <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Lightning icon -->
-    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-teal-500/20 border border-teal-500/30 mb-8">
-      <svg class="w-8 h-8 text-teal-400" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z"/></svg>
+    <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-8" style="background:rgba(0,168,150,.2);border:1px solid rgba(26,255,204,.25);box-shadow:0 0 24px rgba(0,168,150,.3)">
+      <svg class="w-8 h-8" style="color:#1AFFCC" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z"/></svg>
     </div>
 
     <h2 class="text-4xl sm:text-5xl font-black text-white leading-tight mb-3">
@@ -986,7 +989,10 @@
     <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
       <a href="<?= base_url('find-my-ev') ?>"
          onclick="charjTrack('final_cta_click',{button:'finder'})"
-         class="inline-flex items-center justify-center gap-2 bg-[#009999] hover:bg-[#16c4c4] text-white font-bold text-base px-8 py-4 rounded-full transition-all duration-200 shadow-xl hover:-translate-y-0.5">
+         class="inline-flex items-center justify-center gap-2 text-white font-bold text-base px-8 py-4 rounded-full transition-all duration-200 hover:-translate-y-0.5"
+         style="background:#00A896;box-shadow:0 0 30px rgba(0,168,150,.45)"
+         onmouseover="this.style.background='#1AFFCC';this.style.color='#003d36';this.style.boxShadow='0 0 40px rgba(26,255,204,.55)'"
+         onmouseout="this.style.background='#00A896';this.style.color='#fff';this.style.boxShadow='0 0 30px rgba(0,168,150,.45)'">
         Find My EV &#x2192;
       </a>
       <a href="<?= base_url('vehicles') ?>"
