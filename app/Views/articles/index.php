@@ -59,14 +59,14 @@
             <div class="flex flex-1 flex-col p-5">
                 <!-- Category badge -->
                 <?php if (!empty($article['category'])): ?>
-                <span class="mb-2 inline-block self-start rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide" style="background:rgba(0,153,153,.12);color:#16c4c4;border:1px solid rgba(0,153,153,.3)">
+                <span class="mb-2 inline-block self-start rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide" style="background:rgba(0,168,150,.12);color:#1AFFCC;border:1px solid rgba(0,168,150,.3)">
                     <?= esc($article['category']) ?>
                 </span>
                 <?php endif; ?>
 
                 <!-- Title -->
                 <h2 class="text-base font-bold leading-snug text-slate-100" style="color:#e6f1f1">
-                    <a href="/news/<?= esc($article['slug']) ?>" class="hover:text-cyan-300 transition-colors">
+                    <a href="/news/<?= esc($article['slug']) ?>" class="transition-colors hover:text-[#1AFFCC]">
                         <?= esc($article['title']) ?>
                     </a>
                 </h2>

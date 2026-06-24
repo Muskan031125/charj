@@ -12,9 +12,9 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
 <!-- Hero -->
 <div style="background:linear-gradient(135deg,#0a1628 0%,#0a2e2c 50%,#0a1628 100%)" class="relative overflow-hidden pt-28 pb-10 px-4">
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:24px 24px"></div>
-  <div class="absolute top-0 left-1/2 w-96 h-40 opacity-5 blur-3xl rounded-full pointer-events-none -translate-x-1/2" style="background:#009999"></div>
+  <div class="absolute top-0 left-1/2 w-96 h-40 opacity-5 blur-3xl rounded-full pointer-events-none -translate-x-1/2" style="background:#00A896"></div>
   <div class="relative max-w-7xl mx-auto text-center">
-    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-cyan-300 text-xs font-bold uppercase tracking-widest mb-4" style="background:rgba(0,153,153,.15);border:1px solid rgba(0,153,153,.3)">
+    <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-cyan-300 text-xs font-bold uppercase tracking-widest mb-4" style="background:rgba(0,168,150,.15);border:1px solid rgba(0,168,150,.3)">
       🏪 Authorised Dealers Network
     </div>
     <h1 class="text-3xl md:text-4xl font-black text-white leading-tight">EV Dealers in India</h1>
@@ -36,7 +36,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
             <a href="?city=<?= urlencode($slug) ?>"
                class="shrink-0 rounded-full px-4 py-1.5 text-sm font-semibold transition
                       <?= $active ? 'text-white' : 'text-slate-400 hover:text-cyan-300' ?>"
-               style="<?= !$active ? 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8ba3a3' : 'background:#009999' ?>">
+               style="<?= !$active ? 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#8ba3a3' : 'background:#00A896' ?>">
                 <?= esc($city) ?>
             </a>
             <?php endforeach; ?>
@@ -66,7 +66,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
                         <h2 class="text-base font-bold" style="color:#e6f1f1"><?= esc($dealer['name']) ?></h2>
                         <?php if (!empty($dealer['is_verified'])): ?>
                             <span title="Verified Dealer"
-                                  class="flex h-5 w-5 items-center justify-center rounded-full text-white" style="background:#009999"
+                                  class="flex h-5 w-5 items-center justify-center rounded-full text-white" style="background:#00A896"
                                   aria-label="Verified">
                                 <svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
@@ -76,7 +76,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
                     </div>
                     <p class="mt-0.5 text-xs text-slate-400"><?= esc($dealer['city']) ?>, <?= esc($dealer['state']) ?></p>
                 </div>
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black" style="background:rgba(0,153,153,.12);color:#16c4c4;border:1px solid rgba(0,153,153,.3)">
+                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-black" style="background:rgba(0,168,150,.12);color:#1AFFCC;border:1px solid rgba(0,168,150,.3)">
                     <?= mb_strtoupper(mb_substr($dealer['name'], 0, 2)) ?>
                 </div>
             </div>
@@ -93,7 +93,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
             <!-- Phone -->
             <?php if (!empty($dealer['phone'])): ?>
             <a href="tel:<?= esc($dealer['phone']) ?>"
-               class="mt-2 flex items-center gap-1.5 text-sm font-semibold text-cyan-400 hover:text-cyan-300">
+               class="mt-2 flex items-center gap-1.5 text-sm font-semibold transition-colors" style="color:#1AFFCC">
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                 </svg>
@@ -118,12 +118,12 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
             <!-- Action buttons -->
             <div class="mt-4 flex gap-2">
                 <a href="/dealers/<?= esc($dealer['slug'] ?? $dealer['id']) ?>"
-                   class="flex-1 rounded-xl px-4 py-2 text-center text-sm font-semibold transition" style="border:1px solid rgba(255,255,255,.07);color:#8ba3a3" onmouseenter="this.style.borderColor='rgba(0,153,153,.45)';this.style.color='#16c4c4'" onmouseleave="this.style.borderColor='rgba(255,255,255,.07)';this.style.color='#8ba3a3'">
+                   class="flex-1 rounded-xl px-4 py-2 text-center text-sm font-semibold transition" style="border:1px solid rgba(255,255,255,.07);color:#8ba3a3" onmouseenter="this.style.borderColor='rgba(0,168,150,.45)';this.style.color='#1AFFCC'" onmouseleave="this.style.borderColor='rgba(255,255,255,.07)';this.style.color='#8ba3a3'">
                     View Dealer
                 </a>
                 <a href="#lead-form"
                    onclick="document.querySelector('[name=city]').value='<?= esc($dealer['city']) ?>'"
-                   class="flex-1 rounded-xl px-4 py-2 text-center text-sm font-semibold text-white transition" style="background:#009999" onmouseenter="this.style.background='#16c4c4'" onmouseleave="this.style.background='#009999'">
+                   class="flex-1 rounded-xl px-4 py-2 text-center text-sm font-semibold text-white transition" style="background:#00A896" onmouseenter="this.style.background='#1AFFCC'" onmouseleave="this.style.background='#00A896'">
                     Send Enquiry
                 </a>
             </div>
@@ -138,7 +138,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
         <h3 class="mt-4 text-lg font-semibold text-slate-300">No dealers found</h3>
         <p class="mt-1 text-sm text-slate-400">
             Try a different city or
-            <a href="?city=all" class="font-medium text-cyan-400 hover:underline">view all dealers</a>.
+            <a href="?city=all" class="font-medium hover:underline" style="color:#1AFFCC">view all dealers</a>.
         </p>
     </div>
     <?php endif; ?>
@@ -150,7 +150,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
             List your dealership on Charj.in and get direct enquiries from EV buyers in your city. Free to list.
         </p>
         <a href="#lead-form"
-           class="mt-5 inline-block rounded-xl px-6 py-3 text-sm font-bold text-white transition" style="background:#009999" onmouseenter="this.style.background='#16c4c4'" onmouseleave="this.style.background='#009999'">
+           class="mt-5 inline-block rounded-xl px-6 py-3 text-sm font-bold text-white transition" style="background:#00A896" onmouseenter="this.style.background='#1AFFCC'" onmouseleave="this.style.background='#00A896'">
             Add Your Dealership
         </a>
     </div>

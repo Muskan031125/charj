@@ -14,14 +14,14 @@
 <div class="relative overflow-hidden pt-28 pb-14 px-4 text-center anim-grad"
      style="background:linear-gradient(135deg,#030712,#04302e,#0a2e2c,#030712)">
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1px);background-size:20px 20px"></div>
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-48 rounded-full pointer-events-none" style="background:#009999;opacity:.07;filter:blur(60px)"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-48 rounded-full pointer-events-none" style="background:#00A896;opacity:.07;filter:blur(60px)"></div>
   <div class="absolute bottom-0 right-0 w-64 h-32 rounded-full pointer-events-none" style="background:#38bdf8;opacity:.05;filter:blur(50px)"></div>
-  <div class="absolute top-8 left-16 w-2 h-2 rounded-full float-1 pointer-events-none" style="background:#009999;opacity:.35"></div>
+  <div class="absolute top-8 left-16 w-2 h-2 rounded-full float-1 pointer-events-none" style="background:#00A896;opacity:.35"></div>
   <div class="absolute top-16 right-24 w-1.5 h-1.5 rounded-full float-2 pointer-events-none" style="background:#38bdf8;opacity:.25"></div>
   <div class="absolute bottom-8 left-1/3 w-1 h-1 bg-white rounded-full float-3 pointer-events-none" style="opacity:.2"></div>
 
   <div class="relative">
-    <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest mb-4 text-cyan-300">
+    <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-widest mb-4 text-[#1AFFCC]">
       🏭 <?= count($brands ?? []) ?>+ Brands · India's Biggest EV Database
     </div>
     <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight leading-tight">
@@ -48,7 +48,7 @@
       <?php foreach ([['all','All'],['2-wheeler','2-Wheelers'],['3-wheeler','3-Wheelers'],['4-wheeler','4-Wheelers'],['commercial','Commercial']] as [$key,$label]): ?>
       <button @click="filter = '<?= $key ?>'"
               :class="filter === '<?= $key ?>' ? '' : ''"
-              :style="filter === '<?= $key ?>' ? 'background:#009999;color:#fff;border:1px solid #009999' : 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:<?= $key === 'all' ? '#16c4c4' : '#8ba3a3' ?>'"
+              :style="filter === '<?= $key ?>' ? 'background:#00A896;color:#fff;border:1px solid #00A896' : 'background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:<?= $key === 'all' ? '#1AFFCC' : '#8ba3a3' ?>'"
               class="flex-shrink-0 rounded-full px-4 py-2 text-xs font-semibold transition-all">
         <?= esc($label) ?>
       </button>
@@ -58,8 +58,8 @@
 
   <?php if (empty($brands)): ?>
   <div class="flex flex-col items-center justify-center py-24 text-center">
-    <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background:rgba(0,153,153,.12);color:#16c4c4;border:1px solid rgba(0,153,153,.3)">
-      <svg class="w-10 h-10" style="color:#16c4c4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+    <div class="w-20 h-20 rounded-full flex items-center justify-center mb-4" style="background:rgba(0,168,150,.12);color:#1AFFCC;border:1px solid rgba(0,168,150,.3)">
+      <svg class="w-10 h-10" style="color:#1AFFCC" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
       </svg>
     </div>
@@ -82,7 +82,7 @@
        x-show="search === '' || '<?= addslashes(strtolower($brand['name'])) ?>'.includes(search.toLowerCase())"
        class="group relative flex flex-col items-center text-center p-5 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2"
        style="background:#152b30;border:1px solid rgba(255,255,255,.07)"
-       onmouseenter="this.style.borderColor='rgba(0,153,153,.45)';this.style.boxShadow='0 20px 40px -12px rgba(0,0,0,.5),0 0 22px -4px rgba(0,153,153,.2)'"
+       onmouseenter="this.style.borderColor='rgba(26,255,204,.35)';this.style.boxShadow='0 20px 40px -12px rgba(0,0,0,.5),0 0 24px -4px rgba(0,168,150,.25)'"
        onmouseleave="this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
 
       <!-- Hover bg sweep -->
@@ -96,7 +96,7 @@
              class="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
         <div class="brand-card-fallback w-14 h-14 rounded-2xl items-center justify-center text-2xl font-black"
-             style="background:rgba(0,153,153,.12);color:#16c4c4;border:1px solid rgba(0,153,153,.3)">
+             style="background:rgba(0,168,150,.12);color:#1AFFCC;border:1px solid rgba(0,168,150,.3)">
           <?= $firstLetter ?>
         </div>
       </div>
@@ -104,13 +104,13 @@
       <span class="relative font-bold text-sm transition-colors duration-200" style="color:#e6f1f1"><?= $name ?></span>
 
       <?php if ($evCount > 0): ?>
-      <span class="relative mt-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full" style="background:rgba(0,153,153,.12);color:#16c4c4;border:1px solid rgba(0,153,153,.3)">
+      <span class="relative mt-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full" style="background:rgba(0,168,150,.12);color:#1AFFCC;border:1px solid rgba(0,168,150,.3)">
         ⚡ <?= $evCount ?> <?= $evCount === 1 ? 'EV' : 'EVs' ?>
       </span>
       <?php endif; ?>
 
       <div class="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-1 group-hover:translate-x-0">
-        <svg class="w-4 h-4" style="color:#16c4c4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4" style="color:#1AFFCC" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
       </div>
     </a>
     <?php endforeach; ?>
@@ -118,8 +118,8 @@
 
   <p x-show="search !== ''"
      class="text-center text-sm mt-10" style="color:#8ba3a3">
-    No brands match "<span x-text="search" style="color:#16c4c4"></span>".
-    <button @click="search=''" class="font-semibold hover:underline" style="color:#16c4c4">Clear</button>
+    No brands match "<span x-text="search" style="color:#1AFFCC"></span>".
+    <button @click="search=''" class="font-semibold hover:underline" style="color:#1AFFCC">Clear</button>
   </p>
 
   <?php endif; ?>
