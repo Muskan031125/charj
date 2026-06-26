@@ -15,20 +15,20 @@
 <?= $this->section('content') ?>
 
 <!-- Hero -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-green-950 to-teal-900 text-white pt-28 pb-16 px-4">
+<section class="hero-sm relative overflow-hidden bg-gradient-to-br from-slate-950 via-green-950 to-teal-900 text-white pt-28 pb-16 px-4">
   <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:28px 28px"></div>
   <div class="relative max-w-5xl mx-auto">
-    <div class="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-4 py-1.5 text-green-300 text-xs font-bold uppercase tracking-widest mb-6">
+    <div class="hero-badge inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1 text-green-300 text-xs font-bold uppercase tracking-widest mb-6">
       ⚡ India's Most Comprehensive Guide — 2025
     </div>
     <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-4 leading-tight">Home EV Charging —<br>Complete India Guide 2025</h1>
-    <p class="text-lg text-slate-300 max-w-3xl mb-8 leading-relaxed">
+    <p class="hero-desc text-lg text-slate-300 max-w-3xl mb-7 leading-relaxed">
       Everything about installing a home charger: cost, process, DISCOM approval, subsidy, and how to avoid the most common mistakes Indian EV owners make.
     </p>
-    <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-2">
       <?php foreach (['Charger Types','Cost Estimator','Apartment Guide','DISCOM Approval','FAQ'] as $tab): ?>
       <a href="#<?= strtolower(str_replace([' ','('],['','-'],$tab)) ?>"
-         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-4 py-2 text-sm font-semibold transition-colors">
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl px-3 py-1.5 text-xs sm:text-sm font-semibold transition-colors">
         <?= $tab ?>
       </a>
       <?php endforeach; ?>

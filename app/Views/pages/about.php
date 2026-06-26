@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 
 <!-- Hero -->
-<section class="pt-28 pb-20 text-center relative overflow-hidden anim-grad"
+<section class="hero-sm pt-28 pb-20 text-center relative overflow-hidden anim-grad"
          style="background:linear-gradient(135deg,#030712,#04302e,#0a2e2c,#030712)">
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1px);background-size:20px 20px"></div>
   <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-40 rounded-full pointer-events-none" style="background:#00A896;opacity:.07;filter:blur(60px)"></div>
@@ -10,12 +10,12 @@
   <div class="absolute bottom-12 left-16 w-1.5 h-1.5 rounded-full float-2 pointer-events-none" style="background:#38bdf8;opacity:.25"></div>
 
   <div class="mx-auto max-w-5xl px-4 relative">
-    <span class="inline-block rounded-full px-4 py-1.5 text-sm font-bold mb-4 text-cyan-300" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.25)">About Charj.in</span>
+    <span class="inline-block rounded-full px-3 py-1 text-xs sm:text-sm font-bold mb-2 sm:mb-4 text-cyan-300" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.25)">About Charj.in</span>
     <h1 class="mt-2 text-4xl font-black leading-tight md:text-5xl text-white">
       India's EV<br>
       <span class="neon-green">Decision Engine</span>
     </h1>
-    <p class="mx-auto mt-5 max-w-2xl text-lg" style="color:#8ba3a3">
+    <p class="mx-auto mt-2 sm:mt-4 max-w-2xl text-sm sm:text-base lg:text-lg" style="color:#8ba3a3">
       We help individuals, families and businesses cut through the noise and make confident, data-backed decisions when buying or switching to electric vehicles in India.
     </p>
   </div>
@@ -117,7 +117,7 @@
 <section class="py-14" style="background:#0f2125">
   <div class="mx-auto max-w-2xl px-4">
     <h2 class="mb-6 text-center text-2xl font-black" style="color:#e6f1f1">Talk to an EV Expert</h2>
-    <?= view('partials/lead_form') ?>
+    <?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?>
   </div>
 </section>
 

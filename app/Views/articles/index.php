@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 
 <!-- Hero -->
-<div style="background:linear-gradient(135deg,#0a1628 0%,#1a0a28 50%,#0a1628 100%)" class="relative overflow-hidden pt-28 pb-10 px-4">
+<div style="background:linear-gradient(135deg,#022C22 0%,#0A3D2B 50%,#022C22 100%)" class="hero-sm relative overflow-hidden pt-28 pb-10 px-4">
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:24px 24px"></div>
   <div class="absolute top-0 left-1/3 w-80 h-40 bg-purple-500 opacity-5 blur-3xl rounded-full pointer-events-none"></div>
   <div class="absolute bottom-0 right-1/4 w-64 h-32 bg-teal-400 opacity-5 blur-3xl rounded-full pointer-events-none"></div>
@@ -10,7 +10,7 @@
     <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-white/70 text-xs font-bold uppercase tracking-widest mb-4">
       📰 EV News & Insights
     </div>
-    <h1 class="text-3xl md:text-4xl font-black text-white leading-tight">EV News &amp; Updates</h1>
+    <h1 class="text-4xl lg:text-5xl font-black text-white leading-tight">EV News &amp; Updates</h1>
     <p class="mt-3 max-w-2xl text-base text-slate-400">
       Latest electric vehicle launches, reviews, government policies, subsidies and industry news from India.
     </p>
@@ -18,10 +18,10 @@
 </div>
 
 <!-- Articles grid -->
-<div class="mx-auto max-w-7xl px-4 py-10 pb-24">
+<div class="mx-auto max-w-7xl px-4 py-10 pb-20 md:pb-24">
 
     <?php if (!empty($articles)): ?>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sr-stagger">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sr-stagger">
         <?php foreach ($articles as $article): ?>
         <?php
             // Pick a gradient per category for placeholder image

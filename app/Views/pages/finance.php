@@ -276,7 +276,7 @@
         <div class="space-y-6">
             <!-- Lead form -->
             <div id="lead-form">
-                <?= view('partials/lead_form') ?>
+                <?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?>
             </div>
 
             <!-- Quick facts -->

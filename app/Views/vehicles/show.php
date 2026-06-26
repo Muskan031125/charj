@@ -154,6 +154,12 @@ $bestForRaw  = $v['best_for'] ?? '';
 $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 ?>
 
+<style>
+.scrollbar-hide{-ms-overflow-style:none;scrollbar-width:none}
+.scrollbar-hide::-webkit-scrollbar{display:none}
+[x-cloak]{display:none!important}
+</style>
+
 <!-- ── JSON-LD Product Schema ──────────────────────────────── -->
 <script type="application/ld+json">
 {
@@ -197,12 +203,13 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
     <div class="flex items-center gap-3 min-w-0">
       <span class="text-white font-bold text-sm sm:text-base truncate"><?= $vehicleName ?></span>
       <?php if ($startingPrice > 0): ?>
-      <span class="hidden sm:inline text-charj-green font-semibold text-sm"><?= fmtINRShort($startingPrice) ?></span>
+      <span class="hidden sm:inline font-black text-sm" style="color:#69FF97"><?= fmtINRShort($startingPrice) ?></span>
       <?php endif; ?>
     </div>
     <a
       href="#lead-form"
-      class="flex-shrink-0 bg-charj-green hover:bg-charj-green-dark text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors"
+      class="flex-shrink-0 text-sm font-black px-4 py-2 rounded-lg transition-all"
+      style="background:linear-gradient(135deg,#00E676,#00C060);color:#022C22"
       onclick="charjTrack('sticky_bar_cta_click',{vehicle:'<?= esc(addslashes($vehicleName)) ?>'})"
     >Get Best Price</a>
   </div>
@@ -228,152 +235,166 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 })();
 </script>
 
-<div class="bg-slate-50 min-h-screen">
+<div class="pt-16" style="background:#F5FFF7;min-height:100vh">
 
-<!-- ── SECTION 1: BREADCRUMB ──────────────────────────────── -->
-<div class="bg-white border-b border-slate-100">
+<!-- ── BREADCRUMB ─────────────────────────────────────────── -->
+<div style="background:#fff;border-bottom:1px solid rgba(0,230,118,.1)">
   <div class="max-w-7xl mx-auto px-4 py-3">
     <nav aria-label="Breadcrumb">
-      <ol class="flex items-center gap-1.5 text-sm text-slate-500 flex-wrap">
-        <li><a href="<?= base_url('/') ?>" class="hover:text-charj-green transition-colors">Home</a></li>
-        <li aria-hidden="true"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+      <ol class="flex items-center gap-1.5 text-xs font-semibold text-slate-400 flex-wrap">
+        <li><a href="<?= base_url('/') ?>" class="hover:text-charj-green transition-colors font-bold">Home</a></li>
+        <li aria-hidden="true" class="text-slate-300">›</li>
         <?php if (!empty($v['category_name'])): ?>
-        <li><a href="<?= base_url('vehicles?category=' . esc($v['category_slug'] ?? '')) ?>" class="hover:text-charj-green transition-colors"><?= esc($v['category_name']) ?></a></li>
-        <li aria-hidden="true"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+        <li><a href="<?= base_url('vehicles?category=' . esc($v['category_slug'] ?? '')) ?>" class="hover:text-charj-green transition-colors font-bold"><?= esc($v['category_name']) ?></a></li>
+        <li aria-hidden="true" class="text-slate-300">›</li>
         <?php endif; ?>
         <?php if (!empty($v['brand_name'])): ?>
-        <li><a href="<?= base_url('brands/' . esc($v['brand_slug'] ?? '')) ?>" class="hover:text-charj-green transition-colors"><?= esc($v['brand_name']) ?></a></li>
-        <li aria-hidden="true"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></li>
+        <li><a href="<?= base_url('brands/' . esc($v['brand_slug'] ?? '')) ?>" class="hover:text-charj-green transition-colors font-bold"><?= esc($v['brand_name']) ?></a></li>
+        <li aria-hidden="true" class="text-slate-300">›</li>
         <?php endif; ?>
-        <li class="text-slate-800 font-medium" aria-current="page"><?= esc($v['name'] ?? '') ?></li>
+        <li class="font-black" style="color:#022C22" aria-current="page"><?= esc($v['name'] ?? '') ?></li>
       </ol>
     </nav>
   </div>
 </div>
 
-<!-- ── SECTION 2: HERO ───────────────────────────────────── -->
-<section id="vehicle-hero" class="bg-gradient-to-br from-charj-navy via-[#0f2a45] to-[#1a3a55] text-white">
-  <div class="max-w-7xl mx-auto px-4 py-10 lg:py-14">
+<!-- ── HERO ──────────────────────────────────────────────── -->
+<section id="vehicle-hero" class="text-white relative overflow-hidden"
+         style="background:linear-gradient(135deg,#022C22 0%,#0A3D2B 55%,#0D4A2A 100%)">
+
+  <!-- subtle glow -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute top-0 right-0 w-96 h-96 opacity-10 rounded-full"
+         style="background:radial-gradient(circle,#00E676,transparent 70%);transform:translate(30%,-30%)"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 opacity-5 rounded-full"
+         style="background:radial-gradient(circle,#00E676,transparent 70%);transform:translate(-30%,30%)"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 py-6 lg:py-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
       <!-- Left: Info -->
       <div>
-        <!-- Badges -->
-        <div class="flex items-center flex-wrap gap-2 mb-4">
+        <!-- Badges row -->
+        <div class="flex items-center flex-wrap gap-2 mb-5">
           <?php if (!empty($v['brand_name'])): ?>
-          <span class="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+          <span class="inline-flex items-center gap-1.5 font-bold text-xs px-3 py-1 rounded-full"
+                style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#fff">
             <?php if (!empty($v['brand_logo'])): ?>
-            <img src="<?= esc($v['brand_logo']) ?>" alt="<?= esc($v['brand_name']) ?> logo" class="h-4 w-auto" loading="lazy">
+            <img src="<?= esc($v['brand_logo']) ?>" alt="" class="h-4 w-auto" loading="lazy">
             <?php endif; ?>
             <?= esc($v['brand_name']) ?>
           </span>
           <?php endif; ?>
           <?php if (!empty($v['category_name'])): ?>
-          <span class="inline-flex items-center gap-1 bg-charj-green/20 border border-charj-green/40 text-charj-green text-xs font-semibold px-3 py-1 rounded-full">
+          <span class="inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full"
+                style="background:rgba(0,230,118,.18);border:1px solid rgba(0,230,118,.35);color:#69FF97">
             <?= esc($v['category_icon'] ?? '⚡') ?> <?= esc($v['category_name']) ?>
           </span>
           <?php endif; ?>
           <?php if (!empty($v['featured'])): ?>
-          <span class="bg-amber-400 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">★ Featured</span>
+          <span class="bg-amber-400 text-amber-900 text-xs font-black px-3 py-1 rounded-full">★ Featured</span>
           <?php endif; ?>
         </div>
 
         <!-- Title -->
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight mb-3">
+        <h1 class="font-black leading-tight tracking-tight mb-3"
+            style="font-size:clamp(2rem,5vw,3.25rem);color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.25)">
           <?= esc($v['name'] ?? '') ?>
         </h1>
 
         <!-- Rating -->
         <?php if ($rating > 0): ?>
-        <div class="flex items-center flex-wrap gap-3 mb-4">
-          <div class="flex items-center gap-2">
+        <div class="flex items-center flex-wrap gap-3 mb-5">
+          <div class="flex items-center gap-1.5">
             <?= starIcons($rating) ?>
-            <span class="text-white font-bold text-lg"><?= number_format($rating, 1) ?>/5</span>
+            <span class="font-black text-base text-white"><?= number_format($rating, 1) ?>/5</span>
           </div>
-          <span class="text-slate-300 text-sm"><?= $reviewCount ?> expert &amp; owner reviews</span>
-          <a href="#tab-reviews" class="text-charj-green text-sm hover:underline font-medium">Read reviews →</a>
+          <span class="text-sm font-semibold" style="color:rgba(255,255,255,.55)"><?= $reviewCount ?> reviews</span>
+          <a href="#tab-reviews" class="text-sm font-bold hover:underline" style="color:#69FF97">Read reviews →</a>
         </div>
         <?php endif; ?>
 
-        <!-- Price -->
-        <div class="bg-white/8 rounded-2xl border border-white/15 p-4 mb-5">
-          <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+        <!-- Price box -->
+        <div class="rounded-2xl p-5 mb-5" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px)">
+          <div class="flex flex-wrap items-end gap-x-8 gap-y-3">
             <?php if ($startingPrice > 0): ?>
             <div>
-              <p class="text-slate-400 text-xs font-medium uppercase tracking-wide">Ex-showroom</p>
-              <p class="text-2xl font-extrabold text-white"><?= fmtINRShort($startingPrice) ?></p>
+              <p class="text-xs font-bold uppercase tracking-widest mb-0.5" style="color:rgba(255,255,255,.5)">Ex-showroom</p>
+              <p class="font-black text-white leading-none" style="font-size:clamp(1.5rem,5vw,2rem)"><?= fmtINRShort($startingPrice) ?></p>
             </div>
             <?php endif; ?>
             <?php if ($onRoadPrice > 0 && $onRoadPrice != $startingPrice): ?>
             <div>
-              <p class="text-slate-400 text-xs font-medium uppercase tracking-wide">On-road Delhi ~</p>
-              <p class="text-xl font-bold text-charj-green"><?= fmtINRShort($onRoadPrice) ?></p>
+              <p class="text-xs font-bold uppercase tracking-widest mb-0.5" style="color:rgba(255,255,255,.5)">On-road (Delhi) ~</p>
+              <p class="text-2xl font-black leading-none" style="color:#69FF97"><?= fmtINRShort($onRoadPrice) ?></p>
             </div>
             <?php endif; ?>
           </div>
-          <p class="text-slate-400 text-xs mt-2">* Ex-showroom price. On-road price varies by city, taxes and subsidies.</p>
+          <p class="text-xs font-semibold mt-3" style="color:rgba(255,255,255,.35)">* On-road price varies by city, RTO & subsidies</p>
         </div>
 
-        <!-- Quick spec pills -->
+        <!-- Spec pills -->
         <div class="flex flex-wrap gap-2 mb-6">
-          <?php if ($claimedRange > 0): ?>
-          <div class="flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm font-semibold">
-            <span class="text-charj-green">📏</span> <?= $claimedRange ?> km range
+          <?php
+          $pills = [];
+          if ($claimedRange > 0) $pills[] = ['📏', $claimedRange . ' km range'];
+          if ($battery > 0)      $pills[] = ['🔋', $battery . ' kWh battery'];
+          if (!empty($chargingTime)) $pills[] = ['⚡', esc($chargingTime) . ' charge'];
+          if (!empty($topSpeed) && $topSpeed !== '—') $pills[] = ['🏎️', esc($topSpeed) . ' kmph'];
+          foreach ($pills as $pill):
+          ?>
+          <div class="flex items-center gap-2 font-bold text-sm rounded-full px-4 py-2"
+               style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff">
+            <span><?= $pill[0] ?></span><?= $pill[1] ?>
           </div>
-          <?php endif; ?>
-          <?php if ($battery > 0): ?>
-          <div class="flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm font-semibold">
-            <span class="text-charj-green">🔋</span> <?= $battery ?> kWh battery
-          </div>
-          <?php endif; ?>
-          <?php if (!empty($chargingTime)): ?>
-          <div class="flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm font-semibold">
-            <span class="text-charj-green">⚡</span> <?= esc($chargingTime) ?> charge
-          </div>
-          <?php endif; ?>
+          <?php endforeach; ?>
         </div>
 
         <!-- CTA buttons -->
         <div class="flex flex-wrap gap-3">
-          <a
-            href="#lead-form"
-            class="inline-flex items-center gap-2 bg-charj-green hover:bg-charj-green-dark text-white font-bold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-green-900/30"
-            onclick="charjTrack('hero_get_price_click',{vehicle:'<?= esc(addslashes($vehicleName)) ?>'})"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <a href="#lead-form"
+             class="inline-flex items-center gap-2 font-black text-sm px-6 py-3.5 rounded-xl transition-all"
+             style="background:linear-gradient(135deg,#00E676,#00C060);color:#022C22;box-shadow:0 4px 18px rgba(0,230,118,.35)"
+             onmouseover="this.style.boxShadow='0 6px 24px rgba(0,230,118,.55)'"
+             onmouseout="this.style.boxShadow='0 4px 18px rgba(0,230,118,.35)'"
+             onclick="charjTrack('hero_get_price_click',{vehicle:'<?= esc(addslashes($vehicleName)) ?>'})">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Get Best Price
           </a>
-          <a
-            href="#lead-form"
-            x-data
-            @click="$dispatch('set-lead-type','book_test_ride')"
-            class="inline-flex items-center gap-2 border-2 border-white/40 hover:border-white text-white font-bold px-6 py-3 rounded-xl transition-colors"
-            onclick="charjTrack('hero_test_ride_click',{vehicle:'<?= esc(addslashes($vehicleName)) ?>'})"
-          >
+          <a href="#lead-form" x-data @click="$dispatch('set-lead-type','book_test_ride')"
+             class="inline-flex items-center gap-2 font-black text-sm px-6 py-3.5 rounded-xl transition-all"
+             style="border:2px solid rgba(255,255,255,.35);color:#fff"
+             onmouseover="this.style.borderColor='rgba(255,255,255,.7)'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,.35)'"
+             onclick="charjTrack('hero_test_ride_click',{vehicle:'<?= esc(addslashes($vehicleName)) ?>'})">
             🏍️ Book Test Ride
           </a>
-          <a
-            href="<?= base_url('compare') ?>"
-            class="inline-flex items-center gap-2 border-2 border-white/30 hover:border-white/60 text-slate-300 hover:text-white font-semibold px-5 py-3 rounded-xl transition-colors"
-          >
+          <a href="<?= base_url('compare') ?>"
+             class="inline-flex items-center gap-2 font-bold text-sm px-5 py-3.5 rounded-xl transition-all"
+             style="border:2px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7)"
+             onmouseover="this.style.borderColor='rgba(255,255,255,.5)';this.style.color='#fff'"
+             onmouseout="this.style.borderColor='rgba(255,255,255,.2)';this.style.color='rgba(255,255,255,.7)'">
             ⚖️ Compare
           </a>
         </div>
       </div><!-- /left -->
 
-      <!-- Right: Image -->
+      <!-- Right: Vehicle image -->
       <div class="flex items-center justify-center">
         <?php if (!empty($v['image_url'])): ?>
-        <img
-          src="<?= esc($v['image_url']) ?>"
-          alt="<?= $vehicleName ?>"
-          class="max-h-72 lg:max-h-96 w-auto object-contain drop-shadow-2xl"
-          loading="eager"
-        >
+        <div class="relative">
+          <div class="absolute inset-0 rounded-3xl opacity-20" style="background:radial-gradient(circle,#00E676,transparent 60%)"></div>
+          <img src="<?= esc($v['image_url']) ?>" alt="<?= $vehicleName ?>"
+               class="relative max-h-72 lg:max-h-96 w-auto object-contain"
+               style="filter:drop-shadow(0 16px 40px rgba(0,0,0,.5))"
+               loading="eager">
+        </div>
         <?php else: ?>
-        <div class="w-full max-w-sm aspect-[4/3] bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-3xl flex flex-col items-center justify-center gap-4">
+        <div class="w-full max-w-sm aspect-video rounded-3xl flex flex-col items-center justify-center gap-4"
+             style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15)">
           <span class="text-8xl">⚡</span>
-          <p class="text-slate-400 font-semibold text-lg"><?= esc($v['name'] ?? '') ?></p>
+          <p class="font-bold text-lg" style="color:rgba(255,255,255,.6)"><?= esc($v['name'] ?? '') ?></p>
         </div>
         <?php endif; ?>
       </div>
@@ -382,28 +403,34 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
   </div>
 </section>
 
-<!-- ── SECTION 3: KEY SPECS GRID ────────────────────────── -->
-<section class="bg-white border-b border-slate-100 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 py-6">
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+<!-- ── KEY SPECS STRIP ───────────────────────────────────── -->
+<section style="background:#fff;border-bottom:2px solid rgba(0,230,118,.1);box-shadow:0 2px 12px rgba(0,200,100,.06)">
+  <div class="max-w-7xl mx-auto px-4 py-5">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
 
       <?php
       $keySpecs = [
-        ['icon' => '💰', 'label' => 'Starting Price',   'value' => fmtINRShort($startingPrice)],
-        ['icon' => '🔋', 'label' => 'Battery',          'value' => $battery > 0 ? $battery . ' kWh' : '—'],
-        ['icon' => '📏', 'label' => 'Real Range',        'value' => $realRange > 0 ? $realRange . ' km' : ($claimedRange > 0 ? '~' . (int)round($claimedRange * 0.85) . ' km' : '—')],
-        ['icon' => '⚡', 'label' => 'Charging Time',    'value' => esc($chargingTime ?: '—')],
-        ['icon' => '🏎', 'label' => 'Top Speed',        'value' => $topSpeed != '—' ? esc($topSpeed) . ' kmph' : '—'],
-        ['icon' => '💪', 'label' => 'Motor Power',      'value' => $motorPower != '—' ? esc($motorPower) : '—'],
-        ['icon' => '🪑', 'label' => 'Seating',          'value' => $seating != '—' ? esc($seating) . ' persons' : '—'],
-        ['icon' => '🛡️', 'label' => 'Warranty',         'value' => esc($warranty)],
+        ['icon' => '💰', 'label' => 'Starting Price',   'value' => fmtINRShort($startingPrice),  'accent' => '#00C060'],
+        ['icon' => '🔋', 'label' => 'Battery',          'value' => $battery > 0 ? $battery . ' kWh' : '—', 'accent' => '#0EA5E9'],
+        ['icon' => '📏', 'label' => 'Real-World Range',  'value' => $realRange > 0 ? '~'.$realRange.' km' : ($claimedRange > 0 ? '~'.(int)round($claimedRange*.85).' km' : '—'), 'accent' => '#10B981'],
+        ['icon' => '⚡', 'label' => 'Charging Time',    'value' => esc($chargingTime ?: '—'),    'accent' => '#F59E0B'],
+        ['icon' => '🏎️', 'label' => 'Top Speed',        'value' => $topSpeed != '—' ? esc($topSpeed).' kmph' : '—', 'accent' => '#8B5CF6'],
+        ['icon' => '💡', 'label' => 'Motor Power',      'value' => $motorPower != '—' ? esc($motorPower) : '—', 'accent' => '#EC4899'],
+        ['icon' => '🪑', 'label' => 'Seating',          'value' => $seating != '—' ? esc($seating).' persons' : '—', 'accent' => '#64748B'],
+        ['icon' => '🛡️', 'label' => 'Warranty',         'value' => esc($warranty),               'accent' => '#00C060'],
       ];
       foreach ($keySpecs as $spec): ?>
-      <div class="flex items-start gap-3 p-4 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors group">
-        <span class="text-2xl flex-shrink-0 mt-0.5" aria-hidden="true"><?= $spec['icon'] ?></span>
-        <div>
-          <p class="text-xs text-slate-500 font-medium uppercase tracking-wide"><?= $spec['label'] ?></p>
-          <p class="text-slate-900 font-bold text-sm sm:text-base mt-0.5"><?= $spec['value'] ?></p>
+      <div class="flex items-center gap-3 p-4 rounded-2xl transition-all cursor-default"
+           style="background:#F5FFF7;border:1.5px solid rgba(0,230,118,.1)"
+           onmouseover="this.style.background='#fff';this.style.boxShadow='0 4px 16px rgba(0,200,100,.12)';this.style.borderColor='rgba(0,230,118,.25)'"
+           onmouseout="this.style.background='#F5FFF7';this.style.boxShadow='';this.style.borderColor='rgba(0,230,118,.1)'">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-xl"
+             style="background:rgba(0,230,118,.1)">
+          <?= $spec['icon'] ?>
+        </div>
+        <div class="min-w-0">
+          <p class="text-[10px] font-black uppercase tracking-widest truncate" style="color:#94A3B8"><?= $spec['label'] ?></p>
+          <p class="font-black text-sm sm:text-base mt-0.5 truncate" style="color:#0F172A"><?= $spec['value'] ?></p>
         </div>
       </div>
       <?php endforeach; ?>
@@ -441,18 +468,19 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
       >
 
         <!-- Sticky Tab Bar -->
-        <div class="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm -mx-0 mb-6 overflow-x-auto">
-          <div class="flex min-w-max sm:min-w-0">
+        <div class="sticky top-16 z-20 mb-6 overflow-x-auto scrollbar-hide rounded-2xl"
+             style="background:#fff;border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.08)">
+          <div class="flex min-w-max">
             <template x-for="tab in tabs" :key="tab">
               <button
                 type="button"
-                @click="activeTab = tab; document.getElementById('tab-section').scrollIntoView({behavior:'smooth',block:'start'})"
+                @click="activeTab = tab; $nextTick(()=>{ document.getElementById('tab-section').scrollIntoView({behavior:'smooth',block:'start'}) })"
                 :id="'tab-' + tab"
                 :aria-selected="activeTab === tab"
-                :class="activeTab === tab
-                  ? 'border-b-2 border-charj-green text-charj-green bg-green-50 font-semibold'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'"
-                class="px-4 sm:px-5 py-3.5 text-sm whitespace-nowrap transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
+                :style="activeTab === tab
+                  ? 'color:#022C22;background:linear-gradient(to bottom,#F0FFF4,#E6FFED);border-bottom:3px solid #00C060;font-weight:800'
+                  : 'color:#475569;background:transparent;border-bottom:3px solid transparent;font-weight:700'"
+                class="px-4 sm:px-5 py-3.5 text-xs sm:text-sm whitespace-nowrap transition-all focus:outline-none uppercase tracking-wide"
                 x-text="tabLabels[tab]"
                 role="tab"
               ></button>
@@ -464,8 +492,8 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <div x-show="activeTab === 'overview'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-overview">
 
           <!-- Description -->
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
-            <h2 class="text-xl font-bold text-slate-900 mb-4">About the <?= esc($v['name'] ?? '') ?></h2>
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
+            <h2 class="text-xl font-black mb-4" style="color:#0F172A">About the <?= esc($v['name'] ?? '') ?></h2>
             <div class="prose prose-slate max-w-none text-slate-700 leading-relaxed">
               <?php if (!empty($v['full_description'])): ?>
                 <?= $v['full_description'] ?>
@@ -479,7 +507,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 
           <!-- Best For -->
           <?php if (!empty($bestForTags)): ?>
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
             <h3 class="text-base font-bold text-slate-900 mb-3">Best For</h3>
             <div class="flex flex-wrap gap-2">
               <?php
@@ -504,34 +532,35 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
           <!-- Pros & Cons -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             <!-- Pros -->
-            <div class="bg-green-50 rounded-2xl border border-green-200 p-5">
-              <h3 class="text-base font-bold text-green-800 mb-3 flex items-center gap-2">
-                <span class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="rounded-2xl p-5" style="background:linear-gradient(135deg,#F0FFF4,#E6FFED);border:1.5px solid rgba(0,200,100,.2)">
+              <h3 class="text-sm font-black mb-3 flex items-center gap-2 uppercase tracking-wide" style="color:#166534">
+                <span class="w-7 h-7 rounded-xl flex items-center justify-center flex-shrink-0"
+                      style="background:linear-gradient(135deg,#00E676,#00C060)">
                   <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                 </span>
                 Why We Love It
               </h3>
               <ul class="space-y-2.5">
                 <?php foreach (array_slice($prosJson, 0, 4) as $pro): ?>
-                <li class="flex items-start gap-2 text-sm text-green-900">
-                  <span class="text-green-500 mt-0.5 flex-shrink-0">✓</span>
+                <li class="flex items-start gap-2 text-sm font-semibold" style="color:#14532D">
+                  <span class="font-black mt-0.5 flex-shrink-0" style="color:#00C060">✓</span>
                   <span><?= esc($pro) ?></span>
                 </li>
                 <?php endforeach; ?>
               </ul>
             </div>
             <!-- Cons -->
-            <div class="bg-red-50 rounded-2xl border border-red-200 p-5">
-              <h3 class="text-base font-bold text-red-800 mb-3 flex items-center gap-2">
-                <span class="w-6 h-6 bg-red-400 rounded-full flex items-center justify-center flex-shrink-0">
+            <div class="rounded-2xl p-5" style="background:linear-gradient(135deg,#FFF5F5,#FFE8E8);border:1.5px solid rgba(239,68,68,.2)">
+              <h3 class="text-sm font-black mb-3 flex items-center gap-2 uppercase tracking-wide" style="color:#991B1B">
+                <span class="w-7 h-7 rounded-xl bg-red-400 flex items-center justify-center flex-shrink-0">
                   <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
                 </span>
                 Watch Out For
               </h3>
               <ul class="space-y-2.5">
                 <?php foreach (array_slice($consJson, 0, 3) as $con): ?>
-                <li class="flex items-start gap-2 text-sm text-red-900">
-                  <span class="text-red-400 mt-0.5 flex-shrink-0">✗</span>
+                <li class="flex items-start gap-2 text-sm font-semibold" style="color:#7F1D1D">
+                  <span class="font-black mt-0.5 flex-shrink-0 text-red-400">✗</span>
                   <span><?= esc($con) ?></span>
                 </li>
                 <?php endforeach; ?>
@@ -540,13 +569,17 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
           </div>
 
           <!-- Expert Verdict -->
-          <div class="bg-gradient-to-br from-charj-navy to-[#1a3a55] rounded-2xl p-6 text-white mb-6">
-            <div class="flex items-start gap-4">
-              <div class="flex-shrink-0 w-12 h-12 bg-charj-green rounded-xl flex items-center justify-center">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z"/></svg>
+          <div class="rounded-2xl p-6 text-white mb-6 relative overflow-hidden"
+               style="background:linear-gradient(135deg,#022C22,#0A3D2B)">
+            <div class="absolute top-0 right-0 w-48 h-48 opacity-10 pointer-events-none"
+                 style="background:radial-gradient(circle,#00E676,transparent 70%);transform:translate(30%,-30%)"></div>
+            <div class="relative flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center"
+                   style="background:linear-gradient(135deg,#00E676,#00C060)">
+                <svg class="w-6 h-6" style="color:#022C22" fill="currentColor" viewBox="0 0 24 24"><path d="M13 2L4.09 12.97H11L10 22L20.91 11.03H14L13 2Z"/></svg>
               </div>
-              <div>
-                <h3 class="text-lg font-bold mb-2">Expert Verdict</h3>
+              <div class="flex-1">
+                <h3 class="text-base font-black mb-2 uppercase tracking-wide" style="color:#69FF97">Expert Verdict</h3>
                 <?php if (!empty($v['expert_review'])): ?>
                 <p class="text-slate-200 leading-relaxed text-sm"><?= esc($v['expert_review']) ?></p>
                 <?php else: ?>
@@ -562,8 +595,8 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
                 <?php if ($rating > 0): ?>
                 <div class="flex items-center gap-2 mt-3">
                   <?= starIcons($rating) ?>
-                  <span class="font-bold text-charj-green"><?= number_format($rating, 1) ?>/5</span>
-                  <span class="text-slate-400 text-sm">— Charj.in Expert Score</span>
+                  <span class="font-black" style="color:#00E676"><?= number_format($rating, 1) ?>/5</span>
+                  <span class="text-sm font-semibold" style="color:rgba(255,255,255,.45)">— Charj.in Expert Score</span>
                 </div>
                 <?php endif; ?>
               </div>
@@ -600,10 +633,10 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <div x-show="activeTab === 'realworld'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-realworld">
 
           <!-- Real-world Range -->
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
             <div class="flex items-start justify-between flex-wrap gap-3 mb-5">
               <div>
-                <h2 class="text-xl font-bold text-slate-900">Real-World Range Analysis</h2>
+                <h2 class="text-xl font-black" style="color:#0F172A">Real-World Range Analysis</h2>
                 <p class="text-sm text-slate-500 mt-1">Claimed range: <strong><?= $claimedRange ?> km</strong> · Based on Autocar India methodology + owner reports</p>
               </div>
               <span class="bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold px-3 py-1.5 rounded-full">India-specific data</span>
@@ -647,8 +680,8 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
           </div>
 
           <!-- Charging Performance -->
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
-            <h2 class="text-xl font-bold text-slate-900 mb-5">Charging Performance</h2>
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
+            <h2 class="text-xl font-black mb-5" style="color:#0F172A">Charging Performance</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <?php if ($chargeTime3kw): ?>
               <div class="bg-slate-50 rounded-xl p-4 text-center border border-slate-200">
@@ -685,10 +718,10 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
           </div>
 
           <!-- Efficiency Tip -->
-          <div class="bg-charj-green/10 border border-charj-green/30 rounded-2xl p-5 flex items-start gap-4">
+          <div class="rounded-2xl p-5 flex items-start gap-4" style="background:rgba(0,230,118,.08);border:1.5px solid rgba(0,230,118,.2)">
             <span class="text-3xl flex-shrink-0">💡</span>
             <div>
-              <h3 class="font-bold text-green-900 mb-1">Efficiency Tip</h3>
+              <h3 class="font-black text-sm mb-1 uppercase tracking-wide" style="color:#166534">Efficiency Tip</h3>
               <p class="text-green-800 text-sm leading-relaxed">
                 The <?= esc($v['name'] ?? 'this EV') ?> is most efficient at <strong>40–60 kmph in city traffic</strong> — regenerative braking is most effective at these speeds, meaning you recharge while slowing down. Avoid aggressive acceleration and maintain steady speeds on highways for best range.
                 <?php if ($battery > 0): ?>
@@ -705,7 +738,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 
           <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden mb-6">
             <div class="p-5 border-b border-slate-100">
-              <h2 class="text-xl font-bold text-slate-900">Complete Specifications</h2>
+              <h2 class="text-xl font-black" style="color:#0F172A">Complete Specifications</h2>
             </div>
 
             <?php
@@ -785,15 +818,15 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <div x-show="activeTab === 'charging'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-charging">
 
           <!-- Connector info -->
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
-            <h2 class="text-xl font-bold text-slate-900 mb-4">Charging Guide</h2>
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
+            <h2 class="text-xl font-black mb-4" style="color:#0F172A">Charging Guide</h2>
 
             <div class="flex items-center gap-3 mb-5">
               <span class="text-3xl">🔌</span>
               <div>
                 <p class="text-xs text-slate-500 font-medium uppercase tracking-wide">Connector Type</p>
                 <div class="flex items-center gap-2 mt-1">
-                  <span class="bg-charj-navy text-white text-sm font-bold px-4 py-1.5 rounded-full"><?= esc($connectorType) ?></span>
+                  <span class="text-white text-sm font-black px-4 py-1.5 rounded-full" style="background:#022C22"><?= esc($connectorType) ?></span>
                   <?php if ($fastSupported): ?>
                   <span class="bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold px-3 py-1 rounded-full">⚡ Fast Charging Supported</span>
                   <?php endif; ?>
@@ -827,7 +860,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 
           <!-- Charging Cost Calculator -->
           <div
-            class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6"
+            class="bg-white rounded-2xl p-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)"
             x-data="{
               kmNeeded: 100,
               elecRate: 8,
@@ -880,10 +913,10 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
                 <p class="text-2xl font-extrabold text-red-700 mt-1">₹<span x-text="petrolTotalCost"></span></p>
                 <p class="text-xs text-red-500 mt-0.5">for <span x-text="kmNeeded"></span> km</p>
               </div>
-              <div class="bg-charj-navy rounded-xl p-4 text-center">
-                <p class="text-xs text-slate-300 font-semibold uppercase tracking-wide">You Save</p>
-                <p class="text-2xl font-extrabold text-charj-green mt-1">₹<span x-text="savings"></span></p>
-                <p class="text-xs text-slate-400 mt-0.5">per month</p>
+              <div class="rounded-xl p-4 text-center" style="background:linear-gradient(135deg,#022C22,#0A3D2B)">
+                <p class="text-xs font-black uppercase tracking-wide" style="color:rgba(255,255,255,.5)">You Save</p>
+                <p class="text-2xl font-black mt-1" style="color:#00E676">₹<span x-text="savings"></span></p>
+                <p class="text-xs mt-0.5" style="color:rgba(255,255,255,.4)">per month</p>
               </div>
             </div>
             <p class="text-xs text-slate-400 mt-3 text-center">* Estimates based on vehicle efficiency. Actual savings may vary.</p>
@@ -894,8 +927,8 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <!-- ── TAB: OWNERSHIP COST ─────────────────────────── -->
         <div x-show="activeTab === 'ownership'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-ownership">
 
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
-            <h2 class="text-xl font-bold text-slate-900 mb-1">5-Year Ownership Cost Estimate</h2>
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
+            <h2 class="text-xl font-black mb-1" style="color:#0F172A">5-Year Ownership Cost Estimate</h2>
             <p class="text-sm text-slate-500 mb-6">Assuming: 9% loan rate, 36-month tenure, 20% down payment, 40 km/day, ₹8/kWh electricity rate</p>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
@@ -920,7 +953,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
             </div>
 
             <!-- Total monthly cost -->
-            <div class="bg-charj-navy rounded-2xl p-5 text-white text-center mb-5">
+            <div class="rounded-2xl p-5 text-white text-center mb-5" style="background:linear-gradient(135deg,#022C22,#0A3D2B)">
               <p class="text-slate-300 text-sm font-medium uppercase tracking-wider mb-1">Total Monthly Cost of Ownership</p>
               <p class="text-4xl font-extrabold text-white">₹<?= number_format($monthlyTotal) ?></p>
               <p class="text-slate-400 text-xs mt-2">EMI + Electricity + Maintenance + Insurance</p>
@@ -950,7 +983,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
                 <h3 class="font-bold text-slate-900">Check Your Subsidy</h3>
                 <p class="text-sm text-slate-500 mt-0.5">FAME II + state subsidy could reduce your cost by ₹10,000–₹1.5 lakh</p>
               </div>
-              <a href="<?= base_url('subsidy-calculator') ?>" class="flex-shrink-0 bg-charj-green hover:bg-charj-green-dark text-white font-bold px-5 py-2.5 rounded-xl transition-colors text-sm">
+              <a href="<?= base_url('subsidy-calculator') ?>" class="flex-shrink-0 text-white font-black px-5 py-2.5 rounded-xl transition-all text-sm" style="background:linear-gradient(135deg,#00C060,#009944)" onmouseover="this.style.boxShadow='0 4px 14px rgba(0,200,100,.4)'" onmouseout="this.style.boxShadow=''">
                 Check Subsidy →
               </a>
             </div>
@@ -961,12 +994,15 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <!-- ── TAB: REVIEWS ───────────────────────────────── -->
         <div x-show="activeTab === 'reviews'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-reviews" id="tab-reviews">
 
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
             <div class="flex items-center justify-between flex-wrap gap-3 mb-6">
-              <h2 class="text-xl font-bold text-slate-900">Owner Reviews</h2>
+              <h2 class="text-xl font-black" style="color:#0F172A">Owner Reviews</h2>
               <a
                 href="<?= base_url('reviews/submit/' . esc($v['slug'] ?? '')) ?>"
-                class="inline-flex items-center gap-2 bg-charj-navy hover:bg-charj-navy-light text-white text-sm font-bold px-4 py-2 rounded-xl transition-colors"
+                class="inline-flex items-center gap-2 text-white text-sm font-black px-4 py-2 rounded-xl transition-all"
+                style="background:linear-gradient(135deg,#00C060,#009944)"
+                onmouseover="this.style.boxShadow='0 4px 14px rgba(0,200,100,.4)'"
+                onmouseout="this.style.boxShadow=''"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 Write a Review
@@ -1039,7 +1075,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 
             <?php if (count($reviews) > 5): ?>
             <div class="text-center mt-6">
-              <a href="<?= base_url('vehicles/' . esc($v['slug'] ?? '') . '/reviews') ?>" class="inline-flex items-center gap-2 border-2 border-slate-300 hover:border-charj-green text-slate-700 hover:text-charj-green font-semibold px-6 py-2.5 rounded-xl transition-colors text-sm">
+              <a href="<?= base_url('vehicles/' . esc($v['slug'] ?? '') . '/reviews') ?>" class="inline-flex items-center gap-2 font-black px-6 py-2.5 rounded-xl transition-all text-sm" style="border:2px solid rgba(0,200,100,.3);color:#00C060" onmouseover="this.style.borderColor='#00C060';this.style.background='rgba(0,200,100,.05)'" onmouseout="this.style.borderColor='rgba(0,200,100,.3)';this.style.background=''">
                 View all <?= count($reviews) ?> reviews →
               </a>
             </div>
@@ -1053,7 +1089,8 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
               <p class="text-slate-500 text-sm mb-6">Share your ownership experience and help other buyers make the right choice.</p>
               <a
                 href="<?= base_url('reviews/submit/' . esc($v['slug'] ?? '')) ?>"
-                class="inline-flex items-center gap-2 bg-charj-green hover:bg-charj-green-dark text-white font-bold px-6 py-3 rounded-xl transition-colors"
+                class="inline-flex items-center gap-2 text-white font-black px-6 py-3 rounded-xl transition-all"
+                style="background:linear-gradient(135deg,#00C060,#009944)"
               >
                 Write the First Review →
               </a>
@@ -1066,10 +1103,10 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <!-- ── TAB: OWNER Q&A ────────────────────────────── -->
         <div x-show="activeTab === 'ownerqa'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-ownerqa">
 
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-6">
+          <div class="bg-white rounded-2xl p-6 mb-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
             <div class="flex items-center justify-between flex-wrap gap-3 mb-6">
               <div>
-                <h2 class="text-xl font-bold text-slate-900">Owner Questions &amp; Answers</h2>
+                <h2 class="text-xl font-black" style="color:#0F172A">Owner Questions &amp; Answers</h2>
                 <p class="text-sm text-slate-500 mt-1">Real questions from prospective buyers, answered by owners</p>
               </div>
               <span class="bg-green-50 border border-green-200 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full">
@@ -1202,8 +1239,8 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
         <!-- ── TAB: FAQ ────────────────────────────────────── -->
         <div x-show="activeTab === 'faq'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-1" x-transition:enter-end="opacity-100 translate-y-0" role="tabpanel" aria-labelledby="tab-faq">
 
-          <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
-            <h2 class="text-xl font-bold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div class="bg-white rounded-2xl p-6" style="border:1.5px solid rgba(0,230,118,.12);box-shadow:0 2px 12px rgba(0,200,100,.06)">
+            <h2 class="text-xl font-black mb-5" style="color:#0F172A">Frequently Asked Questions</h2>
 
             <div class="space-y-3">
               <?php foreach ($faqs as $idx => $faq): ?>
@@ -1245,7 +1282,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
       <section class="mt-8" aria-labelledby="city-pricing-heading">
         <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
           <div class="p-5 border-b border-slate-100">
-            <h2 id="city-pricing-heading" class="text-xl font-bold text-slate-900">
+            <h2 id="city-pricing-heading" class="text-xl font-black" style="color:#0F172A">
               <?= $vehicleName ?> — Price in Major Indian Cities
             </h2>
             <p class="text-sm text-slate-500 mt-1">On-road prices vary by city due to road tax, registration charges, and state EV subsidies</p>
@@ -1289,7 +1326,7 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
       <?php if (!empty($similarVehicles)): ?>
       <section class="mt-8" aria-labelledby="similar-heading">
         <div class="flex items-center justify-between mb-4">
-          <h2 id="similar-heading" class="text-xl font-bold text-slate-900">You Might Also Like</h2>
+          <h2 id="similar-heading" class="text-xl font-black" style="color:#0F172A">You Might Also Like</h2>
           <a href="<?= base_url('vehicles?category=' . esc($v['category_slug'] ?? '')) ?>" class="text-sm text-charj-green hover:underline font-medium">View all →</a>
         </div>
         <div class="flex gap-4 overflow-x-auto pb-3 -mx-1 px-1 snap-x snap-mandatory scroll-smooth">
@@ -1307,9 +1344,9 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
             </div>
             <div class="p-4">
               <p class="text-xs text-slate-400 font-medium mb-0.5"><?= esc($sv['brand_name'] ?? '') ?></p>
-              <h3 class="font-bold text-slate-900 text-sm leading-snug mb-2 group-hover:text-charj-green transition-colors"><?= esc($sv['name'] ?? '') ?></h3>
+              <h3 class="font-black text-sm leading-snug mb-2 group-hover:text-charj-green transition-colors" style="color:#0F172A"><?= esc($sv['name'] ?? '') ?></h3>
               <div class="flex items-center justify-between">
-                <span class="text-charj-green font-bold text-sm"><?= fmtINRShort($sv['starting_price'] ?? null) ?></span>
+                <span class="font-black text-sm" style="color:#00C060"><?= fmtINRShort($sv['starting_price'] ?? null) ?></span>
                 <?php if (!empty($sv['claimed_range'])): ?>
                 <span class="text-xs text-slate-500"><?= $sv['claimed_range'] ?> km</span>
                 <?php endif; ?>
@@ -1377,22 +1414,22 @@ $bestForTags = array_filter(array_map('trim', explode(',', $bestForRaw)));
 
         <!-- Key info snippet -->
         <?php if ($startingPrice > 0): ?>
-        <div class="bg-charj-navy rounded-2xl p-5 text-white">
-          <h3 class="font-bold text-base mb-3">Quick Numbers</h3>
-          <div class="space-y-2 text-sm">
+        <div class="rounded-2xl p-5 text-white" style="background:linear-gradient(135deg,#022C22,#0A3D2B)">
+          <h3 class="font-black text-sm mb-4 uppercase tracking-wider" style="color:#69FF97">Quick Numbers</h3>
+          <div class="space-y-3 text-sm">
             <?php if ($emiMonthly > 0): ?>
             <div class="flex justify-between items-center">
-              <span class="text-slate-300">EMI from</span>
-              <span class="font-bold text-white">₹<?= number_format($emiMonthly) ?>/mo</span>
+              <span class="font-semibold" style="color:rgba(255,255,255,.55)">EMI from</span>
+              <span class="font-black text-white">₹<?= number_format($emiMonthly) ?>/mo</span>
             </div>
             <?php endif; ?>
             <div class="flex justify-between items-center">
-              <span class="text-slate-300">Electricity cost</span>
-              <span class="font-bold text-charj-green">~₹<?= number_format($monthlyElecCost) ?>/mo</span>
+              <span class="font-semibold" style="color:rgba(255,255,255,.55)">Electricity cost</span>
+              <span class="font-black" style="color:#00E676">~₹<?= number_format($monthlyElecCost) ?>/mo</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-slate-300">Annual saving vs petrol</span>
-              <span class="font-bold text-charj-green">~₹<?= number_format(($petrolEquivCost - $monthlyTotal) * 12) ?></span>
+              <span class="font-semibold" style="color:rgba(255,255,255,.55)">Annual saving vs petrol</span>
+              <span class="font-black" style="color:#00E676">~₹<?= number_format(($petrolEquivCost - $monthlyTotal) * 12) ?></span>
             </div>
           </div>
         </div>
@@ -1416,5 +1453,7 @@ document.addEventListener('alpine:init', function() {
   });
 });
 </script>
+
+<div class="pb-20 md:pb-0"></div>
 
 <?= $this->endSection() ?>

@@ -66,17 +66,22 @@ class CompareController extends BaseController
             throw PageNotFoundException::forPageNotFound('Second vehicle not found: ' . $slug2);
         }
 
-        $name1 = ($vehicle1['brand_name'] ?? '') . ' ' . $vehicle1['name'];
-        $name2 = ($vehicle2['brand_name'] ?? '') . ' ' . $vehicle2['name'];
+        $name1 = trim(($vehicle1['brand_name'] ?? '') . ' ' . $vehicle1['name']);
+        $name2 = trim(($vehicle2['brand_name'] ?? '') . ' ' . $vehicle2['name']);
 
-        $metaTitle = trim($name1) . ' vs ' . trim($name2) . ' - Comparison | Charj.in';
-        $metaDesc  = 'Compare ' . trim($name1) . ' vs ' . trim($name2) . ' on price, range, battery, charging and specs. Find out which EV is better for you.';
+        $allVehicles = $vehicleModel
+            ->select('vehicles.id, vehicles.name, vehicles.slug, brands.name as brand_name')
+            ->join('brands', 'brands.id = vehicles.brand_id', 'left')
+            ->where('vehicles.status', 'published')
+            ->orderBy('brands.name', 'ASC')
+            ->orderBy('vehicles.name', 'ASC')
+            ->findAll();
 
-        return $this->render('compare/versus', [
-            'vehicle1'         => $vehicle1,
-            'vehicle2'         => $vehicle2,
-            'meta_title'       => $metaTitle,
-            'meta_description' => $metaDesc,
+        return $this->render('compare/index', [
+            'vehicles'         => [$vehicle1, $vehicle2],
+            'allVehicles'      => $allVehicles,
+            'meta_title'       => $name1 . ' vs ' . $name2 . ' - Comparison | Charj.in',
+            'meta_description' => 'Compare ' . $name1 . ' vs ' . $name2 . ' on price, range, battery, charging and specs. Find out which EV is better for you.',
         ]);
     }
 }

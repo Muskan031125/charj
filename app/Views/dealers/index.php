@@ -10,14 +10,14 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
 ?>
 
 <!-- Hero -->
-<div style="background:linear-gradient(135deg,#0a1628 0%,#0a2e2c 50%,#0a1628 100%)" class="relative overflow-hidden pt-28 pb-10 px-4">
+<div style="background:linear-gradient(135deg,#022C22 0%,#0A3D2B 50%,#022C22 100%)" class="hero-sm relative overflow-hidden pt-28 pb-10 px-4">
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:24px 24px"></div>
   <div class="absolute top-0 left-1/2 w-96 h-40 opacity-5 blur-3xl rounded-full pointer-events-none -translate-x-1/2" style="background:#00A896"></div>
   <div class="relative max-w-7xl mx-auto text-center">
     <div class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-cyan-300 text-xs font-bold uppercase tracking-widest mb-4" style="background:rgba(0,168,150,.15);border:1px solid rgba(0,168,150,.3)">
       🏪 Authorised Dealers Network
     </div>
-    <h1 class="text-3xl md:text-4xl font-black text-white leading-tight">EV Dealers in India</h1>
+    <h1 class="text-4xl lg:text-5xl font-black text-white leading-tight">EV Dealers in India</h1>
     <p class="mt-3 max-w-2xl mx-auto text-base text-slate-400">
       Find authorised EV dealers near you. Browse by city, compare brands handled, and send a direct enquiry.
     </p>
@@ -27,7 +27,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
 <!-- City filter tabs -->
 <div class="sticky top-[57px] z-10 shadow-sm" style="background:rgba(12,26,29,.95);border-bottom:1px solid rgba(255,255,255,.07);backdrop-filter:blur(12px)">
     <div class="mx-auto max-w-7xl px-4">
-        <div class="flex gap-1 overflow-x-auto py-3 scrollbar-hide" style="-ms-overflow-style:none;scrollbar-width:none">
+        <div class="flex gap-1 overflow-x-auto py-3 scrollbar-hide" style="-ms-overflow-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch">
             <?php foreach ($allCityTabs as $city): ?>
             <?php
                 $slug  = strtolower($city) === 'all' ? 'all' : strtolower($city);
@@ -53,7 +53,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
 </div>
 
 <!-- Dealer cards grid -->
-<div class="mx-auto max-w-7xl px-4 pb-16">
+<div class="mx-auto max-w-7xl px-4 pb-20 md:pb-16">
     <?php if (!empty($dealers)): ?>
     <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <?php foreach ($dealers as $dealer): ?>
@@ -118,12 +118,12 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
             <!-- Action buttons -->
             <div class="mt-4 flex gap-2">
                 <a href="/dealers/<?= esc($dealer['slug'] ?? $dealer['id']) ?>"
-                   class="flex-1 rounded-xl px-4 py-2 text-center text-sm font-semibold transition" style="border:1px solid rgba(255,255,255,.07);color:#8ba3a3" onmouseenter="this.style.borderColor='rgba(0,168,150,.45)';this.style.color='#1AFFCC'" onmouseleave="this.style.borderColor='rgba(255,255,255,.07)';this.style.color='#8ba3a3'">
+                   class="flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-semibold transition min-h-[44px] flex items-center justify-center" style="border:1px solid rgba(255,255,255,.07);color:#8ba3a3" onmouseenter="this.style.borderColor='rgba(0,168,150,.45)';this.style.color='#1AFFCC'" onmouseleave="this.style.borderColor='rgba(255,255,255,.07)';this.style.color='#8ba3a3'">
                     View Dealer
                 </a>
                 <a href="#lead-form"
                    onclick="document.querySelector('[name=city]').value='<?= esc($dealer['city']) ?>'"
-                   class="flex-1 rounded-xl px-4 py-2 text-center text-sm font-semibold text-white transition" style="background:#00A896" onmouseenter="this.style.background='#1AFFCC'" onmouseleave="this.style.background='#00A896'">
+                   class="flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-semibold text-white transition min-h-[44px] flex items-center justify-center" style="background:#00A896" onmouseenter="this.style.background='#1AFFCC'" onmouseleave="this.style.background='#00A896'">
                     Send Enquiry
                 </a>
             </div>
@@ -158,7 +158,7 @@ $allCityTabs = array_merge($topCities, array_values($extraCities));
 
 <!-- Lead form -->
 <div class="mx-auto max-w-2xl px-4 pb-20 md:pb-10">
-    <?= view('partials/lead_form') ?>
+    <?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?>
 </div>
 
 <?= $this->endSection() ?>

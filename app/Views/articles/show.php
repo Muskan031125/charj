@@ -170,7 +170,7 @@ $schema = $article['schema_json'] ?? json_encode([
         <!-- Sticky sidebar with lead form -->
         <div class="lg:col-span-1">
             <div class="sticky top-20">
-                <?= view('partials/lead_form') ?>
+                <?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?>
             </div>
         </div>
 

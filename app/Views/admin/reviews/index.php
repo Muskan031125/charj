@@ -9,7 +9,7 @@
 <!-- Filter tabs -->
 <div class="mb-5 flex gap-1 rounded-xl bg-slate-100 p-1 w-fit">
     <?php
-    $tabs = ['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'];
+    $tabs = ['pending' => 'Pending', 'published' => 'Approved', 'rejected' => 'Rejected'];
     foreach ($tabs as $key => $label):
         $active = ($status === $key);
     ?>

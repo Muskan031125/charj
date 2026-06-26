@@ -9,8 +9,10 @@
  *   $formSubtitle     string  — override subtitle
  *   $defaultTab       string  — 'price' | 'test_ride' | 'advice'
  *   $compactMode      bool    — hide optional fields
+ *   $hideName         bool    — hide the name field (e.g. calculator pages)
  */
 $compactMode  = $compactMode  ?? false;
+$hideName     = $hideName     ?? false;
 $defaultTab   = $defaultTab   ?? 'price';
 $formHeading  = $formHeading  ?? 'Get the Best EV Deal';
 $formSubtitle = $formSubtitle ?? 'Our EV specialists respond within 24 hours — completely free.';
@@ -52,7 +54,7 @@ $isSuccess   = (bool) session('lead_success');
 
   <!-- Header -->
   <div class="mb-5">
-    <h3 class="font-bold text-slate-900 text-lg">
+    <h3 class="font-bold text-slate-900 text-base sm:text-lg">
       <?= $vehicleName ? 'Interested in the ' . esc($vehicleName) . '?' : esc($formHeading) ?>
     </h3>
     <p class="text-sm text-slate-500 mt-1"><?= esc($formSubtitle) ?></p>
@@ -63,21 +65,21 @@ $isSuccess   = (bool) session('lead_success');
     <button type="button" role="tab"
       @click="activeTab='price'"
       :class="activeTab==='price' ? 'bg-green-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'"
-      class="flex flex-col items-center gap-0.5 px-2 py-2 rounded-xl text-[11px] font-bold transition-all cursor-pointer focus:outline-none">
+      class="flex flex-col items-center gap-0.5 px-1.5 sm:px-2 py-2 rounded-xl text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer focus:outline-none min-h-[44px]">
       <span class="text-base" aria-hidden="true">&#127991;&#65039;</span>
       <span>Best Price</span>
     </button>
     <button type="button" role="tab"
       @click="activeTab='test_ride'"
       :class="activeTab==='test_ride' ? 'bg-green-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'"
-      class="flex flex-col items-center gap-0.5 px-2 py-2 rounded-xl text-[11px] font-bold transition-all cursor-pointer focus:outline-none">
+      class="flex flex-col items-center gap-0.5 px-1.5 sm:px-2 py-2 rounded-xl text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer focus:outline-none min-h-[44px]">
       <span class="text-base" aria-hidden="true">&#128663;</span>
       <span>Test Ride</span>
     </button>
     <button type="button" role="tab"
       @click="activeTab='advice'"
       :class="activeTab==='advice' ? 'bg-green-600 text-white shadow-sm' : 'bg-slate-50 text-slate-600 hover:bg-slate-100'"
-      class="flex flex-col items-center gap-0.5 px-2 py-2 rounded-xl text-[11px] font-bold transition-all cursor-pointer focus:outline-none">
+      class="flex flex-col items-center gap-0.5 px-1.5 sm:px-2 py-2 rounded-xl text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer focus:outline-none min-h-[44px]">
       <span class="text-base" aria-hidden="true">&#128172;</span>
       <span>Advice</span>
     </button>
@@ -137,7 +139,7 @@ $isSuccess   = (bool) session('lead_success');
     x-show="!submitted"
     x-on:submit.prevent="
       submitting = true;
-      name = $el.querySelector('[name=name]').value;
+      name = ($el.querySelector('[name=name]') || {}).value || '';
       charjTrack && charjTrack('lead_form_submit', {
         lead_type: activeTab,
         vehicle_id: '<?= esc($vehicleId) ?>',
@@ -158,21 +160,25 @@ $isSuccess   = (bool) session('lead_success');
     <input type="hidden" name="utm_content"  id="lf_utm_content"  value="">
     <input type="hidden" name="referrer"     id="lf_referrer"     value="">
 
+    <?php if (!$hideName): ?>
     <input type="text" name="name" placeholder="Your name" required autocomplete="name"
            value="<?= esc(old('name')) ?>"
-           class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
+           oninput="this.value=this.value.replace(/[^a-zA-Z\s\.'`-]/g,'')"
+           class="w-full rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
+    <?php endif; ?>
 
     <div class="relative">
       <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-semibold select-none" aria-hidden="true">+91</span>
-      <input type="tel" name="mobile" placeholder="Mobile number" required autocomplete="tel"
-             pattern="[6-9][0-9]{9}" maxlength="10"
+      <input type="tel" name="mobile" placeholder="10-digit mobile number" required autocomplete="tel"
+             pattern="[6-9][0-9]{9}" maxlength="10" minlength="10" inputmode="numeric"
              value="<?= esc(old('mobile')) ?>"
-             class="w-full rounded-xl border border-slate-200 pl-12 pr-4 py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
+             oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)"
+             class="w-full rounded-xl border border-slate-200 pl-12 pr-3 py-2.5 sm:pr-4 sm:py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
     </div>
 
     <input type="text" name="city" list="lf_city_list" placeholder="Your city" autocomplete="address-level2"
            value="<?= esc(old('city')) ?>"
-           class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
+           class="w-full rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
     <datalist id="lf_city_list">
       <?php foreach ($indianCities as $city): ?><option value="<?= esc($city) ?>"><?php endforeach; ?>
     </datalist>
@@ -180,7 +186,7 @@ $isSuccess   = (bool) session('lead_success');
     <!-- Tab-specific fields -->
     <div x-show="activeTab==='price'">
       <select name="budget"
-        class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all bg-white">
+        class="w-full rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all bg-white">
         <option value="">Your budget range</option>
         <option value="under_50k">Under &#8377;50,000</option>
         <option value="50k_1l">&#8377;50,000 – &#8377;1 Lakh</option>
@@ -195,12 +201,12 @@ $isSuccess   = (bool) session('lead_success');
       <input type="date" name="preferred_date"
         min="<?= date('Y-m-d', strtotime('+1 day')) ?>"
         value="<?= esc(old('preferred_date')) ?>"
-        class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all">
+        class="w-full rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-slate-700 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all">
     </div>
 
     <div x-show="activeTab==='advice'" x-cloak class="space-y-3">
       <select name="use_case"
-        class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all bg-white">
+        class="w-full rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all bg-white">
         <option value="">How will you use the EV?</option>
         <option value="personal">Personal / Daily Commute</option>
         <option value="commercial">Commercial / Delivery</option>
@@ -214,12 +220,12 @@ $isSuccess   = (bool) session('lead_success');
     </div>
 
     <?php if (!$compactMode): ?>
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <input type="email" name="email" placeholder="Email (optional)" autocomplete="email"
              value="<?= esc(old('email')) ?>"
-             class="rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
+             class="rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all placeholder:text-slate-400">
       <select name="purchase_timeline"
-        class="rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all bg-white">
+        class="rounded-xl border border-slate-200 px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-slate-600 focus:border-green-500 focus:ring-2 focus:ring-green-100 focus:outline-none transition-all bg-white">
         <?php foreach ($timelines as $val => $lbl): ?>
         <option value="<?= esc($val) ?>" <?= old('purchase_timeline')===$val?'selected':'' ?>><?= esc($lbl) ?></option>
         <?php endforeach; ?>
@@ -239,7 +245,7 @@ $isSuccess   = (bool) session('lead_success');
     <button type="submit"
       :disabled="submitting"
       :class="submitting ? 'opacity-70 cursor-wait' : 'hover:bg-green-700 active:scale-[0.98]'"
-      class="btn-primary w-full justify-center py-3 transition-all">
+      class="btn-primary w-full justify-center py-3 min-h-[44px] transition-all">
       <span x-show="!submitting" class="flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>

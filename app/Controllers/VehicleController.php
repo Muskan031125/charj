@@ -22,30 +22,43 @@ class VehicleController extends BaseController
         $minRange = $this->request->getGet('min_range');
         $sort     = $this->request->getGet('sort') ?? 'newest';
         $search   = $this->request->getGet('search');
+        $savedRaw = $this->request->getGet('saved');
+
+        // Saved EVs mode — filter by comma-separated slugs from client localStorage
+        $savedSlugs  = [];
+        $savedMode   = false;
+        if ($savedRaw !== null && $savedRaw !== '') {
+            $savedSlugs = array_values(array_unique(array_filter(array_map('trim', explode(',', $savedRaw)))));
+            $savedMode  = !empty($savedSlugs);
+        }
 
         $query = $vehicleModel->withBrandCategory()->where('vehicles.status', 'published');
 
-        if ($brand) {
-            $query->where('brands.slug', $brand);
-        }
-        if ($category) {
-            $query->where('vehicle_categories.slug', $category);
-        }
-        if ($minPrice !== null && $minPrice !== '') {
-            $query->where('vehicles.starting_price >=', (int) $minPrice);
-        }
-        if ($maxPrice !== null && $maxPrice !== '') {
-            $query->where('vehicles.starting_price <=', (int) $maxPrice);
-        }
-        if ($minRange !== null && $minRange !== '') {
-            $query->where('vehicles.real_world_range >=', (int) $minRange);
-        }
-        if ($search) {
-            $query->groupStart()
-                ->like('vehicles.name', $search)
-                ->orLike('brands.name', $search)
-                ->orLike('vehicles.short_description', $search)
-                ->groupEnd();
+        if ($savedMode) {
+            $query->whereIn('vehicles.slug', $savedSlugs);
+        } else {
+            if ($brand) {
+                $query->where('brands.slug', $brand);
+            }
+            if ($category) {
+                $query->where('vehicle_categories.slug', $category);
+            }
+            if ($minPrice !== null && $minPrice !== '') {
+                $query->where('vehicles.starting_price >=', (int) $minPrice);
+            }
+            if ($maxPrice !== null && $maxPrice !== '') {
+                $query->where('vehicles.starting_price <=', (int) $maxPrice);
+            }
+            if ($minRange !== null && $minRange !== '') {
+                $query->where('vehicles.real_world_range >=', (int) $minRange);
+            }
+            if ($search) {
+                $query->groupStart()
+                    ->like('vehicles.name', $search)
+                    ->orLike('brands.name', $search)
+                    ->orLike('vehicles.short_description', $search)
+                    ->groupEnd();
+            }
         }
 
         switch ($sort) {
@@ -76,8 +89,15 @@ class VehicleController extends BaseController
             'pager'       => $vehicleModel->pager,
             'brands'      => $brands,
             'categories'  => $categories,
+            'savedMode'   => $savedMode,
+            'title'       => $savedMode ? 'Your Saved EVs' : 'All EVs in India',
+            'subtitle'    => $savedMode
+                ? 'Electric vehicles you\'ve saved — compare, shortlist & decide'
+                : 'Compare prices, range & features across all electric vehicles',
             'activeFilters' => compact('brand', 'category', 'minPrice', 'maxPrice', 'minRange', 'sort', 'search'),
-            'meta_title'      => 'All Electric Vehicles in India - Prices, Range & Specs | Charj.in',
+            'meta_title'      => $savedMode
+                ? 'Your Saved EVs | Charj.in'
+                : 'All Electric Vehicles in India - Prices, Range & Specs | Charj.in',
             'meta_description' => 'Browse and compare all electric vehicles available in India. Filter by brand, price, range and category to find your perfect EV.',
         ]);
     }
