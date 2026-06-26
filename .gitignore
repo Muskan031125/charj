@@ -1,2 +1,10 @@
 .env
 .htaccess
+
+# CodeIgniter runtime — never commit
+writable/cache/*
+writable/debugbar/*
+writable/logs/*
+writable/session/*
+writable/tmp/*
+writable/uploads/*
