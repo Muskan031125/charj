@@ -4,13 +4,13 @@
 <div class="min-h-screen bg-slate-50">
 
   <!-- Page hero -->
-  <div class="bg-gradient-to-br from-green-900 to-teal-900 py-12 pt-28">
+  <div class="hero-sm py-12 pt-28" style="background:linear-gradient(135deg,#022C22,#0A3D2B)">
     <div class="mx-auto max-w-2xl px-4 text-center">
       <div class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-green-200 mb-4">
         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/></svg>
         Savings Calculator
       </div>
-      <h1 class="text-3xl font-black text-white">EV vs Petrol — 5-Year Cost Comparison</h1>
+      <h1 class="text-3xl lg:text-4xl font-black text-white">EV vs Petrol — 5-Year Cost Comparison</h1>
       <p class="mt-2 text-green-200 text-sm">See exactly how much you save by going electric, including EMI, fuel, maintenance and insurance.</p>
     </div>
   </div>
@@ -90,7 +90,7 @@
             </div>
 
             <!-- Side-by-side vehicle inputs -->
-            <div class="grid gap-4 md:grid-cols-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <!-- EV -->
                 <div class="rounded-3xl bg-green-50 p-6 ring-1 ring-green-200">
                     <h2 class="font-bold text-green-800 mb-4">⚡ Electric Vehicle</h2>
@@ -196,8 +196,9 @@
             </div>
         </div>
 
-        <aside class="mt-6 lg:mt-0"><?= view('partials/lead_form', ['vehicle' => []]) ?></aside>
+        <aside class="mt-6 lg:mt-0"><?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?></aside>
     </div>
   </div>
+  <div class="pb-20 md:pb-0"></div>
 </div>
 <?= $this->endSection() ?>

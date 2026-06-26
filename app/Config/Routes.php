@@ -78,6 +78,12 @@ $routes->get('charging-stations/api',         'ChargingController::api');
 $routes->get('charging-stations/(:segment)',  'ChargingController::city/$1');
 
 // -----------------------------------------------------------
+// Reviews
+// -----------------------------------------------------------
+$routes->get('reviews/submit/(:segment)', 'ReviewController::submit/$1');
+$routes->post('reviews/store',            'ReviewController::store');
+
+// -----------------------------------------------------------
 // EV Dealers
 // -----------------------------------------------------------
 $routes->get('ev-dealers',            'DealerController::index');

@@ -122,7 +122,7 @@ foreach ($grouped as $letter => $terms) {
 <div x-data="glossaryApp()" x-init="init()" class="min-h-screen bg-slate-50">
 
 <!-- ═══ HERO ═══ -->
-<section class="glossary-hero relative overflow-hidden text-white pt-28 pb-20 px-4">
+<section class="hero-sm glossary-hero relative overflow-hidden text-white pt-28 pb-20 px-4">
   <div class="absolute inset-0 opacity-10 pointer-events-none"
        style="background-image:radial-gradient(rgba(255,255,255,.6) 1px,transparent 1px);background-size:32px 32px"></div>
   <!-- Glow blobs -->
@@ -130,13 +130,13 @@ foreach ($grouped as $letter => $terms) {
   <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500 opacity-10 blur-3xl rounded-full pointer-events-none"></div>
 
   <div class="relative max-w-3xl mx-auto text-center">
-    <div class="inline-flex items-center gap-2 bg-indigo-500/25 border border-indigo-400/30 rounded-full px-4 py-1.5 text-indigo-200 text-xs font-bold uppercase tracking-widest mb-6">
+    <div class="hero-badge inline-flex items-center gap-2 bg-indigo-500/25 border border-indigo-400/30 rounded-full px-3 py-1 text-indigo-200 text-xs font-bold uppercase tracking-widest mb-6">
       📖 <?= $total ?>+ EV Terms Explained for India
     </div>
-    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight mb-4 leading-tight">
+    <h1 class="text-5xl lg:text-6xl font-black tracking-tight mb-4 leading-tight">
       EV <span style="background:linear-gradient(135deg,#818cf8,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Glossary</span>
     </h1>
-    <p class="text-lg text-slate-300 max-w-xl mx-auto mb-8">
+    <p class="hero-desc text-lg text-slate-300 max-w-xl mx-auto mb-7">
       Every electric vehicle term — from kWh to FAME II, BMS to V2G — explained in plain English for Indian buyers.
     </p>
 

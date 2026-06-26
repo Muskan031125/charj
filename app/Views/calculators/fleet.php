@@ -1,377 +1,459 @@
 <?= $this->extend('layouts/public') ?>
 <?= $this->section('content') ?>
 
-<div x-data="fleetCalc()" class="min-h-screen bg-slate-50">
+<style>
+[x-cloak]{display:none!important}
+input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:9999px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#00E676,#00C060);box-shadow:0 2px 8px rgba(0,200,100,.35);cursor:pointer;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.fleet-card{background:#fff;border:1.5px solid rgba(0,230,118,.13);border-radius:20px;box-shadow:0 2px 16px rgba(0,200,100,.06)}
+.fleet-label{font-size:.65rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:#374151}
+.fleet-val{font-weight:900;color:#022C22}
+.vtype-btn{border:1.5px solid rgba(0,230,118,.18);border-radius:14px;padding:10px 8px;text-align:left;background:#F5FFF7;transition:all .18s;cursor:pointer;width:100%}
+.vtype-btn.active{border-color:#00C060;background:linear-gradient(135deg,rgba(0,230,118,.12),rgba(0,200,100,.06));box-shadow:0 0 0 3px rgba(0,230,118,.12)}
+.result-dark{background:linear-gradient(135deg,#022C22,#0A3D2B);border-radius:20px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.anim-1{animation:fadeUp .5s .06s both}
+.anim-2{animation:fadeUp .5s .14s both}
+.anim-3{animation:fadeUp .5s .22s both}
+</style>
+
+<div x-data="fleetCalc()">
 
   <!-- ── Hero ── -->
-  <section class="bg-gradient-to-br from-[#0a1628] via-[#0d2137] to-[#1a3a55] text-white py-16 px-4">
-    <div class="max-w-5xl mx-auto">
-      <div class="flex flex-col lg:flex-row gap-8 items-center">
-        <div class="flex-1">
-          <div class="inline-flex items-center gap-2 bg-green-500/20 border border-green-400/30 rounded-full px-4 py-1.5 text-green-300 text-sm font-semibold mb-5">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
-            Trusted by 500+ Fleet Operators
-          </div>
-          <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-4">EV Fleet ROI Calculator</h1>
-          <p class="text-xl text-slate-300 mb-6">
-            Calculate exact savings from switching your business fleet to electric. Real numbers, real payback period, real ROI.
-          </p>
-          <div class="grid grid-cols-3 gap-4 max-w-sm">
-            <div class="bg-white/10 rounded-xl p-3 text-center">
-              <div class="text-2xl font-black text-green-400" x-text="fmt(r.annualSaving)"></div>
-              <div class="text-xs text-slate-400 mt-1">Annual saving</div>
-            </div>
-            <div class="bg-white/10 rounded-xl p-3 text-center">
-              <div class="text-2xl font-black text-green-400" x-text="r.breakEvenMonths + 'M'"></div>
-              <div class="text-xs text-slate-400 mt-1">Break-even</div>
-            </div>
-            <div class="bg-white/10 rounded-xl p-3 text-center">
-              <div class="text-2xl font-black text-green-400" x-text="r.co2Annual + 'T'"></div>
-              <div class="text-xs text-slate-400 mt-1">CO₂ saved/yr</div>
-            </div>
-          </div>
+  <section class="relative overflow-hidden text-white py-8 sm:py-14 px-4"
+           style="background:linear-gradient(135deg,#022C22 0%,#0A3D2B 55%,#0D4A2A 100%)">
+    <!-- glows -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div style="position:absolute;top:-80px;right:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(0,230,118,.14),transparent 70%);filter:blur(60px)"></div>
+      <div style="position:absolute;bottom:-60px;left:-40px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,230,118,.1),transparent 70%);filter:blur(50px)"></div>
+    </div>
+
+    <div class="max-w-5xl mx-auto relative">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-black uppercase tracking-widest mb-5"
+           style="background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.25);color:#69FF97">
+        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
+        EV Fleet ROI Calculator
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-3 leading-tight">
+        Switch Your Fleet to EV —<br class="hidden sm:block"> See Exact Savings
+      </h1>
+      <p class="text-base sm:text-lg mb-8 max-w-xl" style="color:rgba(255,255,255,.7)">
+        Real numbers: fuel savings, break-even period, CO₂ impact and 5-year ROI for your business fleet.
+      </p>
+
+      <!-- Live stats strip -->
+      <div class="grid grid-cols-3 gap-3 max-w-sm">
+        <div class="rounded-2xl p-3 text-center" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)">
+          <div class="text-lg sm:text-2xl font-black" style="color:#00E676" x-text="fmt(r.annualSaving)"></div>
+          <div class="text-[10px] mt-0.5" style="color:rgba(255,255,255,.55)">Annual saving</div>
         </div>
-        <div class="lg:w-72 bg-white/10 backdrop-blur rounded-3xl p-6 border border-white/20 w-full">
-          <div class="text-center mb-4">
-            <div class="text-xs text-slate-400 uppercase tracking-wide mb-1">Your Fleet Saves</div>
-            <div class="text-4xl font-black text-green-400" x-text="fmt(r.dailySaving)"></div>
-            <div class="text-slate-300 text-sm">every single day</div>
-          </div>
-          <div class="h-1 bg-white/20 rounded-full mb-4">
-            <div class="h-full bg-green-400 rounded-full transition-all duration-700" :style="'width: ' + Math.min(100, (inputs.numVehicles / 100) * 100) + '%'"></div>
-          </div>
-          <div class="text-xs text-slate-400 text-center" x-text="inputs.numVehicles + ' vehicles × ' + fmt(r.perVehicleDailySaving) + '/vehicle/day'"></div>
+        <div class="rounded-2xl p-3 text-center" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)">
+          <div class="text-lg sm:text-2xl font-black" style="color:#00E676" x-text="r.breakEvenMonths + 'M'"></div>
+          <div class="text-[10px] mt-0.5" style="color:rgba(255,255,255,.55)">Break-even</div>
+        </div>
+        <div class="rounded-2xl p-3 text-center" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)">
+          <div class="text-lg sm:text-2xl font-black" style="color:#00E676" x-text="r.co2Annual + 'T'"></div>
+          <div class="text-[10px] mt-0.5" style="color:rgba(255,255,255,.55)">CO₂ saved/yr</div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="max-w-5xl mx-auto px-4 py-10">
-    <div class="grid lg:grid-cols-[1fr_380px] gap-8">
+  <!-- ── Calculator Body ── -->
+  <div class="max-w-5xl mx-auto px-4 py-8">
+    <div class="grid lg:grid-cols-[1fr_360px] gap-6 items-start">
 
-      <!-- ── Inputs ── -->
-      <div class="space-y-6">
-        <div class="bg-white rounded-3xl shadow-sm ring-1 ring-slate-200 p-6">
-          <h2 class="font-black text-slate-900 text-lg mb-5">Fleet & Usage Details</h2>
+      <!-- ═══ LEFT: Inputs ═══ -->
+      <div class="space-y-5">
 
-          <div class="space-y-6">
+        <!-- Fleet & Usage -->
+        <div class="fleet-card p-5 sm:p-6 anim-1">
+          <h2 class="font-black text-base mb-5" style="color:#022C22">Fleet & Usage</h2>
+
+          <div class="space-y-5">
+
             <!-- Number of vehicles -->
             <div>
-              <label class="flex items-center justify-between mb-2">
-                <span class="text-sm font-semibold text-slate-700">Number of Vehicles</span>
-                <span class="text-2xl font-black text-[#0d2137]" x-text="inputs.numVehicles"></span>
-              </label>
+              <div class="flex items-center justify-between mb-2">
+                <span class="fleet-label">Number of Vehicles</span>
+                <span class="fleet-val text-xl" x-text="inputs.numVehicles"></span>
+              </div>
               <input type="range" x-model="inputs.numVehicles" min="1" max="500" step="1" @input="calc()"
-                class="w-full accent-green-600 h-2 rounded-lg">
-              <div class="flex justify-between text-xs text-slate-400 mt-1"><span>1</span><span>500</span></div>
+                class="w-full" style="background:linear-gradient(90deg,#00C060,#A7F3D0)">
+              <div class="flex justify-between text-[10px] font-bold mt-1" style="color:#94A3B8"><span>1</span><span>500</span></div>
             </div>
 
             <!-- Vehicle type -->
             <div>
-              <label class="text-sm font-semibold text-slate-700 block mb-2">Vehicle Type</label>
-              <div class="grid grid-cols-2 gap-2">
+              <span class="fleet-label block mb-2">Vehicle Type</span>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 <template x-for="vt in vehicleTypes" :key="vt.id">
                   <button @click="inputs.vehicleType = vt.id; calc()"
-                    :class="inputs.vehicleType === vt.id ? 'ring-2 ring-green-500 bg-green-50 border-green-300' : 'bg-slate-50 border-slate-200 hover:border-green-300'"
-                    class="border rounded-xl p-3 text-left transition-all">
-                    <div class="text-lg mb-1" x-text="vt.icon"></div>
-                    <div class="font-semibold text-slate-800 text-xs" x-text="vt.label"></div>
-                    <div class="text-[10px] text-slate-500" x-text="vt.sub"></div>
+                    :class="inputs.vehicleType === vt.id ? 'vtype-btn active' : 'vtype-btn'">
+                    <div class="text-xl mb-1" x-text="vt.icon"></div>
+                    <div class="text-xs font-black leading-tight" style="color:#0F172A" x-text="vt.label"></div>
+                    <div class="text-[10px] font-medium mt-0.5" style="color:#94A3B8" x-text="vt.sub"></div>
                   </button>
                 </template>
               </div>
             </div>
 
-            <!-- Daily km & Working days -->
+            <!-- Daily km + Working days -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Daily km/vehicle</span>
-                  <span class="font-black text-green-700" x-text="inputs.dailyKm + ' km'"></span>
-                </label>
-                <input type="range" x-model="inputs.dailyKm" min="20" max="300" step="5" @input="calc()" class="w-full accent-green-500">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="fleet-label">Daily km/vehicle</span>
+                  <span class="font-black text-sm" style="color:#00963C" x-text="inputs.dailyKm + ' km'"></span>
+                </div>
+                <input type="range" x-model="inputs.dailyKm" min="20" max="300" step="5" @input="calc()"
+                  class="w-full" style="background:linear-gradient(90deg,#00C060,#A7F3D0)">
               </div>
               <div>
-                <label class="flex items-center justify-between mb-2">
-                  <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Working days/month</span>
-                  <span class="font-black text-green-700" x-text="inputs.workDays"></span>
-                </label>
-                <input type="range" x-model="inputs.workDays" min="15" max="30" step="1" @input="calc()" class="w-full accent-green-500">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="fleet-label">Working days/mo</span>
+                  <span class="font-black text-sm" style="color:#00963C" x-text="inputs.workDays"></span>
+                </div>
+                <input type="range" x-model="inputs.workDays" min="15" max="30" step="1" @input="calc()"
+                  class="w-full" style="background:linear-gradient(90deg,#00C060,#A7F3D0)">
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Fuel & Energy Costs -->
-        <div class="bg-white rounded-3xl shadow-sm ring-1 ring-slate-200 p-6">
-          <h2 class="font-black text-slate-900 text-lg mb-5">Current Petrol Fleet vs EV Fleet</h2>
-          <div class="grid grid-cols-2 gap-6">
+        <!-- Petrol vs EV Costs -->
+        <div class="fleet-card p-5 sm:p-6 anim-2">
+          <h2 class="font-black text-base mb-5" style="color:#022C22">Petrol Fleet vs EV Fleet</h2>
+
+          <div class="grid sm:grid-cols-2 gap-6">
+
+            <!-- Petrol -->
             <div class="space-y-4">
-              <h3 class="text-xs font-bold text-orange-600 uppercase tracking-wide flex items-center gap-1.5">
-                <span class="w-2 h-2 bg-orange-500 rounded-full"></span> Current Petrol Fleet
-              </h3>
-              <label class="grid gap-1.5">
-                <span class="text-xs text-slate-600">Fuel cost ₹/litre</span>
-                <div class="flex items-center gap-2">
-                  <input type="range" x-model="inputs.fuelPrice" min="80" max="140" step="1" @input="calc()" class="flex-1 accent-orange-500">
-                  <span class="w-12 text-center bg-orange-50 text-orange-700 font-bold rounded-lg py-1 text-xs" x-text="'₹' + inputs.fuelPrice"></span>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#F97316"></span>
+                <span class="text-xs font-black uppercase tracking-widest" style="color:#EA580C">Current Petrol</span>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="fleet-label">Fuel cost (₹/litre)</span>
+                  <span class="text-xs font-black px-2 py-0.5 rounded-lg" style="background:#FFF7ED;color:#C2410C" x-text="'₹' + inputs.fuelPrice"></span>
                 </div>
-              </label>
-              <label class="grid gap-1.5">
-                <span class="text-xs text-slate-600">Mileage km/litre</span>
-                <div class="flex items-center gap-2">
-                  <input type="range" x-model="inputs.mileage" min="15" max="60" step="1" @input="calc()" class="flex-1 accent-orange-500">
-                  <span class="w-12 text-center bg-orange-50 text-orange-700 font-bold rounded-lg py-1 text-xs" x-text="inputs.mileage + ' km'"></span>
+                <input type="range" x-model="inputs.fuelPrice" min="80" max="140" step="1" @input="calc()"
+                  class="w-full" style="background:linear-gradient(90deg,#F97316,#FED7AA)">
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="fleet-label">Mileage (km/litre)</span>
+                  <span class="text-xs font-black px-2 py-0.5 rounded-lg" style="background:#FFF7ED;color:#C2410C" x-text="inputs.mileage + ' km'"></span>
                 </div>
-              </label>
-              <label class="grid gap-1.5">
-                <span class="text-xs text-slate-600">Annual maintenance/vehicle (₹)</span>
+                <input type="range" x-model="inputs.mileage" min="15" max="60" step="1" @input="calc()"
+                  class="w-full" style="background:linear-gradient(90deg,#F97316,#FED7AA)">
+              </div>
+
+              <div>
+                <label class="fleet-label block mb-1.5">Maintenance/vehicle/yr (₹)</label>
                 <input type="number" x-model="inputs.petrolMaintenance" step="1000" @input="calc()"
-                  class="rounded-xl border border-orange-200 px-3 py-2 text-sm font-bold focus:border-orange-500 focus:outline-none">
-              </label>
+                  class="w-full rounded-xl px-3 py-2.5 text-sm font-black focus:outline-none"
+                  style="border:1.5px solid rgba(249,115,22,.25);color:#0F172A;background:#FFFBF5"
+                  onfocus="this.style.borderColor='#F97316'" onblur="this.style.borderColor='rgba(249,115,22,.25)'">
+              </div>
             </div>
+
+            <!-- EV -->
             <div class="space-y-4">
-              <h3 class="text-xs font-bold text-green-600 uppercase tracking-wide flex items-center gap-1.5">
-                <span class="w-2 h-2 bg-green-500 rounded-full"></span> EV Fleet (Proposed)
-              </h3>
-              <label class="grid gap-1.5">
-                <span class="text-xs text-slate-600">Electricity ₹/kWh</span>
-                <div class="flex items-center gap-2">
-                  <input type="range" x-model="inputs.elecRate" min="4" max="15" step="0.5" @input="calc()" class="flex-1 accent-green-500">
-                  <span class="w-12 text-center bg-green-50 text-green-700 font-bold rounded-lg py-1 text-xs" x-text="'₹' + Number(inputs.elecRate).toFixed(1)"></span>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#00C060"></span>
+                <span class="text-xs font-black uppercase tracking-widest" style="color:#00963C">EV Fleet</span>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="fleet-label">Electricity (₹/kWh)</span>
+                  <span class="text-xs font-black px-2 py-0.5 rounded-lg" style="background:#F0FFF4;color:#166534" x-text="'₹' + Number(inputs.elecRate).toFixed(1)"></span>
                 </div>
-              </label>
-              <label class="grid gap-1.5">
-                <span class="text-xs text-slate-600">EV efficiency km/kWh</span>
-                <div class="flex items-center gap-2">
-                  <input type="range" x-model="inputs.evEfficiency" min="2" max="12" step="0.5" @input="calc()" class="flex-1 accent-green-500">
-                  <span class="w-12 text-center bg-green-50 text-green-700 font-bold rounded-lg py-1 text-xs" x-text="Number(inputs.evEfficiency).toFixed(1)"></span>
+                <input type="range" x-model="inputs.elecRate" min="4" max="15" step="0.5" @input="calc()"
+                  class="w-full" style="background:linear-gradient(90deg,#00C060,#A7F3D0)">
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="fleet-label">EV efficiency (km/kWh)</span>
+                  <span class="text-xs font-black px-2 py-0.5 rounded-lg" style="background:#F0FFF4;color:#166534" x-text="Number(inputs.evEfficiency).toFixed(1)"></span>
                 </div>
-              </label>
-              <label class="grid gap-1.5">
-                <span class="text-xs text-slate-600">Annual maintenance/vehicle (₹)</span>
+                <input type="range" x-model="inputs.evEfficiency" min="2" max="12" step="0.5" @input="calc()"
+                  class="w-full" style="background:linear-gradient(90deg,#00C060,#A7F3D0)">
+              </div>
+
+              <div>
+                <label class="fleet-label block mb-1.5">Maintenance/vehicle/yr (₹)</label>
                 <input type="number" x-model="inputs.evMaintenance" step="500" @input="calc()"
-                  class="rounded-xl border border-green-200 px-3 py-2 text-sm font-bold focus:border-green-500 focus:outline-none">
-              </label>
+                  class="w-full rounded-xl px-3 py-2.5 text-sm font-black focus:outline-none"
+                  style="border:1.5px solid rgba(0,230,118,.25);color:#0F172A;background:#F5FFF7"
+                  onfocus="this.style.borderColor='#00C060'" onblur="this.style.borderColor='rgba(0,230,118,.25)'">
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Payback Inputs -->
-        <div class="bg-white rounded-3xl shadow-sm ring-1 ring-slate-200 p-6">
-          <h2 class="font-black text-slate-900 text-lg mb-5">Payback Period Calculator</h2>
-          <div class="grid grid-cols-2 gap-4">
-            <label class="grid gap-1.5">
-              <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Extra cost per EV vs ICE (₹)</span>
+        <div class="fleet-card p-5 sm:p-6 anim-3">
+          <h2 class="font-black text-base mb-4" style="color:#022C22">Payback Period</h2>
+
+          <div class="grid sm:grid-cols-2 gap-4 mb-5">
+            <div>
+              <label class="fleet-label block mb-1.5">Extra cost per EV vs ICE (₹)</label>
               <input type="number" x-model="inputs.extraCostPerVehicle" step="5000" @input="calc()"
-                class="rounded-xl border border-slate-200 px-4 py-3 font-bold text-slate-800 focus:border-green-500 focus:outline-none">
-              <span class="text-xs text-slate-400">Ex: EV costs ₹1,50,000 more than petrol equivalent</span>
-            </label>
-            <label class="grid gap-1.5">
-              <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">FAME II commercial subsidy/vehicle (₹)</span>
+                class="w-full rounded-xl px-3 py-2.5 font-black text-sm focus:outline-none"
+                style="border:1.5px solid rgba(0,230,118,.18);color:#0F172A;background:#F9FAFB"
+                onfocus="this.style.borderColor='#00C060'" onblur="this.style.borderColor='rgba(0,230,118,.18)'">
+              <p class="text-[10px] font-medium mt-1" style="color:#94A3B8">e.g. EV costs ₹1,20,000 more than petrol equiv.</p>
+            </div>
+            <div>
+              <label class="fleet-label block mb-1.5">FAME II subsidy/vehicle (₹)</label>
               <input type="number" x-model="inputs.fameSubsidy" step="5000" @input="calc()"
-                class="rounded-xl border border-slate-200 px-4 py-3 font-bold text-slate-800 focus:border-green-500 focus:outline-none">
-              <span class="text-xs text-slate-400">₹50,000 for 3W; ₹1,50,000 for 4W commercial</span>
-            </label>
-          </div>
-
-          <!-- Payback Result -->
-          <div class="mt-5 bg-gradient-to-r from-[#0d2137] to-[#1e3f5a] rounded-2xl p-5 text-white flex flex-wrap gap-6 items-center justify-between">
-            <div>
-              <div class="text-xs text-slate-400 uppercase tracking-wide mb-1">Net extra investment (fleet)</div>
-              <div class="text-2xl font-black text-white" x-text="fmt(r.netExtraInvestment)"></div>
-            </div>
-            <div>
-              <div class="text-xs text-slate-400 uppercase tracking-wide mb-1">Break-even</div>
-              <div class="text-2xl font-black text-green-400" x-text="r.breakEvenMonths + ' months'"></div>
-            </div>
-            <div>
-              <div class="text-xs text-slate-400 uppercase tracking-wide mb-1">5-year net profit</div>
-              <div class="text-2xl font-black text-green-400" x-text="fmt(r.fiveYearNetProfit)"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Results Panel (sticky) ── -->
-      <div class="space-y-5 lg:sticky lg:top-24 lg:self-start">
-
-        <!-- Main Savings Card -->
-        <div class="bg-gradient-to-br from-green-600 to-green-500 rounded-3xl p-6 text-white shadow-xl shadow-green-500/25">
-          <h2 class="text-sm font-bold text-green-100 uppercase tracking-widest mb-4">Fleet Savings Summary</h2>
-
-          <div class="space-y-4">
-            <div class="bg-white/15 rounded-2xl p-4">
-              <div class="text-xs text-green-100 mb-1">Monthly Fuel Saving (fleet)</div>
-              <div class="text-3xl font-black" x-text="fmt(r.monthlyFuelSaving)"></div>
-            </div>
-            <div class="bg-white/15 rounded-2xl p-4">
-              <div class="text-xs text-green-100 mb-1">Monthly Maintenance Saving</div>
-              <div class="text-3xl font-black" x-text="fmt(r.monthlyMaintSaving)"></div>
-            </div>
-            <div class="bg-white/25 border border-white/30 rounded-2xl p-4">
-              <div class="text-xs text-green-100 mb-1 font-bold uppercase tracking-wide">Total Monthly Saving</div>
-              <div class="text-4xl font-black" x-text="fmt(r.totalMonthlySaving)"></div>
+                class="w-full rounded-xl px-3 py-2.5 font-black text-sm focus:outline-none"
+                style="border:1.5px solid rgba(0,230,118,.18);color:#0F172A;background:#F9FAFB"
+                onfocus="this.style.borderColor='#00C060'" onblur="this.style.borderColor='rgba(0,230,118,.18)'">
+              <p class="text-[10px] font-medium mt-1" style="color:#94A3B8">₹50K for 3W · ₹1.5L for 4W commercial</p>
             </div>
           </div>
 
-          <div class="mt-4 grid grid-cols-2 gap-3">
-            <div class="bg-white/15 rounded-xl p-3 text-center">
-              <div class="text-xs text-green-100 mb-1">Annual Saving</div>
-              <div class="text-xl font-black" x-text="fmt(r.annualSaving)"></div>
+          <!-- Payback result row -->
+          <div class="result-dark p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-3 gap-4 text-white">
+            <div>
+              <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,.5)">Net extra investment</div>
+              <div class="text-xl font-black text-white" x-text="fmt(r.netExtraInvestment)"></div>
             </div>
-            <div class="bg-white/15 rounded-xl p-3 text-center">
-              <div class="text-xs text-green-100 mb-1">5-Year Saving</div>
-              <div class="text-xl font-black" x-text="fmt(r.fiveYearSaving)"></div>
+            <div>
+              <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,.5)">Break-even</div>
+              <div class="text-xl font-black" style="color:#00E676" x-text="r.breakEvenMonths + ' months'"></div>
+            </div>
+            <div>
+              <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,.5)">5-year net profit</div>
+              <div class="text-xl font-black" style="color:#00E676" x-text="fmt(r.fiveYearNetProfit)"></div>
             </div>
           </div>
         </div>
 
-        <!-- Per-vehicle stats -->
-        <div class="bg-white rounded-2xl shadow-sm ring-1 ring-slate-200 p-5">
-          <h3 class="font-bold text-slate-700 text-sm mb-3">Per Vehicle Economics</h3>
-          <div class="space-y-3 text-sm">
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">Daily saving/vehicle</span>
-              <span class="font-black text-green-600" x-text="fmt(r.perVehicleDailySaving)"></span>
+      </div><!-- /left inputs -->
+
+      <!-- ═══ RIGHT: Results — shown first on mobile via order ═══ -->
+      <div class="space-y-5 order-first lg:order-last lg:sticky lg:top-20 lg:self-start">
+
+        <!-- Main savings card -->
+        <div class="result-dark p-5 text-white">
+          <div class="text-[10px] font-black uppercase tracking-widest mb-4" style="color:rgba(255,255,255,.5)">Fleet Savings Summary</div>
+
+          <div class="space-y-3">
+            <div class="rounded-xl p-3.5" style="background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.15)">
+              <div class="text-[10px] font-bold mb-1" style="color:rgba(255,255,255,.55)">Monthly Fuel Saving</div>
+              <div class="text-xl sm:text-2xl font-black" style="color:#00E676" x-text="fmt(r.monthlyFuelSaving)"></div>
             </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">Monthly saving/vehicle</span>
-              <span class="font-black text-green-600" x-text="fmt(r.perVehicleMonthlySaving)"></span>
+            <div class="rounded-xl p-3.5" style="background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.15)">
+              <div class="text-[10px] font-bold mb-1" style="color:rgba(255,255,255,.55)">Monthly Maintenance Saving</div>
+              <div class="text-xl sm:text-2xl font-black" style="color:#00E676" x-text="fmt(r.monthlyMaintSaving)"></div>
             </div>
-            <div class="flex justify-between items-center">
-              <span class="text-slate-500">Annual saving/vehicle</span>
-              <span class="font-black text-green-600" x-text="fmt(r.perVehicleAnnualSaving)"></span>
+            <div class="rounded-xl p-4" style="background:rgba(0,230,118,.18);border:1.5px solid rgba(0,230,118,.35)">
+              <div class="text-[10px] font-black uppercase tracking-widest mb-1" style="color:rgba(255,255,255,.7)">Total Monthly Saving</div>
+              <div class="text-2xl sm:text-3xl font-black text-white" x-text="fmt(r.totalMonthlySaving)"></div>
             </div>
-            <div class="border-t border-slate-100 pt-3 flex justify-between items-center">
-              <span class="text-slate-500">CO₂ reduced/vehicle/yr</span>
-              <span class="font-black text-green-600" x-text="(r.co2Annual / Number(inputs.numVehicles)).toFixed(2) + ' T'"></span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 mt-3">
+            <div class="rounded-xl p-3 text-center" style="background:rgba(255,255,255,.06)">
+              <div class="text-[10px] mb-1" style="color:rgba(255,255,255,.5)">Annual</div>
+              <div class="font-black" style="color:#00E676" x-text="fmt(r.annualSaving)"></div>
+            </div>
+            <div class="rounded-xl p-3 text-center" style="background:rgba(255,255,255,.06)">
+              <div class="text-[10px] mb-1" style="color:rgba(255,255,255,.5)">5-Year</div>
+              <div class="font-black" style="color:#00E676" x-text="fmt(r.fiveYearSaving)"></div>
             </div>
           </div>
         </div>
 
-        <!-- CO2 Card -->
-        <div class="bg-[#0d2137] rounded-2xl p-5 text-white">
-          <h3 class="font-bold text-sm mb-3 text-slate-300">Environmental Impact (Annual)</h3>
+        <!-- Per-vehicle breakdown -->
+        <div class="fleet-card p-5">
+          <h3 class="font-black text-sm mb-3" style="color:#022C22">Per Vehicle Economics</h3>
+          <div class="space-y-2.5">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-medium" style="color:#64748B">Daily saving/vehicle</span>
+              <span class="font-black text-sm" style="color:#00963C" x-text="fmt(r.perVehicleDailySaving)"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-medium" style="color:#64748B">Monthly saving/vehicle</span>
+              <span class="font-black text-sm" style="color:#00963C" x-text="fmt(r.perVehicleMonthlySaving)"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-medium" style="color:#64748B">Annual saving/vehicle</span>
+              <span class="font-black text-sm" style="color:#00963C" x-text="fmt(r.perVehicleAnnualSaving)"></span>
+            </div>
+            <div class="pt-2.5" style="border-top:1px solid rgba(0,230,118,.12)">
+              <div class="flex justify-between items-center">
+                <span class="text-xs font-medium" style="color:#64748B">CO₂ reduced/vehicle/yr</span>
+                <span class="font-black text-sm" style="color:#00963C" x-text="(r.co2Annual / Number(inputs.numVehicles)).toFixed(2) + ' T'"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Environmental -->
+        <div class="result-dark p-5 text-white">
+          <h3 class="text-[10px] font-black uppercase tracking-widest mb-4" style="color:rgba(255,255,255,.5)">Environmental Impact / Year</h3>
           <div class="space-y-3">
             <div class="flex items-center gap-3">
-              <span class="text-2xl">🌿</span>
+              <span class="text-xl flex-shrink-0">🌿</span>
               <div>
-                <div class="text-xl font-black text-green-400" x-text="r.co2Annual + ' tonnes'"></div>
-                <div class="text-xs text-slate-400">CO₂ emissions avoided</div>
+                <div class="font-black" style="color:#00E676" x-text="r.co2Annual + ' tonnes'"></div>
+                <div class="text-[10px]" style="color:rgba(255,255,255,.5)">CO₂ emissions avoided</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <span class="text-2xl">🌳</span>
+              <span class="text-xl flex-shrink-0">🌳</span>
               <div>
-                <div class="text-xl font-black text-green-400" x-text="(r.co2Annual * 50).toLocaleString('en-IN')"></div>
-                <div class="text-xs text-slate-400">Equivalent trees planted</div>
+                <div class="font-black" style="color:#00E676" x-text="(r.co2Annual * 50).toLocaleString('en-IN')"></div>
+                <div class="text-[10px]" style="color:rgba(255,255,255,.5)">Equivalent trees planted</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <span class="text-2xl">⛽</span>
+              <span class="text-xl flex-shrink-0">⛽</span>
               <div>
-                <div class="text-xl font-black text-orange-400" x-text="r.litresSaved.toLocaleString('en-IN') + ' L'"></div>
-                <div class="text-xs text-slate-400">Petrol not burned</div>
+                <div class="font-black" style="color:#FCD34D" x-text="r.litresSaved.toLocaleString('en-IN') + ' L'"></div>
+                <div class="text-[10px]" style="color:rgba(255,255,255,.5)">Petrol not burned</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Daily saving callout -->
-        <div class="bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl p-5">
-          <div class="text-xs font-bold text-amber-700 uppercase tracking-wide mb-2">At a glance</div>
-          <p class="text-amber-900 font-semibold text-sm" x-text="'Your fleet of ' + inputs.numVehicles + ' vehicles saves ' + fmt(r.dailySaving) + ' per day — that is ' + fmt(r.annualSaving) + ' every year that flows directly to your bottom line.'"></p>
+        <!-- At a glance callout -->
+        <div class="rounded-2xl p-4" style="background:linear-gradient(135deg,rgba(0,230,118,.08),rgba(0,200,100,.04));border:1.5px solid rgba(0,230,118,.2)">
+          <p class="text-sm font-bold leading-relaxed" style="color:#022C22"
+            x-text="'Your fleet of ' + inputs.numVehicles + ' vehicles saves ' + fmt(r.dailySaving) + ' per day — that\'s ' + fmt(r.annualSaving) + ' flowing directly to your bottom line every year.'"></p>
         </div>
-      </div>
-    </div>
 
-    <!-- ══ Benefits Section ══ -->
+      </div><!-- /right results -->
+
+    </div><!-- /grid -->
+
+    <!-- ══ Benefits ══ -->
     <section class="mt-12">
-      <h2 class="text-3xl font-black text-slate-900 mb-2">Why EV Fleet Makes Business Sense</h2>
-      <p class="text-slate-500 mb-8">Beyond fuel savings — the strategic advantages of going electric for your business fleet.</p>
+      <h2 class="text-2xl sm:text-3xl font-black mb-1.5" style="color:#022C22">Why EV Fleet Makes Business Sense</h2>
+      <p class="text-sm mb-7" style="color:#64748B">Strategic advantages beyond fuel savings.</p>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <?php
-        $benefits = [
-          ['🏛️', 'Higher FAME II Commercial Subsidy', 'Commercial EV buyers receive higher FAME II subsidies (₹50,000–₹1,50,000 per vehicle) compared to personal use — directly reducing your fleet acquisition cost.', 'bg-blue-50 border-blue-200'],
-          ['📊', 'GST Input Tax Credit', 'Businesses can claim 28% GST paid on EV purchases as input credit, unlike personal buyers. This significantly reduces effective cost for registered businesses.', 'bg-purple-50 border-purple-200'],
-          ['🌱', 'ESG & CSR Reporting Benefits', 'A documented green fleet strengthens your ESG score, supports SEBI-mandated BRSR reporting, and can qualify for green bonds/financing at lower rates.', 'bg-green-50 border-green-200'],
-          ['⚡', 'Insulation from Fuel Price Volatility', 'Petrol prices have risen 40%+ in 5 years. EV electricity costs are regulated and far more stable. Predictable operating costs improve fleet P&L forecasting.', 'bg-amber-50 border-amber-200'],
-          ['🛡️', 'Improved Driver Safety', 'No fuel tanks, no combustion risk. EV fires are significantly rarer than petrol vehicle fires. Lower insurance claims = lower fleet insurance premiums over time.', 'bg-red-50 border-red-200'],
-          ['🔋', 'Priority Commercial Charging', 'Registered commercial EV fleets get priority access at EESL-managed charging stations and can negotiate dedicated charging infrastructure with state DISCOMs.', 'bg-teal-50 border-teal-200'],
-        ];
-        foreach ($benefits as $b):
-        ?>
-        <div class="bg-white rounded-2xl border <?= $b[3] ?> p-5 shadow-sm">
-          <div class="text-3xl mb-3"><?= $b[0] ?></div>
-          <h3 class="font-bold text-slate-800 mb-2"><?= $b[1] ?></h3>
-          <p class="text-slate-500 text-sm leading-relaxed"><?= $b[2] ?></p>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <?php foreach ([
+          ['🏛️','Higher FAME II Subsidy',       'Commercial EV buyers receive ₹50,000–₹1,50,000 per vehicle in subsidies — directly reducing fleet acquisition cost.'],
+          ['📊','GST Input Tax Credit',           'Claim 28% GST on EV purchases as input credit, unlike personal buyers, significantly reducing effective cost.'],
+          ['🌱','ESG & CSR Benefits',             'A documented green fleet strengthens ESG scores, supports SEBI BRSR reporting, and may qualify for green bonds.'],
+          ['⚡','Stable Operating Costs',         'Petrol prices rose 40%+ in 5 years. Electricity costs are regulated and far more predictable for P&L forecasting.'],
+          ['🛡️','Improved Safety',               'No fuel tanks, no combustion risk. EV fires are significantly rarer — translating to lower insurance premiums.'],
+          ['🔋','Priority Commercial Charging',  'Registered commercial EV fleets get priority at EESL-managed stations and can negotiate dedicated charging with DISCOMs.'],
+        ] as [$ico, $title, $desc]): ?>
+        <div class="fleet-card p-5" style="border-top:3px solid rgba(0,230,118,.25)">
+          <div class="text-2xl mb-3"><?= $ico ?></div>
+          <h3 class="font-black text-sm mb-1.5" style="color:#022C22"><?= $title ?></h3>
+          <p class="text-xs leading-relaxed" style="color:#64748B"><?= $desc ?></p>
         </div>
         <?php endforeach; ?>
       </div>
     </section>
 
     <!-- ══ Lead Form ══ -->
-    <section class="mt-12 bg-[#0d2137] rounded-3xl p-8 lg:p-12 text-white" x-data="{ sent: false, form: { company:'', fleetSize:'', vehicleType:'', contact:'', mobile:'', email:'' } }">
-      <div class="grid lg:grid-cols-2 gap-10 items-start">
+    <section class="mt-12 rounded-3xl p-6 sm:p-10 text-white"
+             style="background:linear-gradient(135deg,#022C22,#0A3D2B)"
+             x-data="{ sent: false, form: { company:'', fleetSize:'', vehicleType:'', mobile:'', email:'' } }">
+
+      <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+
+        <!-- Left copy -->
         <div>
-          <h2 class="text-3xl font-black mb-3">Get a Custom Fleet EV Proposal</h2>
-          <p class="text-slate-300 mb-6">Our fleet team will analyse your specific routes, vehicle types and financials to build a detailed ROI report — completely free.</p>
-          <ul class="space-y-3 text-sm text-slate-300">
-            <li class="flex items-start gap-2"><svg class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Custom ROI report for your exact fleet composition</li>
-            <li class="flex items-start gap-2"><svg class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>EV model recommendations per vehicle category</li>
-            <li class="flex items-start gap-2"><svg class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>FAME II application guidance</li>
-            <li class="flex items-start gap-2"><svg class="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>Charging infrastructure planning</li>
+          <h2 class="text-2xl sm:text-3xl font-black mb-3">Get a Custom Fleet EV Proposal</h2>
+          <p class="text-sm mb-5" style="color:rgba(255,255,255,.65)">Our fleet team will analyse your routes, vehicle types and financials to build a detailed ROI report — free.</p>
+          <ul class="space-y-2.5 text-sm" style="color:rgba(255,255,255,.7)">
+            <?php foreach ([
+              'Custom ROI report for your exact fleet composition',
+              'EV model recommendations per vehicle category',
+              'FAME II application guidance',
+              'Charging infrastructure planning',
+            ] as $li): ?>
+            <li class="flex items-start gap-2">
+              <svg class="w-4 h-4 flex-shrink-0 mt-0.5" style="color:#00E676" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <?= $li ?>
+            </li>
+            <?php endforeach; ?>
           </ul>
-          <div class="mt-5 inline-flex items-center gap-2 bg-green-500/20 border border-green-400/30 rounded-xl px-4 py-2.5 text-green-300 text-sm">
+          <div class="mt-5 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm"
+               style="background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);color:#69FF97">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
-            Our fleet team responds within <strong class="text-green-200">4 business hours</strong>
+            Fleet team responds within <strong class="ml-1">4 business hours</strong>
           </div>
         </div>
 
+        <!-- Right form -->
         <div x-show="!sent">
-          <form class="space-y-4" @submit.prevent="sent = true; charjTrack && charjTrack('fleet_lead', { fleet_size: form.fleetSize })">
-            <div class="grid grid-cols-2 gap-3">
+          <form class="space-y-3" @submit.prevent="sent = true">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <input type="text" x-model="form.company" placeholder="Company name *" required
-                class="bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-green-400">
-              <input type="text" x-model="form.fleetSize" placeholder="Fleet size (vehicles) *" required
-                class="bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-green-400">
+                class="rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-white/40 focus:outline-none"
+                style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)"
+                onfocus="this.style.borderColor='#00E676'" onblur="this.style.borderColor='rgba(255,255,255,.18)'">
+              <input type="text" x-model="form.fleetSize" placeholder="Fleet size *" required
+                class="rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-white/40 focus:outline-none"
+                style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)"
+                onfocus="this.style.borderColor='#00E676'" onblur="this.style.borderColor='rgba(255,255,255,.18)'">
             </div>
             <select x-model="form.vehicleType"
-              class="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-green-400">
-              <option value="" class="text-slate-800">Select primary vehicle type *</option>
-              <option value="2w_delivery" class="text-slate-800">2-Wheeler — Last mile delivery</option>
-              <option value="3w_cargo" class="text-slate-800">3-Wheeler — Cargo/auto</option>
-              <option value="4w_cab" class="text-slate-800">4-Wheeler — Cab/corporate</option>
-              <option value="lcv" class="text-slate-800">LCV — Light commercial van</option>
-              <option value="mixed" class="text-slate-800">Mixed fleet</option>
+              class="w-full rounded-xl px-4 py-3 text-sm font-bold text-white focus:outline-none"
+              style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)"
+              onfocus="this.style.borderColor='#00E676'" onblur="this.style.borderColor='rgba(255,255,255,.18)'">
+              <option value="" class="text-slate-800 bg-white">Primary vehicle type *</option>
+              <option value="2w_delivery" class="text-slate-800 bg-white">2-Wheeler — Last mile delivery</option>
+              <option value="3w_cargo" class="text-slate-800 bg-white">3-Wheeler — Cargo/auto</option>
+              <option value="4w_cab" class="text-slate-800 bg-white">4-Wheeler — Cab/corporate</option>
+              <option value="lcv" class="text-slate-800 bg-white">LCV — Light commercial van</option>
+              <option value="mixed" class="text-slate-800 bg-white">Mixed fleet</option>
             </select>
-            <input type="text" x-model="form.contact" placeholder="Contact person name *" required
-              class="w-full bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-green-400">
-            <div class="grid grid-cols-2 gap-3">
-              <input type="tel" x-model="form.mobile" placeholder="Mobile *" required pattern="[6-9]\d{9}"
-                class="bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-green-400">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input type="tel" x-model="form.mobile" placeholder="Mobile *" required
+                pattern="[6-9]\d{9}" maxlength="10" minlength="10" inputmode="numeric"
+                @input="form.mobile = $event.target.value = $event.target.value.replace(/\D/g,'').slice(0,10)"
+                class="rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-white/40 focus:outline-none"
+                style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)"
+                onfocus="this.style.borderColor='#00E676'" onblur="this.style.borderColor='rgba(255,255,255,.18)'">
               <input type="email" x-model="form.email" placeholder="Work email *" required
-                class="bg-white/10 border border-white/30 rounded-xl px-4 py-3 text-white placeholder-slate-400 text-sm focus:outline-none focus:border-green-400">
+                class="rounded-xl px-4 py-3 text-sm font-bold text-white placeholder-white/40 focus:outline-none"
+                style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)"
+                onfocus="this.style.borderColor='#00E676'" onblur="this.style.borderColor='rgba(255,255,255,.18)'">
             </div>
             <button type="submit"
-              class="w-full bg-green-500 hover:bg-green-400 text-white font-bold py-4 rounded-2xl transition-colors text-lg">
+              class="w-full font-black py-3.5 rounded-2xl text-base transition-all"
+              style="background:linear-gradient(135deg,#00E676,#00C060);color:#022C22;box-shadow:0 4px 16px rgba(0,230,118,.3)"
+              onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(0,230,118,.4)'"
+              onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(0,230,118,.3)'">
               Get My Fleet ROI Report →
             </button>
-            <p class="text-xs text-slate-400 text-center">No spam. No sales pressure. Just real numbers.</p>
+            <p class="text-xs text-center" style="color:rgba(255,255,255,.4)">No spam. No sales calls. Just real numbers.</p>
           </form>
         </div>
-        <div x-show="sent" class="bg-green-500/20 border border-green-400/30 rounded-2xl p-8 text-center">
+
+        <div x-show="sent" x-cloak
+             class="rounded-2xl p-8 text-center"
+             style="background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25)">
           <div class="text-5xl mb-4">✅</div>
-          <h3 class="text-2xl font-black mb-2" x-text="'Thank you, ' + (form.contact || 'there') + '!'"></h3>
-          <p class="text-green-200">Your fleet enquiry is received. Our specialist will contact you within 4 business hours with a custom EV fleet ROI report.</p>
+          <h3 class="text-2xl font-black mb-2">Request Received!</h3>
+          <p style="color:rgba(255,255,255,.7)">Our fleet specialist will send you a custom EV ROI report within 4 business hours.</p>
         </div>
+
       </div>
     </section>
 
-  </div>
-</div>
+  </div><!-- /max-w-5xl -->
+</div><!-- /x-data -->
+<div class="h-20 md:h-0"></div><!-- bottom spacing for mobile nav -->
 
 <script>
 function fleetCalc() {
@@ -392,10 +474,10 @@ function fleetCalc() {
     },
 
     vehicleTypes: [
-      { id: '2w_delivery', label: '2W Delivery',    sub: 'Scooter / e-bike', icon: '🛵', fameSubsidy: 10000  },
-      { id: '3w_cargo',    label: '3W Auto/Cargo',  sub: 'E-rickshaw / L5',  icon: '🛺', fameSubsidy: 50000  },
-      { id: '4w_cab',      label: '4W Cab/Corp.',   sub: 'Car / MUV',        icon: '🚗', fameSubsidy: 150000 },
-      { id: 'lcv',         label: 'LCV',            sub: 'Light comm. van',  icon: '🚚', fameSubsidy: 150000 },
+      { id: '2w_delivery', label: '2W Delivery',   sub: 'Scooter / e-bike', icon: '🛵', fameSubsidy: 10000  },
+      { id: '3w_cargo',    label: '3W Auto/Cargo', sub: 'E-rickshaw / L5',  icon: '🛺', fameSubsidy: 50000  },
+      { id: '4w_cab',      label: '4W Cab/Corp.',  sub: 'Car / MUV',        icon: '🚗', fameSubsidy: 150000 },
+      { id: 'lcv',         label: 'LCV',           sub: 'Light comm. van',  icon: '🚚', fameSubsidy: 150000 },
     ],
 
     r: {},
@@ -403,32 +485,31 @@ function fleetCalc() {
     init() { this.calc(); },
 
     calc() {
-      const n            = Number(this.inputs.numVehicles);
-      const dailyKm      = Number(this.inputs.dailyKm);
-      const workDays     = Number(this.inputs.workDays);
-      const fuelPrice    = Number(this.inputs.fuelPrice);
-      const mileage      = Number(this.inputs.mileage);
-      const elecRate     = Number(this.inputs.elecRate);
-      const evEff        = Number(this.inputs.evEfficiency);
-      const petrolMaint  = Number(this.inputs.petrolMaintenance);
-      const evMaint      = Number(this.inputs.evMaintenance);
-      const extraCost    = Number(this.inputs.extraCostPerVehicle);
-      const fameSubsidy  = Number(this.inputs.fameSubsidy);
+      const n           = Number(this.inputs.numVehicles);
+      const dailyKm     = Number(this.inputs.dailyKm);
+      const workDays    = Number(this.inputs.workDays);
+      const fuelPrice   = Number(this.inputs.fuelPrice);
+      const mileage     = Number(this.inputs.mileage);
+      const elecRate    = Number(this.inputs.elecRate);
+      const evEff       = Number(this.inputs.evEfficiency);
+      const petrolMaint = Number(this.inputs.petrolMaintenance);
+      const evMaint     = Number(this.inputs.evMaintenance);
+      const extraCost   = Number(this.inputs.extraCostPerVehicle);
+      const fameSub     = Number(this.inputs.fameSubsidy);
 
-      const monthlyKmPerVehicle   = dailyKm * workDays;
-      const annualKmPerVehicle    = monthlyKmPerVehicle * 12;
+      const monthlyKm = dailyKm * workDays;
+      const annualKm  = monthlyKm * 12;
 
-      // Per-vehicle monthly costs
-      const petrolFuelMonthly = (monthlyKmPerVehicle / mileage) * fuelPrice;
-      const evFuelMonthly     = (monthlyKmPerVehicle / evEff) * elecRate;
+      const petrolFuelMonthly = (monthlyKm / mileage) * fuelPrice;
+      const evFuelMonthly     = (monthlyKm / evEff) * elecRate;
 
-      const fuelSavingPerVehicleMonthly = petrolFuelMonthly - evFuelMonthly;
+      const fuelSavingPerVehicleMonthly  = petrolFuelMonthly - evFuelMonthly;
       const maintSavingPerVehicleMonthly = (petrolMaint - evMaint) / 12;
       const totalSavingPerVehicleMonthly = fuelSavingPerVehicleMonthly + maintSavingPerVehicleMonthly;
 
-      const perVehicleDailySaving    = totalSavingPerVehicleMonthly / workDays;
-      const perVehicleMonthlySaving  = totalSavingPerVehicleMonthly;
-      const perVehicleAnnualSaving   = totalSavingPerVehicleMonthly * 12;
+      const perVehicleDailySaving   = totalSavingPerVehicleMonthly / workDays;
+      const perVehicleMonthlySaving = totalSavingPerVehicleMonthly;
+      const perVehicleAnnualSaving  = totalSavingPerVehicleMonthly * 12;
 
       const monthlyFuelSaving  = fuelSavingPerVehicleMonthly * n;
       const monthlyMaintSaving = maintSavingPerVehicleMonthly * n;
@@ -437,21 +518,18 @@ function fleetCalc() {
       const fiveYearSaving     = annualSaving * 5;
       const dailySaving        = totalMonthlySaving / workDays;
 
-      // Payback
-      const netExtraPerVehicle    = Math.max(0, extraCost - fameSubsidy);
-      const netExtraInvestment    = netExtraPerVehicle * n;
-      const breakEvenMonths       = totalMonthlySaving > 0 ? Math.ceil(netExtraInvestment / totalMonthlySaving) : 999;
-      const fiveYearNetProfit     = fiveYearSaving - netExtraInvestment;
+      const netExtraPerVehicle = Math.max(0, extraCost - fameSub);
+      const netExtraInvestment = netExtraPerVehicle * n;
+      const breakEvenMonths    = totalMonthlySaving > 0 ? Math.ceil(netExtraInvestment / totalMonthlySaving) : 999;
+      const fiveYearNetProfit  = fiveYearSaving - netExtraInvestment;
 
-      // CO2
-      const litresSaved  = Math.round(annualKmPerVehicle * n / mileage);
-      const co2Annual    = Number(((annualKmPerVehicle * n * 0.12 - annualKmPerVehicle * n * 0.05) / 1000).toFixed(1));
+      const litresSaved = Math.round(annualKm * n / mileage);
+      const co2Annual   = Number(((annualKm * n * 0.12 - annualKm * n * 0.05) / 1000).toFixed(1));
 
       this.r = {
         monthlyFuelSaving, monthlyMaintSaving, totalMonthlySaving, annualSaving, fiveYearSaving,
         dailySaving, perVehicleDailySaving, perVehicleMonthlySaving, perVehicleAnnualSaving,
-        netExtraInvestment, breakEvenMonths, fiveYearNetProfit,
-        co2Annual, litresSaved
+        netExtraInvestment, breakEvenMonths, fiveYearNetProfit, co2Annual, litresSaved
       };
     },
 

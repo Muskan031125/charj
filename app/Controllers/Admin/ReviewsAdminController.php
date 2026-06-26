@@ -17,7 +17,7 @@ class ReviewsAdminController extends AdminBaseController
         ", [$status])->getResultArray();
 
         $counts = [];
-        foreach (['pending', 'approved', 'rejected'] as $s) {
+        foreach (['pending', 'published', 'rejected'] as $s) {
             $counts[$s] = $this->db->table('reviews')->where('status', $s)->countAllResults();
         }
 
@@ -31,7 +31,7 @@ class ReviewsAdminController extends AdminBaseController
 
     public function approve($id)
     {
-        $this->db->table('reviews')->where('id', $id)->update(['status' => 'approved']);
+        $this->db->table('reviews')->where('id', $id)->update(['status' => 'published']);
         return redirect()->back()->with('success', 'Review approved.');
     }
 

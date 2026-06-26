@@ -1,4 +1,4 @@
-<?= $this->extend('layouts/public') ?>
+﻿<?= $this->extend('layouts/public') ?>
 <?= $this->section('content') ?>
 
 <?php /* ============================================================
@@ -12,13 +12,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;heigh
 input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to right,#22C55E var(--pct,50%),#e5e7eb var(--pct,50%));height:6px;border-radius:3px}
 .bar-ev    { background: linear-gradient(135deg,#22C55E,#16a34a); }
 .bar-petrol{ background: linear-gradient(135deg,#f97316,#ea580c); }
-.tab-active{ color:#0D2137;border-bottom:3px solid #22C55E;font-weight:700;background:rgba(34,197,94,.06) }
+.tab-active{ color:#022C22;border-bottom:3px solid #22C55E;font-weight:700;background:rgba(34,197,94,.06) }
 </style>
 
-<div class="min-h-screen bg-gray-50">
+<div class=”min-h-screen bg-gray-50 pb-20 md:pb-0”>
 
-    <!-- â”€â”€ Page Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
-    <div class="bg-[#0D2137] text-white py-10 px-4">
+    <!-- ── Page Header ──────────────────────────────────── -->
+    <div class=”bg-gradient-to-br from-[#022C22] to-[#0A3D2B] text-white py-10 px-4”>
         <div class="max-w-7xl mx-auto">
             <nav class="text-sm mb-3 text-gray-400 flex items-center gap-1">
                 <a href="<?= base_url('/') ?>" class="hover:text-[#22C55E] transition-colors">Home</a>
@@ -47,13 +47,13 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                         <!-- Tab nav -->
                         <div class="flex border-b border-gray-100">
                             <button @click="activeTab = 'running'"
-                                :class="activeTab === 'running' ? 'tab-active' : 'text-gray-500 hover:text-[#0D2137]'"
-                                class="flex-1 px-4 py-4 text-sm font-medium transition-colors">
+                                :class="activeTab === 'running' ? 'tab-active' : 'text-gray-500 hover:text-[#022C22]'"
+                                class="flex-1 px-2 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors">
                                 âš¡ Running Cost
                             </button>
                             <button @click="activeTab = 'emi'"
-                                :class="activeTab === 'emi' ? 'tab-active' : 'text-gray-500 hover:text-[#0D2137]'"
-                                class="flex-1 px-4 py-4 text-sm font-medium transition-colors">
+                                :class="activeTab === 'emi' ? 'tab-active' : 'text-gray-500 hover:text-[#022C22]'"
+                                class="flex-1 px-2 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium transition-colors">
                                 ðŸ¦ EMI Calculator
                             </button>
                         </div>
@@ -71,13 +71,13 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                             <div class="grid md:grid-cols-2 gap-6">
                                 <!-- Inputs -->
                                 <div class="space-y-5">
-                                    <h3 class="font-bold text-[#0D2137] text-sm uppercase tracking-wide">Your Usage</h3>
+                                    <h3 class="font-bold text-[#022C22] text-sm uppercase tracking-wide">Your Usage</h3>
 
                                     <!-- Daily KM -->
                                     <div>
                                         <div class="flex justify-between mb-1.5">
                                             <label class="text-sm font-medium text-gray-700">Daily Distance</label>
-                                            <span class="text-sm font-bold text-[#0D2137]" x-text="dailyKm + ' km'"></span>
+                                            <span class="text-sm font-bold text-[#022C22]" x-text="dailyKm + ' km'"></span>
                                         </div>
                                         <input type="range" x-model.number="dailyKm" @input="calc()" min="5" max="200" step="5"
                                             class="w-full accent-green-500">
@@ -90,7 +90,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                     <div>
                                         <div class="flex justify-between mb-1.5">
                                             <label class="text-sm font-medium text-gray-700">Days per Month</label>
-                                            <span class="text-sm font-bold text-[#0D2137]" x-text="daysPerMonth + ' days'"></span>
+                                            <span class="text-sm font-bold text-[#022C22]" x-text="daysPerMonth + ' days'"></span>
                                         </div>
                                         <input type="range" x-model.number="daysPerMonth" @input="calc()" min="10" max="31" step="1"
                                             class="w-full accent-green-500">
@@ -100,13 +100,13 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                     </div>
 
                                     <hr class="border-gray-100">
-                                    <h3 class="font-bold text-[#0D2137] text-sm uppercase tracking-wide">EV Parameters</h3>
+                                    <h3 class="font-bold text-[#022C22] text-sm uppercase tracking-wide">EV Parameters</h3>
 
                                     <!-- EV efficiency -->
                                     <div>
                                         <div class="flex justify-between mb-1.5">
                                             <label class="text-sm font-medium text-gray-700">EV Efficiency</label>
-                                            <span class="text-sm font-bold text-[#0D2137]" x-text="evEfficiency + ' km/kWh'"></span>
+                                            <span class="text-sm font-bold text-[#022C22]" x-text="evEfficiency + ' km/kWh'"></span>
                                         </div>
                                         <input type="range" x-model.number="evEfficiency" @input="calc()" min="2" max="10" step="0.5"
                                             class="w-full accent-green-500">
@@ -119,13 +119,13 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                         <div class="relative">
                                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">â‚¹</span>
                                             <input type="number" x-model.number="electricityRate" @input="calc()" min="3" max="20" step="0.5"
-                                                class="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E] text-sm font-semibold text-[#0D2137]">
+                                                class="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00E676] text-sm font-semibold text-[#022C22]">
                                         </div>
                                         <p class="text-xs text-gray-400 mt-0.5">Home charging: â‚¹6â€“10/kWh. Public: â‚¹12â€“18/kWh</p>
                                     </div>
 
                                     <hr class="border-gray-100">
-                                    <h3 class="font-bold text-[#0D2137] text-sm uppercase tracking-wide">Petrol Vehicle</h3>
+                                    <h3 class="font-bold text-[#022C22] text-sm uppercase tracking-wide">Petrol Vehicle</h3>
 
                                     <!-- Petrol cost -->
                                     <div>
@@ -133,7 +133,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                         <div class="relative">
                                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">â‚¹</span>
                                             <input type="number" x-model.number="petrolRate" @input="calc()" min="80" max="150" step="1"
-                                                class="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E] text-sm font-semibold text-[#0D2137]">
+                                                class="w-full pl-8 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00E676] text-sm font-semibold text-[#022C22]">
                                         </div>
                                     </div>
 
@@ -141,7 +141,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                     <div>
                                         <div class="flex justify-between mb-1.5">
                                             <label class="text-sm font-medium text-gray-700">Petrol Mileage</label>
-                                            <span class="text-sm font-bold text-[#0D2137]" x-text="petrolMileage + ' km/L'"></span>
+                                            <span class="text-sm font-bold text-[#022C22]" x-text="petrolMileage + ' km/L'"></span>
                                         </div>
                                         <input type="range" x-model.number="petrolMileage" @input="calc()" min="10" max="80" step="2"
                                             class="w-full accent-green-500">
@@ -153,7 +153,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
 
                                 <!-- Results -->
                                 <div class="space-y-4">
-                                    <h3 class="font-bold text-[#0D2137] text-sm uppercase tracking-wide">Monthly Comparison</h3>
+                                    <h3 class="font-bold text-[#022C22] text-sm uppercase tracking-wide">Monthly Comparison</h3>
 
                                     <!-- Per km costs -->
                                     <div class="grid grid-cols-2 gap-3">
@@ -174,14 +174,14 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                                 <span class="w-3 h-3 rounded-full bg-[#22C55E] flex-shrink-0"></span>
                                                 Monthly EV Cost
                                             </span>
-                                            <span class="font-bold text-[#0D2137]">â‚¹<span x-text="monthlyEvCost.toLocaleString('en-IN')"></span></span>
+                                            <span class="font-bold text-[#022C22]">â‚¹<span x-text="monthlyEvCost.toLocaleString('en-IN')"></span></span>
                                         </div>
                                         <div class="flex justify-between items-center">
                                             <span class="text-sm text-gray-600 flex items-center gap-2">
                                                 <span class="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0"></span>
                                                 Monthly Petrol Cost
                                             </span>
-                                            <span class="font-bold text-[#0D2137]">â‚¹<span x-text="monthlyPetrolCost.toLocaleString('en-IN')"></span></span>
+                                            <span class="font-bold text-[#022C22]">â‚¹<span x-text="monthlyPetrolCost.toLocaleString('en-IN')"></span></span>
                                         </div>
                                     </div>
 
@@ -215,7 +215,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                     </div>
 
                                     <!-- Savings highlight -->
-                                    <div class="bg-[#0D2137] rounded-2xl p-5 text-white text-center">
+                                    <div class="bg-[#022C22] rounded-2xl p-5 text-white text-center">
                                         <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Monthly Saving with EV</p>
                                         <p class="text-4xl font-black text-[#22C55E] mb-1">
                                             â‚¹<span x-text="monthlySaving.toLocaleString('en-IN')"></span>
@@ -258,7 +258,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                         <div class="relative">
                                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">â‚¹</span>
                                             <input type="number" x-model.number="price" @input="calcEmi()"
-                                                class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E] text-[#0D2137] font-bold">
+                                                class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00E676] text-[#022C22] font-bold">
                                         </div>
                                     </div>
                                     <div>
@@ -266,17 +266,17 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                         <div class="relative">
                                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm">â‚¹</span>
                                             <input type="number" x-model.number="downPayment" @input="calcEmi()"
-                                                class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E] text-[#0D2137] font-bold">
+                                                class="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00E676] text-[#022C22] font-bold">
                                         </div>
                                         <div class="flex justify-between text-xs text-gray-400 mt-1">
                                             <span>Loan Amount:</span>
-                                            <span class="font-bold text-[#0D2137]">â‚¹<span x-text="Math.max(0,price-downPayment).toLocaleString('en-IN')"></span></span>
+                                            <span class="font-bold text-[#022C22]">â‚¹<span x-text="Math.max(0,price-downPayment).toLocaleString('en-IN')"></span></span>
                                         </div>
                                     </div>
                                     <div>
                                         <div class="flex justify-between mb-1.5">
                                             <label class="text-sm font-medium text-gray-700">Interest Rate</label>
-                                            <span class="text-sm font-bold text-[#0D2137]" x-text="rate + '%'"></span>
+                                            <span class="text-sm font-bold text-[#022C22]" x-text="rate + '%'"></span>
                                         </div>
                                         <input type="range" x-model.number="rate" @input="calcEmi()" min="6" max="20" step="0.5"
                                             class="w-full accent-green-500">
@@ -287,7 +287,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                     <div>
                                         <div class="flex justify-between mb-1.5">
                                             <label class="text-sm font-medium text-gray-700">Loan Tenure</label>
-                                            <span class="text-sm font-bold text-[#0D2137]" x-text="tenure + ' months'"></span>
+                                            <span class="text-sm font-bold text-[#022C22]" x-text="tenure + ' months'"></span>
                                         </div>
                                         <input type="range" x-model.number="tenure" @input="calcEmi()" min="12" max="84" step="6"
                                             class="w-full accent-green-500">
@@ -313,7 +313,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                 <!-- Results -->
                                 <div class="flex flex-col gap-4">
                                     <!-- EMI display -->
-                                    <div class="bg-[#0D2137] rounded-2xl p-6 text-white text-center">
+                                    <div class="bg-[#022C22] rounded-2xl p-6 text-white text-center">
                                         <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Monthly EMI</p>
                                         <p class="text-5xl font-black text-[#22C55E] mb-1">
                                             â‚¹<span x-text="emi.toLocaleString('en-IN')"></span>
@@ -325,11 +325,11 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                     <div class="bg-white border border-gray-100 rounded-2xl p-5 space-y-3">
                                         <div class="flex justify-between py-2 border-b border-gray-50">
                                             <span class="text-sm text-gray-600">Down Payment</span>
-                                            <span class="font-bold text-[#0D2137]">â‚¹<span x-text="downPayment.toLocaleString('en-IN')"></span></span>
+                                            <span class="font-bold text-[#022C22]">â‚¹<span x-text="downPayment.toLocaleString('en-IN')"></span></span>
                                         </div>
                                         <div class="flex justify-between py-2 border-b border-gray-50">
                                             <span class="text-sm text-gray-600">Loan Amount</span>
-                                            <span class="font-bold text-[#0D2137]">â‚¹<span x-text="Math.max(0,price-downPayment).toLocaleString('en-IN')"></span></span>
+                                            <span class="font-bold text-[#022C22]">â‚¹<span x-text="Math.max(0,price-downPayment).toLocaleString('en-IN')"></span></span>
                                         </div>
                                         <div class="flex justify-between py-2 border-b border-gray-50">
                                             <span class="text-sm text-gray-600">Total Interest</span>
@@ -337,11 +337,11 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                         </div>
                                         <div class="flex justify-between py-2 border-b border-gray-50">
                                             <span class="text-sm text-gray-600">Total EMI Payment</span>
-                                            <span class="font-bold text-[#0D2137]">â‚¹<span x-text="(emi * tenure).toLocaleString('en-IN')"></span></span>
+                                            <span class="font-bold text-[#022C22]">â‚¹<span x-text="(emi * tenure).toLocaleString('en-IN')"></span></span>
                                         </div>
                                         <div class="flex justify-between py-2 bg-gray-50 rounded-lg px-2">
-                                            <span class="text-sm font-bold text-[#0D2137]">Total Cost</span>
-                                            <span class="font-black text-[#0D2137]">â‚¹<span x-text="totalCost.toLocaleString('en-IN')"></span></span>
+                                            <span class="text-sm font-bold text-[#022C22]">Total Cost</span>
+                                            <span class="font-black text-[#022C22]">â‚¹<span x-text="totalCost.toLocaleString('en-IN')"></span></span>
                                         </div>
                                     </div>
 
@@ -352,12 +352,12 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                                             <div>
                                                 <div class="flex justify-between text-xs mb-1">
                                                     <span class="text-gray-600">Principal</span>
-                                                    <span class="font-semibold text-[#0D2137]">
+                                                    <span class="font-semibold text-[#022C22]">
                                                         <span x-text="price > 0 ? Math.round((price-downPayment)/price*100) : 0"></span>%
                                                     </span>
                                                 </div>
                                                 <div class="bg-gray-100 rounded-full h-4 overflow-hidden">
-                                                    <div class="bg-[#0D2137] h-4 rounded-full transition-all duration-500"
+                                                    <div class="bg-[#022C22] h-4 rounded-full transition-all duration-500"
                                                          :style="'width:' + (price > 0 ? Math.round((price-downPayment)/totalCost*100) : 0) + '%'"></div>
                                                 </div>
                                             </div>
@@ -388,7 +388,7 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                     </div>
 
                     <!-- CTA card below calculator -->
-                    <div class="bg-gradient-to-br from-[#0D2137] to-[#1a3a5c] rounded-2xl p-6 text-white">
+                    <div class="bg-gradient-to-br from-[#022C22] to-[#0A3D2B] rounded-2xl p-6 text-white">
                         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5">
                             <div class="text-4xl flex-shrink-0">ðŸ’¡</div>
                             <div class="flex-1">
@@ -420,16 +420,16 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
                 <div class="sticky top-4 space-y-4">
                     <!-- Lead form -->
                     <div class="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
-                        <div class="bg-[#0D2137] px-5 py-4 text-white">
+                        <div class="bg-[#022C22] px-5 py-4 text-white">
                             <h3 class="font-bold text-lg">Get Personalised Help</h3>
                             <p class="text-gray-300 text-xs mt-0.5">Our EV experts will call you back</p>
                         </div>
-                        <?= view('partials/lead_form', ['source' => 'cost_calculator']) ?>
+                        <?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?>
                     </div>
 
                     <!-- Info cards -->
                     <div class="bg-[#22C55E]/10 border border-[#22C55E]/20 rounded-2xl p-5">
-                        <h4 class="font-bold text-[#0D2137] mb-3 flex items-center gap-2">
+                        <h4 class="font-bold text-[#022C22] mb-3 flex items-center gap-2">
                             <span>ðŸ‡®ðŸ‡³</span> India EV Benefits
                         </h4>
                         <ul class="space-y-2 text-sm text-gray-700">
@@ -458,19 +458,19 @@ input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(to r
 
                     <!-- Charging cost tip -->
                     <div class="bg-white border border-gray-100 rounded-2xl p-5">
-                        <h4 class="font-bold text-[#0D2137] mb-2 text-sm">ðŸ’¡ Electricity Rate Guide</h4>
+                        <h4 class="font-bold text-[#022C22] mb-2 text-sm">ðŸ’¡ Electricity Rate Guide</h4>
                         <div class="space-y-2 text-xs text-gray-600">
                             <div class="flex justify-between py-1.5 border-b border-gray-50">
                                 <span>Home charging (residential)</span>
-                                <span class="font-bold text-[#0D2137]">â‚¹6â€“10/kWh</span>
+                                <span class="font-bold text-[#022C22]">â‚¹6â€“10/kWh</span>
                             </div>
                             <div class="flex justify-between py-1.5 border-b border-gray-50">
                                 <span>Public AC charger</span>
-                                <span class="font-bold text-[#0D2137]">â‚¹12â€“16/kWh</span>
+                                <span class="font-bold text-[#022C22]">â‚¹12â€“16/kWh</span>
                             </div>
                             <div class="flex justify-between py-1.5">
                                 <span>DC fast charger</span>
-                                <span class="font-bold text-[#0D2137]">â‚¹15â€“20/kWh</span>
+                                <span class="font-bold text-[#022C22]">â‚¹15â€“20/kWh</span>
                             </div>
                         </div>
                     </div>

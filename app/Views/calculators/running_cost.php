@@ -13,7 +13,7 @@
         <button onclick="calcCost()" class="mt-5 rounded-xl bg-emerald-600 px-5 py-3 font-bold text-white">Calculate</button>
         <div id="result" class="mt-6 rounded-2xl bg-emerald-50 p-5 text-emerald-950"></div>
     </div>
-    <aside><?= view('partials/lead_form') ?></aside>
+    <aside><?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?></aside>
 </section>
 <script>
 function calcCost(){

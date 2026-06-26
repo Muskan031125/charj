@@ -47,10 +47,13 @@ $connColors = [
 // City lat/lng for API
 $cityCoords = [
     'delhi'=>[28.6139,77.2090],'mumbai'=>[19.0760,72.8777],'bangalore'=>[12.9716,77.5946],
-    'pune'=>[18.5204,73.8567],'hyderabad'=>[17.3850,78.4867],'chennai'=>[13.0827,80.2707],
-    'ahmedabad'=>[23.0225,72.5714],'kolkata'=>[22.5726,88.3639],'jaipur'=>[26.9124,75.7873],
-    'noida'=>[28.5355,77.3910],'gurgaon'=>[28.4595,77.0266],'surat'=>[21.1702,72.8311],
-    'lucknow'=>[26.8467,80.9462],
+    'bengaluru'=>[12.9716,77.5946],'pune'=>[18.5204,73.8567],'hyderabad'=>[17.3850,78.4867],
+    'chennai'=>[13.0827,80.2707],'ahmedabad'=>[23.0225,72.5714],'kolkata'=>[22.5726,88.3639],
+    'jaipur'=>[26.9124,75.7873],'noida'=>[28.5355,77.3910],'gurgaon'=>[28.4595,77.0266],
+    'gurugram'=>[28.4595,77.0266],'surat'=>[21.1702,72.8311],'lucknow'=>[26.8467,80.9462],
+    'chandigarh'=>[30.7333,76.7794],'coimbatore'=>[11.0168,76.9558],'nagpur'=>[21.1458,79.0882],
+    'indore'=>[22.7196,75.8577],'kochi'=>[9.9312,76.2673],'vadodara'=>[22.3072,73.1812],
+    'visakhapatnam'=>[17.6868,83.2185],'nashik'=>[19.9975,73.7898],'bhopal'=>[23.2599,77.4126],
 ];
 $initLat = $cityCoords[$activeCityFilter][0] ?? 28.6139;
 $initLng = $cityCoords[$activeCityFilter][1] ?? 77.2090;
@@ -189,11 +192,19 @@ $initLng = $cityCoords[$activeCityFilter][1] ?? 77.2090;
   <!-- No results -->
   <div x-show="!loading && filteredStations.length===0" x-cloak class="py-24 text-center">
     <div class="text-5xl mb-4">⚡</div>
-    <h3 class="text-lg font-black text-slate-900 mb-2">No stations found here yet</h3>
-    <p class="text-slate-500 text-sm mb-4">Try a different city or check back soon — our network is expanding.</p>
-    <button @click="loadCity('all')" class="bg-green-600 text-white font-bold px-6 py-3 rounded-full text-sm hover:bg-green-700 transition-colors">
-      Show All India Stations
-    </button>
+    <h3 class="text-lg font-black text-slate-900 mb-2" x-text="speedFilter !== 'all' ? 'No ' + speedFilter + ' chargers found here' : 'No stations found here yet'"></h3>
+    <p class="text-slate-500 text-sm mb-4">
+      <span x-show="speedFilter !== 'all'">Try removing the speed filter, or </span>try a different city — India's charging network is expanding rapidly.
+    </p>
+    <div class="flex flex-wrap gap-3 justify-center">
+      <button x-show="speedFilter !== 'all'" @click="speedFilter='all';applyFilter()"
+              class="bg-slate-800 text-white font-bold px-5 py-2.5 rounded-full text-sm hover:bg-slate-700 transition-colors">
+        Remove Speed Filter
+      </button>
+      <button @click="loadCity('all')" class="bg-green-600 text-white font-bold px-6 py-3 rounded-full text-sm hover:bg-green-700 transition-colors">
+        Show All India Stations
+      </button>
+    </div>
   </div>
 
   <!-- Stations grid -->
@@ -201,20 +212,30 @@ $initLng = $cityCoords[$activeCityFilter][1] ?? 77.2090;
     <template x-for="(st, idx) in filteredStations" :key="st.id || idx">
       <div class="station-card p-5 flex flex-col" :style="`animation:fadeInUp .3s ${idx*40}ms both`">
         <!-- Header -->
-        <div class="flex items-start justify-between gap-2 mb-3">
+        <div class="flex items-start justify-between gap-2 mb-2">
           <div class="flex-1 min-w-0">
-            <h3 class="font-black text-slate-900 text-sm leading-tight truncate" x-text="st.name"></h3>
-            <p class="text-xs text-slate-400 mt-0.5 truncate" x-text="st.operator || 'Public Charger'"></p>
+            <h3 class="font-black text-slate-900 text-sm leading-tight" x-text="st.name"></h3>
+            <!-- Show operator only if it differs from the name -->
+            <p class="text-xs text-slate-400 mt-0.5 truncate"
+               x-show="st.operator && st.operator !== st.name"
+               x-text="st.operator"></p>
           </div>
-          <span class="flex-shrink-0 text-[10px] font-black px-2.5 py-1 rounded-full"
+          <span class="flex-shrink-0 text-[10px] font-black px-2.5 py-1 rounded-full whitespace-nowrap"
                 :class="st.charging_speed==='rapid'?'speed-rapid':st.charging_speed==='fast'?'speed-fast':'speed-slow'"
                 x-text="st.charging_speed==='rapid'?'⚡ Rapid DC':st.charging_speed==='fast'?'🔆 Fast':'🔌 Slow AC'"></span>
         </div>
 
-        <!-- Address -->
-        <p class="text-xs text-slate-600 leading-relaxed mb-3 flex items-start gap-1.5">
-          <svg class="w-3.5 h-3.5 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-          <span x-text="(st.address || '') + (st.city ? ', ' + st.city : '')"></span>
+        <!-- Address — show only when present -->
+        <p class="text-xs text-slate-500 leading-relaxed mb-3 flex items-start gap-1.5"
+           x-show="(st.address || '') || st.city">
+          <svg class="w-3 h-3 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span x-text="[st.address, st.city].filter(Boolean).join(', ')"></span>
+        </p>
+        <!-- Coordinates fallback when no address -->
+        <p class="text-xs text-slate-400 leading-relaxed mb-3 flex items-start gap-1.5"
+           x-show="!st.address && !st.city && st.lat">
+          <svg class="w-3 h-3 text-slate-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+          <span x-text="'~' + Number(st.lat).toFixed(4) + ', ' + Number(st.lng).toFixed(4)"></span>
         </p>
 
         <!-- Connectors -->
@@ -238,13 +259,15 @@ $initLng = $cityCoords[$activeCityFilter][1] ?? 77.2090;
           </span>
           <span x-show="st.is_open_24x7" class="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full">24×7</span>
           <!-- Source badge -->
-          <span x-show="st.source==='ocm'" class="text-blue-400 text-[9px] font-bold uppercase">Live ●</span>
+          <span x-show="st.source==='ocm' || st.source==='osm'" class="text-blue-400 text-[9px] font-bold uppercase">Live ●</span>
         </div>
 
         <div class="flex-1"></div>
 
-        <!-- Directions button -->
-        <a :href="'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((st.name||'') + ' EV charging ' + (st.city||''))"
+        <!-- Directions button — use lat/lng when available for accuracy -->
+        <a :href="st.lat && st.lng
+              ? 'https://www.google.com/maps/dir/?api=1&destination=' + st.lat + ',' + st.lng
+              : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((st.name||'') + ' EV charging ' + (st.city||''))"
            target="_blank" rel="noopener"
            class="flex items-center justify-center gap-2 rounded-xl bg-slate-900 hover:bg-green-700 text-white font-bold py-2.5 text-sm transition-all duration-150">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
@@ -304,6 +327,17 @@ const INIT_LAT  = <?= $initLat ?>;
 const INIT_LNG  = <?= $initLng ?>;
 const INIT_CITY = '<?= esc($activeCityFilter) ?>';
 
+const CITY_COORDS = {
+  delhi:[28.6139,77.2090], mumbai:[19.0760,72.8777], bangalore:[12.9716,77.5946],
+  bengaluru:[12.9716,77.5946], pune:[18.5204,73.8567], hyderabad:[17.3850,78.4867],
+  chennai:[13.0827,80.2707], ahmedabad:[23.0225,72.5714], kolkata:[22.5726,88.3639],
+  jaipur:[26.9124,75.7873], noida:[28.5355,77.3910], gurgaon:[28.4595,77.0266],
+  gurugram:[28.4595,77.0266], surat:[21.1702,72.8311], lucknow:[26.8467,80.9462],
+  chandigarh:[30.7333,76.7794], coimbatore:[11.0168,76.9558], nagpur:[21.1458,79.0882],
+  indore:[22.7196,75.8577], kochi:[9.9312,76.2673], vadodara:[22.3072,73.1812],
+  visakhapatnam:[17.6868,83.2185], nashik:[19.9975,73.7898], bhopal:[23.2599,77.4126],
+};
+
 function chargingApp() {
   return {
     allStations: [...DB_STATIONS],
@@ -316,31 +350,38 @@ function chargingApp() {
     dataSource: DB_STATIONS.length ? 'Charj Database' : 'Loading...',
 
     async init() {
-      // Always fetch live data on load
-      await this.fetchLive(INIT_LAT, INIT_LNG, INIT_CITY);
+      if (INIT_CITY && INIT_CITY !== 'all') {
+        await this.fetchLive(INIT_LAT, INIT_LNG, INIT_CITY);
+      } else {
+        // 'all' mode — just show all DB stations, no single-city API call
+        this.allStations = [...DB_STATIONS];
+        this.dataSource = DB_STATIONS.length ? 'Charj Database' : 'No stations yet';
+        this.applyFilter();
+      }
     },
 
     async loadCity(city) {
       this.activeCity = city;
       this.speedFilter = 'all';
-      // Update URL without reload
       const url = new URL(window.location);
       url.searchParams.set('city', city);
       window.history.pushState({}, '', url);
 
-      const coords = {
-        delhi:[28.6139,77.2090], mumbai:[19.0760,72.8777], bangalore:[12.9716,77.5946],
-        pune:[18.5204,73.8567], hyderabad:[17.3850,78.4867], chennai:[13.0827,80.2707],
-        ahmedabad:[23.0225,72.5714], kolkata:[22.5726,88.3639], jaipur:[26.9124,75.7873],
-        noida:[28.5355,77.3910], gurgaon:[28.4595,77.0266], surat:[21.1702,72.8311],
-        lucknow:[26.8467,80.9462],
-      };
-
       if (city === 'all') {
-        await this.fetchLive(28.6139, 77.2090, 'all');
-      } else {
-        const c = coords[city] || [28.6139, 77.2090];
+        this.allStations = [...DB_STATIONS];
+        this.dataSource = 'Charj Database';
+        this.applyFilter();
+        return;
+      }
+
+      const c = CITY_COORDS[city];
+      if (c) {
         await this.fetchLive(c[0], c[1], city);
+      } else {
+        // City not in coords map — filter DB by city name only
+        this.allStations = DB_STATIONS.filter(s => s.city === city.toLowerCase());
+        this.dataSource = 'Charj Database';
+        this.applyFilter();
       }
     },
 
@@ -351,7 +392,6 @@ function chargingApp() {
         async pos => {
           const lat = pos.coords.latitude, lng = pos.coords.longitude;
           this.locating = false;
-          // Reverse geocode
           try {
             const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`);
             const d = await r.json();
@@ -370,36 +410,32 @@ function chargingApp() {
 
     async fetchLive(lat, lng, city) {
       this.loading = true;
+      const dbForCity = city && city !== 'all'
+        ? DB_STATIONS.filter(s => s.city === city.toLowerCase())
+        : DB_STATIONS;
+
       try {
-        const params = new URLSearchParams({ lat, lng, city: city || '' });
+        const params = new URLSearchParams({ lat, lng, city: city === 'all' ? '' : (city || '') });
         const resp = await fetch(`<?= site_url('charging-stations/api') ?>?${params}`);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const json = await resp.json();
 
-        if (json.success && json.stations.length > 0) {
-          // Merge: API data first, then DB stations not already in API results
-          const apiIds = new Set(json.stations.map(s => s.id));
-          const dbOnly = DB_STATIONS.filter(s => !apiIds.has(s.id));
-
-          // Filter DB by city if set
-          const dbFiltered = city && city !== 'all'
-            ? dbOnly.filter(s => s.city === city.toLowerCase())
-            : dbOnly;
-
-          this.allStations = [...json.stations, ...dbFiltered];
+        if (json.success && json.stations && json.stations.length > 0) {
+          // Merge: live API first, then DB stations not already present
+          const apiIds = new Set(json.stations.map(s => String(s.id)));
+          const dbExtra = dbForCity.filter(s => !apiIds.has(String(s.id)));
+          this.allStations = [...json.stations, ...dbExtra];
           this.dataSource = 'OpenChargeMap + Charj Database';
         } else {
-          // Fall back to DB data
-          this.allStations = city && city !== 'all'
-            ? DB_STATIONS.filter(s => s.city === city.toLowerCase())
-            : DB_STATIONS;
-          this.dataSource = 'Charj Database';
+          // API returned nothing — use DB. If DB also empty, fall back to all DB so page isn't blank
+          this.allStations = dbForCity.length > 0 ? dbForCity : [...DB_STATIONS];
+          this.dataSource = dbForCity.length > 0 ? 'Charj Database' : 'Charj Database (all India)';
         }
       } catch(e) {
-        this.allStations = city && city !== 'all'
-          ? DB_STATIONS.filter(s => s.city === city.toLowerCase())
-          : DB_STATIONS;
-        this.dataSource = 'Charj Database (offline)';
+        this.allStations = dbForCity.length > 0 ? dbForCity : [...DB_STATIONS];
+        this.dataSource = dbForCity.length > 0 ? 'Charj Database' : 'Charj Database (all India)';
       }
+
       this.applyFilter();
       this.loading = false;
     },

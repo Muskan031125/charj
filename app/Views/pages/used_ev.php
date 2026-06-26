@@ -12,18 +12,18 @@
 <?= $this->section('content') ?>
 
 <!-- Hero -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-green-950 to-emerald-900 text-white pt-28 pb-16 px-4">
+<section class="hero-sm relative overflow-hidden bg-gradient-to-br from-slate-950 via-green-950 to-emerald-900 text-white pt-28 pb-16 px-4">
   <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:28px 28px"></div>
   <div class="relative max-w-5xl mx-auto text-center">
-    <div class="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-4 py-1.5 text-green-300 text-xs font-bold uppercase tracking-widest mb-6">
+    <div class="hero-badge inline-flex items-center gap-2 bg-green-500/20 border border-green-500/30 rounded-full px-3 py-1 text-green-300 text-xs font-bold uppercase tracking-widest mb-6">
       🚗 India's Dedicated Used EV Marketplace — Launching Soon
     </div>
     <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-4 leading-tight">Buy or Sell a<br>Used EV in India</h1>
-    <p class="text-lg text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+    <p class="hero-desc text-lg text-slate-300 max-w-3xl mx-auto mb-6 leading-relaxed">
       India's first dedicated used EV marketplace is coming. Join the waitlist and get early access to <strong class="text-green-400">battery-health verified listings</strong> — zero broker fees.
     </p>
     <!-- Stats -->
-    <div class="flex flex-wrap justify-center gap-3 mb-8">
+    <div class="flex flex-wrap justify-center gap-2 mb-4 sm:mb-7">
       <?php foreach ([['2,400+','on waitlist'],['100%','battery verified'],['0%','broker fee'],['₹2L–₹25L','price range']] as $s): ?>
       <div class="flex items-center gap-2 bg-white/10 border border-white/10 rounded-full px-4 py-2 text-sm">
         <span class="text-green-400 font-black"><?= $s[0] ?></span>

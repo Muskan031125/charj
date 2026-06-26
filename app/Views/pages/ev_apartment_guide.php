@@ -24,20 +24,20 @@
 <?= $this->section('content') ?>
 
 <!-- Hero -->
-<section class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-teal-950 to-green-900 text-white pt-28 pb-16 px-4">
+<section class="hero-sm relative overflow-hidden bg-gradient-to-br from-slate-950 via-teal-950 to-green-900 text-white pt-28 pb-16 px-4">
   <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:28px 28px"></div>
   <div class="relative max-w-5xl mx-auto">
-    <div class="inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-4 py-1.5 text-teal-300 text-xs font-bold uppercase tracking-widest mb-6">
+    <div class="hero-badge inline-flex items-center gap-2 bg-teal-500/20 border border-teal-400/30 rounded-full px-3 py-1 text-teal-300 text-xs font-bold uppercase tracking-widest mb-6">
       🏢 Apartment EV Charging Guide — India 2025
     </div>
     <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-4 leading-tight">EV Charging in<br>Apartments & Societies</h1>
-    <p class="text-lg text-slate-300 max-w-3xl mb-8 leading-relaxed">
+    <p class="hero-desc text-lg text-slate-300 max-w-3xl mb-7 leading-relaxed">
       The complete guide to charging your EV when you live in a flat — covering your legal rights, society NOC, wiring costs, and the best charger options.
     </p>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
       <?php foreach ([['✅','Legal Right','Ministry of Power 2022'],['💰','₹20–65K','Total install cost'],['🏢','NOC','Recommended not required'],['⚡','7.2kW','Max single-phase speed']] as $s): ?>
-      <div class="bg-white/10 backdrop-blur rounded-2xl p-4 text-center border border-white/10">
-        <div class="text-2xl mb-1"><?= $s[0] ?></div>
+      <div class="bg-white/10 backdrop-blur rounded-xl p-3 text-center border border-white/10">
+        <div class="text-xl sm:text-2xl mb-0.5"><?= $s[0] ?></div>
         <div class="font-black text-white text-sm"><?= $s[1] ?></div>
         <div class="text-xs text-slate-400 mt-0.5"><?= $s[2] ?></div>
       </div>

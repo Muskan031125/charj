@@ -4,13 +4,13 @@
 <div x-data="tcoCalc()" class="min-h-screen bg-slate-50">
 
   <!-- ── Hero ── -->
-  <section class="bg-gradient-to-br from-[#0a1628] via-[#0f2d47] to-[#1a3a55] text-white py-14 px-4">
+  <section class="bg-gradient-to-br from-[#022C22] via-[#0A3D2B] to-[#0D4A2A] text-white py-14 px-4">
     <div class="max-w-5xl mx-auto text-center">
       <div class="inline-flex items-center gap-2 bg-green-500/20 border border-green-400/30 rounded-full px-4 py-1.5 text-green-300 text-sm font-semibold mb-5">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
         5-Year True Cost Analysis
       </div>
-      <h1 class="text-4xl lg:text-5xl font-black tracking-tight mb-4">EV vs Petrol — Total Cost of Ownership</h1>
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4">EV vs Petrol — Total Cost of Ownership</h1>
       <p class="text-xl text-slate-300 max-w-2xl mx-auto">
         Compare the real 5-year cost including EMIs, fuel, maintenance, insurance and resale value. No surprises.
       </p>
@@ -20,7 +20,7 @@
   <div class="max-w-7xl mx-auto px-4 py-10">
 
     <!-- ── Inputs Grid ── -->
-    <div class="grid lg:grid-cols-2 gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
 
       <!-- EV Column -->
       <div class="bg-white rounded-3xl shadow-sm ring-1 ring-green-200 overflow-hidden">
@@ -221,7 +221,7 @@
         <div class="text-2xl font-black" x-text="fmt(r.petrolTotal5yr)"></div>
         <div class="text-orange-100 text-xs mt-1">incl. resale deduction</div>
       </div>
-      <div class="bg-[#0d2137] rounded-2xl p-5 text-white col-span-2">
+      <div class="rounded-2xl p-5 text-white col-span-2" style="background:linear-gradient(135deg,#022C22,#0A3D2B)">
         <div class="text-xs font-semibold text-slate-300 uppercase tracking-wide mb-2">You Save by Going EV</div>
         <div class="text-4xl font-black text-green-400" x-text="r.saving5yr >= 0 ? fmt(r.saving5yr) : '-' + fmt(Math.abs(r.saving5yr))"></div>
         <div class="flex flex-wrap gap-4 mt-2">
@@ -239,7 +239,7 @@
         <span class="text-xs text-slate-500">All figures in ₹</span>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full text-sm">
+        <table class="w-full min-w-[500px] text-sm">
           <thead>
             <tr class="bg-slate-50">
               <th class="text-left px-6 py-3 text-slate-500 font-semibold">Year</th>
@@ -354,6 +354,7 @@
     </div>
 
   </div>
+  <div class="pb-20 md:pb-0"></div>
 </div>
 
 <script>

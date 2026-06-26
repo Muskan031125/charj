@@ -350,16 +350,12 @@ $meta_description = $meta_description ?? 'Everything you need to know about elec
 
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
-            <label for="ins_name" class="block text-sm font-medium text-slate-700 mb-1">Your Name *</label>
-            <input type="text" id="ins_name" name="name" required placeholder="e.g. Priya Sharma"
-                   class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#22C55E] focus:outline-none focus:ring-2 focus:ring-[#22C55E]/20">
-          </div>
-          <div>
             <label for="ins_phone" class="block text-sm font-medium text-slate-700 mb-1">Phone Number *</label>
             <div class="flex">
               <span class="inline-flex items-center rounded-l-xl border border-r-0 border-slate-200 bg-slate-50 px-3 text-sm text-slate-500">+91</span>
               <input type="tel" id="ins_phone" name="phone" required placeholder="98765 43210"
-                     maxlength="10" pattern="[6-9][0-9]{9}"
+                     maxlength="10" minlength="10" pattern="[6-9][0-9]{9}" inputmode="numeric"
+                     oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)"
                      class="flex-1 rounded-r-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#22C55E] focus:outline-none focus:ring-2 focus:ring-[#22C55E]/20">
             </div>
           </div>
@@ -428,13 +424,10 @@ $meta_description = $meta_description ?? 'Everything you need to know about elec
       <input type="hidden" name="source" value="insurance_modal">
       <input type="hidden" name="insurance_provider" x-bind:value="selectedInsurer">
       <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1">Name *</label>
-        <input type="text" name="name" required placeholder="Your name"
-               class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-2 focus:ring-[#22C55E]/20">
-      </div>
-      <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Phone *</label>
-        <input type="tel" name="phone" required placeholder="10-digit mobile number" maxlength="10" pattern="[6-9][0-9]{9}"
+        <input type="tel" name="phone" required placeholder="10-digit mobile number"
+               maxlength="10" minlength="10" pattern="[6-9][0-9]{9}" inputmode="numeric"
+               oninput="this.value=this.value.replace(/\D/g,'').slice(0,10)"
                class="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm focus:border-[#22C55E] focus:outline-none focus:ring-2 focus:ring-[#22C55E]/20">
       </div>
       <div>

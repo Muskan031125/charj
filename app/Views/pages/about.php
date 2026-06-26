@@ -2,20 +2,20 @@
 <?= $this->section('content') ?>
 
 <!-- Hero -->
-<section class="pt-28 pb-20 text-center relative overflow-hidden anim-grad"
+<section class="hero-sm pt-28 pb-20 text-center relative overflow-hidden anim-grad"
          style="background:linear-gradient(135deg,#030712,#04302e,#0a2e2c,#030712)">
   <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image:radial-gradient(rgba(255,255,255,.4) 1px,transparent 1px);background-size:20px 20px"></div>
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-40 rounded-full pointer-events-none" style="background:#009999;opacity:.07;filter:blur(60px)"></div>
-  <div class="absolute top-8 right-24 w-2 h-2 rounded-full float-1 pointer-events-none" style="background:#009999;opacity:.3"></div>
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-40 rounded-full pointer-events-none" style="background:#00A896;opacity:.07;filter:blur(60px)"></div>
+  <div class="absolute top-8 right-24 w-2 h-2 rounded-full float-1 pointer-events-none" style="background:#00A896;opacity:.3"></div>
   <div class="absolute bottom-12 left-16 w-1.5 h-1.5 rounded-full float-2 pointer-events-none" style="background:#38bdf8;opacity:.25"></div>
 
   <div class="mx-auto max-w-5xl px-4 relative">
-    <span class="inline-block rounded-full px-4 py-1.5 text-sm font-bold mb-4 text-cyan-300" style="background:rgba(0,153,153,.12);border:1px solid rgba(0,153,153,.25)">About Charj.in</span>
+    <span class="inline-block rounded-full px-3 py-1 text-xs sm:text-sm font-bold mb-2 sm:mb-4 text-cyan-300" style="background:rgba(0,168,150,.12);border:1px solid rgba(0,168,150,.25)">About Charj.in</span>
     <h1 class="mt-2 text-4xl font-black leading-tight md:text-5xl text-white">
       India's EV<br>
       <span class="neon-green">Decision Engine</span>
     </h1>
-    <p class="mx-auto mt-5 max-w-2xl text-lg" style="color:#8ba3a3">
+    <p class="mx-auto mt-2 sm:mt-4 max-w-2xl text-sm sm:text-base lg:text-lg" style="color:#8ba3a3">
       We help individuals, families and businesses cut through the noise and make confident, data-backed decisions when buying or switching to electric vehicles in India.
     </p>
   </div>
@@ -44,7 +44,7 @@
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 sr-stagger">
       <?php
       $features = [
-        ['icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z','iconColor'=>'#16c4c4','iconBg'=>'rgba(0,153,153,.14)','title'=>'EV Comparison Tool','desc'=>'Compare up to 3 EVs side by side across range, price, specs, charging time and real-world performance.'],
+        ['icon'=>'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z','iconColor'=>'#1AFFCC','iconBg'=>'rgba(0,168,150,.14)','title'=>'EV Comparison Tool','desc'=>'Compare up to 3 EVs side by side across range, price, specs, charging time and real-world performance.'],
         ['icon'=>'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z','iconColor'=>'rgba(56,189,248,.8)','iconBg'=>'rgba(56,189,248,.1)','title'=>'Verified Dealer Network','desc'=>'Connect with authorised EV dealers in your city. Get actual on-road prices, not just sticker prices.'],
         ['icon'=>'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z','iconColor'=>'rgba(251,191,36,.8)','iconBg'=>'rgba(251,191,36,.1)','title'=>'Running Cost Calculator','desc'=>'Calculate your actual savings: compare EV vs petrol/diesel running cost based on your city, usage and electricity tariff.'],
         ['icon'=>'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z','iconColor'=>'rgba(45,212,191,.8)','iconBg'=>'rgba(45,212,191,.1)','title'=>'Charging Station Map','desc'=>'Find public charging stations across major Indian cities. Filter by connector type, speed and availability.'],
@@ -75,7 +75,7 @@
     </div>
     <div class="grid gap-8 md:grid-cols-3 sr-stagger">
       <?php foreach ([
-        ['num'=>'1','title'=>'Browse & Compare','desc'=>'Search our database of 200+ EVs. Use filters for budget, range, vehicle type and use case. Compare up to 3 models side by side.','color'=>'#009999'],
+        ['num'=>'1','title'=>'Browse & Compare','desc'=>'Search our database of 200+ EVs. Use filters for budget, range, vehicle type and use case. Compare up to 3 models side by side.','color'=>'#00A896'],
         ['num'=>'2','title'=>'Get Personalised Advice','desc'=>'Submit your requirement. Our EV advisors review your use case and recommend the right vehicles and finance options for you.','color'=>'#38bdf8'],
         ['num'=>'3','title'=>'Connect With Dealers','desc'=>'We connect you with verified dealers in your city. Get real on-road prices, test rides, and post-purchase support.','color'=>'#a78bfa'],
       ] as $step): ?>
@@ -117,7 +117,7 @@
 <section class="py-14" style="background:#0f2125">
   <div class="mx-auto max-w-2xl px-4">
     <h2 class="mb-6 text-center text-2xl font-black" style="color:#e6f1f1">Talk to an EV Expert</h2>
-    <?= view('partials/lead_form') ?>
+    <?= view('partials/lead_form', ['vehicle' => [], 'hideName' => true]) ?>
   </div>
 </section>
 

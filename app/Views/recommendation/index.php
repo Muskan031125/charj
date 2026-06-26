@@ -381,7 +381,8 @@
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold">+91</span>
                                 <input type="tel" x-model="contact.mobile" placeholder="9876543210"
-                                    maxlength="10" pattern="[6-9][0-9]{9}"
+                                    maxlength="10" minlength="10" pattern="[6-9][0-9]{9}" inputmode="numeric"
+                                    @input="contact.mobile = $event.target.value = $event.target.value.replace(/\D/g,'').slice(0,10)"
                                     class="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#22C55E] text-sm">
                             </div>
                         </div>
